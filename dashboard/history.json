@@ -213,5 +213,50 @@
         "pageTitle": "Bonds Listing"
       }
     ]
+  },
+  {
+    "timestamp": "2026-02-23T17:46:12.625Z",
+    "results": [
+      {
+        "airtableId": "recBJcopy2vZyLcHx",
+        "name": "Jordan Ranch Portal",
+        "type": "softr",
+        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "jordan-ranch-portal",
+        "checkedAt": "2026-02-23T17:46:01.084Z",
+        "status": "down",
+        "responseMs": 30045,
+        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4\", waiting until \"networkidle\"\n"
+      },
+      {
+        "airtableId": "recUS1iqlfWojro2l",
+        "name": "Kingdomlandkids",
+        "type": "shopify",
+        "url": "https://kingdomlandkids.com/",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomlandkids",
+        "checkedAt": "2026-02-23T17:46:02.013Z",
+        "status": "operational",
+        "responseMs": 928,
+        "httpStatus": 200
+      },
+      {
+        "airtableId": "rec9nsO0vYvGzSYrI",
+        "name": "George Adams Insurance (GAI)",
+        "type": "softr",
+        "url": "https://gainsurance.softr.app/magic-authentication?magic-token=710a0d684d5a40c6a9c6e192a1b7f5cc",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "george-adams-insurance-gai",
+        "checkedAt": "2026-02-23T17:46:12.602Z",
+        "status": "operational",
+        "responseMs": 10588,
+        "httpStatus": 200,
+        "pageTitle": "Bonds Listing"
+      }
+    ]
   }
 ]
