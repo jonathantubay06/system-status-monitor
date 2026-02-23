@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T19:43:19.437Z",
+  "updatedAt": "2026-02-23T20:27:07.549Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -10,11 +10,10 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "jordan-ranch-portal",
       "checkPage": "/events",
-      "checkedAt": "2026-02-23T19:43:06.420Z",
-      "status": "operational",
-      "responseMs": 11656,
-      "httpStatus": 200,
-      "pageTitle": "Events",
+      "checkedAt": "2026-02-23T20:25:57.169Z",
+      "status": "down",
+      "responseMs": 69358,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -25,18 +24,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "10 record(s) found"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -49,9 +38,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "kingdomlandkids",
       "checkPage": "",
-      "checkedAt": "2026-02-23T19:43:07.550Z",
+      "checkedAt": "2026-02-23T20:25:58.059Z",
       "status": "operational",
-      "responseMs": 1128,
+      "responseMs": 889,
       "httpStatus": 200,
       "components": [
         {
@@ -89,11 +78,10 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "george-adams-insurance-gai",
       "checkPage": "/capacity",
-      "checkedAt": "2026-02-23T19:43:19.410Z",
-      "status": "operational",
-      "responseMs": 11860,
-      "httpStatus": 200,
-      "pageTitle": "Capacity",
+      "checkedAt": "2026-02-23T20:27:07.523Z",
+      "status": "down",
+      "responseMs": 69464,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://gainsurance.softr.app/capacity\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -104,18 +92,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "No rows detected"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     }

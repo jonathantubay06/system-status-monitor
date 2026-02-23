@@ -367,5 +367,106 @@
         ]
       }
     ]
+  },
+  {
+    "timestamp": "2026-02-23T20:27:07.550Z",
+    "results": [
+      {
+        "airtableId": "recBJcopy2vZyLcHx",
+        "name": "Jordan Ranch Portal",
+        "type": "softr",
+        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "jordan-ranch-portal",
+        "checkPage": "/events",
+        "checkedAt": "2026-02-23T20:25:57.169Z",
+        "status": "down",
+        "responseMs": 69358,
+        "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Page loads",
+            "status": "down"
+          }
+        ]
+      },
+      {
+        "airtableId": "recUS1iqlfWojro2l",
+        "name": "Kingdomlandkids",
+        "type": "shopify",
+        "url": "https://kingdomlandkids.com/",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomlandkids",
+        "checkPage": "",
+        "checkedAt": "2026-02-23T20:25:58.059Z",
+        "status": "operational",
+        "responseMs": 889,
+        "httpStatus": 200,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      },
+      {
+        "airtableId": "rec9nsO0vYvGzSYrI",
+        "name": "George Adams Insurance (GAI)",
+        "type": "softr",
+        "url": "https://gainsurance.softr.app/magic-authentication?magic-token=710a0d684d5a40c6a9c6e192a1b7f5cc",
+        "intervalMins": 2,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "george-adams-insurance-gai",
+        "checkPage": "/capacity",
+        "checkedAt": "2026-02-23T20:27:07.523Z",
+        "status": "down",
+        "responseMs": 69464,
+        "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://gainsurance.softr.app/capacity\", waiting until \"domcontentloaded\"\n",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Page loads",
+            "status": "down"
+          }
+        ]
+      }
+    ]
   }
 ]
