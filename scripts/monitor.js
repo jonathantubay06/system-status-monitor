@@ -87,8 +87,8 @@ async function softrCheck(project, browser) {
 
   try {
     // Step 1: Visit magic link — logs in and redirects to app root
-    const response = await page.goto(project.url, { waitUntil: 'networkidle', timeout: 30000 });
-    await page.waitForTimeout(5000); // Give Softr more time to process auth
+    const response = await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForTimeout(8000); // Give Softr more time to process auth + redirect
 
     // Page loads check
     const httpOk = response?.status() < 400;
@@ -112,7 +112,7 @@ async function softrCheck(project, browser) {
     const checkUrl = `${baseUrl}${checkPath}`;
 
     if (project.checkPage) {
-      await page.goto(checkUrl, { waitUntil: 'networkidle', timeout: 20000 });
+      await page.goto(checkUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
       await page.waitForTimeout(2000);
     }
 
