@@ -1,0 +1,11 @@
+{
+  "name": "system-status-monitor",
+  "version": "4.0.0",
+  "description": "Flexible health monitor — Airtable + Netlify + GitHub Actions",
+  "scripts": {
+    "monitor": "node scripts/monitor.js"
+  },
+  "dependencies": {
+    "playwright": "^1.43.0"
+  }
+}
