@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T21:08:41.913Z",
+  "updatedAt": "2026-02-23T22:00:09.933Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -10,10 +10,11 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "jordan-ranch-portal",
       "checkPage": "/events",
-      "checkedAt": "2026-02-23T21:08:29.207Z",
-      "status": "down",
-      "responseMs": 69296,
-      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
+      "checkedAt": "2026-02-23T21:59:57.642Z",
+      "status": "operational",
+      "responseMs": 11256,
+      "httpStatus": 200,
+      "pageTitle": "Events",
       "components": [
         {
           "name": "Page loads",
@@ -24,8 +25,18 @@
           "status": "operational"
         },
         {
-          "name": "Page loads",
-          "status": "down"
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "10 record(s) found"
         }
       ]
     },
@@ -38,9 +49,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "kingdomlandkids",
       "checkPage": "",
-      "checkedAt": "2026-02-23T21:08:30.268Z",
+      "checkedAt": "2026-02-23T21:59:58.837Z",
       "status": "operational",
-      "responseMs": 1059,
+      "responseMs": 1194,
       "httpStatus": 200,
       "components": [
         {
@@ -78,9 +89,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "george-adams-insurance-gai",
       "checkPage": "/capacity",
-      "checkedAt": "2026-02-23T21:08:41.886Z",
+      "checkedAt": "2026-02-23T22:00:09.903Z",
       "status": "operational",
-      "responseMs": 11618,
+      "responseMs": 11066,
       "httpStatus": 200,
       "pageTitle": "Capacity",
       "components": [
