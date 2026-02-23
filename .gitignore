@@ -1,0 +1,11 @@
+# Local Netlify folder
+.netlify
+
+# Environment variables - NEVER commit this
+.env
+
+# Dependencies
+node_modules
+
+# Local test data
+dashboard/history.json
