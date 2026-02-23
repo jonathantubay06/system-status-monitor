@@ -1,0 +1,34 @@
+[
+  {
+    "timestamp": "2026-02-23T15:14:00.292Z",
+    "results": [
+      {
+        "airtableId": "recBJcopy2vZyLcHx",
+        "name": "Jordan Ranch Portal",
+        "type": "softr",
+        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
+        "intervalMins": 5,
+        "alertEmail": "your@email.com",
+        "id": "jordan-ranch-portal",
+        "checkedAt": "2026-02-23T15:13:59.201Z",
+        "status": "operational",
+        "responseMs": 6990,
+        "httpStatus": 200,
+        "pageTitle": "Jordan Ranch - Home"
+      },
+      {
+        "airtableId": "recUS1iqlfWojro2l",
+        "name": "Kingdomlandkids",
+        "type": "shopify",
+        "url": "https://kingdomlandkids.com/",
+        "intervalMins": 5,
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomlandkids",
+        "checkedAt": "2026-02-23T15:14:00.266Z",
+        "status": "operational",
+        "responseMs": 1065,
+        "httpStatus": 200
+      }
+    ]
+  }
+]
