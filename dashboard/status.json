@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T18:41:38.088Z",
+  "updatedAt": "2026-02-23T19:43:19.437Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -10,9 +10,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "jordan-ranch-portal",
       "checkPage": "/events",
-      "checkedAt": "2026-02-23T18:41:25.021Z",
+      "checkedAt": "2026-02-23T19:43:06.420Z",
       "status": "operational",
-      "responseMs": 11988,
+      "responseMs": 11656,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -49,9 +49,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "kingdomlandkids",
       "checkPage": "",
-      "checkedAt": "2026-02-23T18:41:26.225Z",
+      "checkedAt": "2026-02-23T19:43:07.550Z",
       "status": "operational",
-      "responseMs": 1203,
+      "responseMs": 1128,
       "httpStatus": 200,
       "components": [
         {
@@ -89,9 +89,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "george-adams-insurance-gai",
       "checkPage": "/capacity",
-      "checkedAt": "2026-02-23T18:41:38.061Z",
-      "status": "down",
-      "responseMs": 11835,
+      "checkedAt": "2026-02-23T19:43:19.410Z",
+      "status": "operational",
+      "responseMs": 11860,
       "httpStatus": 200,
       "pageTitle": "Capacity",
       "components": [
@@ -114,7 +114,7 @@
         },
         {
           "name": "Data loads",
-          "status": "down",
+          "status": "operational",
           "detail": "No rows detected"
         }
       ]
