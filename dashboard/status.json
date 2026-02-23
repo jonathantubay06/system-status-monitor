@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T15:31:34.338Z",
+  "updatedAt": "2026-02-23T15:34:08.170Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -9,10 +9,11 @@
       "intervalMins": 2,
       "alertEmail": "jonathantubay@ymail.com",
       "id": "jordan-ranch-portal",
-      "checkedAt": "2026-02-23T15:31:22.578Z",
-      "status": "down",
-      "responseMs": 30046,
-      "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4\", waiting until \"networkidle\"\n"
+      "checkedAt": "2026-02-23T15:33:58.707Z",
+      "status": "operational",
+      "responseMs": 5719,
+      "httpStatus": 200,
+      "pageTitle": "Jordan Ranch - Home"
     },
     {
       "airtableId": "recUS1iqlfWojro2l",
@@ -22,9 +23,9 @@
       "intervalMins": 2,
       "alertEmail": "jonathantubay@ymail.com",
       "id": "kingdomlandkids",
-      "checkedAt": "2026-02-23T15:31:23.611Z",
+      "checkedAt": "2026-02-23T15:33:59.034Z",
       "status": "operational",
-      "responseMs": 1033,
+      "responseMs": 327,
       "httpStatus": 200
     },
     {
@@ -35,9 +36,9 @@
       "intervalMins": 2,
       "alertEmail": "jonathantubay@ymail.com",
       "id": "george-adams-insurance-gai",
-      "checkedAt": "2026-02-23T15:31:34.313Z",
+      "checkedAt": "2026-02-23T15:34:08.145Z",
       "status": "operational",
-      "responseMs": 10702,
+      "responseMs": 9110,
       "httpStatus": 200,
       "pageTitle": "Bonds Listing"
     }
