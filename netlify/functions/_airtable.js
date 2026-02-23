@@ -1,10 +1,8 @@
 // netlify/functions/_airtable.js
-// Shared Airtable API helper
-
 const BASE_ID   = process.env.AIRTABLE_BASE_ID;
 const API_TOKEN = process.env.AIRTABLE_TOKEN;
 const TABLE     = 'Projects';
-const BASE_URL  = `https://api.airtable.com/v0/${BASE_ID}/${TABLE}`;
+const BASE_URL  = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE)}`;
 
 const headers = {
   Authorization: `Bearer ${API_TOKEN}`,
@@ -29,54 +27,51 @@ function mapRecord(record) {
 }
 
 async function getProjects() {
-  const res  = await fetch(`${BASE_URL}?view=Grid%20view`, { headers });
-  if (!res.ok) throw new Error(`Airtable GET failed: ${res.status} ${res.statusText}`);
-  const data = await res.json();
+  const url = `${BASE_URL}?view=Grid%20view`;
+  console.log('Fetching:', url);
+  const res  = await fetch(url, { headers });
+  const text = await res.text();
+  console.log('Response:', res.status, text.substring(0, 300));
+  if (!res.ok) throw new Error(`Airtable GET failed: ${res.status} ${text}`);
+  const data = JSON.parse(text);
   return (data.records || []).map(mapRecord);
 }
 
 async function addProject({ name, type, url, intervalMins, alertEmail }) {
   const res = await fetch(BASE_URL, {
-    method:  'POST',
-    headers,
+    method: 'POST', headers,
     body: JSON.stringify({
-      records: [{
-        fields: {
-          'Project Name':        name,
-          'Type':                type,
-          'URL':                 url,
-          'Check Interval (mins)': Number(intervalMins) || 15,
-          'Alert Email':         alertEmail || '',
-        },
-      }],
+      records: [{ fields: {
+        'Project Name': name, 'Type': type, 'URL': url,
+        'Check Interval (mins)': Number(intervalMins) || 15,
+        'Alert Email': alertEmail || '',
+      }}],
     }),
   });
-  if (!res.ok) throw new Error(`Airtable POST failed: ${res.status} ${await res.text()}`);
-  return res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Airtable POST failed: ${res.status} ${text}`);
+  return JSON.parse(text);
 }
 
 async function updateProject({ airtableId, name, type, url, intervalMins, alertEmail }) {
   const res = await fetch(`${BASE_URL}/${airtableId}`, {
-    method:  'PATCH',
-    headers,
-    body: JSON.stringify({
-      fields: {
-        'Project Name':          name,
-        'Type':                  type,
-        'URL':                   url,
-        'Check Interval (mins)': Number(intervalMins) || 15,
-        'Alert Email':           alertEmail || '',
-      },
-    }),
+    method: 'PATCH', headers,
+    body: JSON.stringify({ fields: {
+      'Project Name': name, 'Type': type, 'URL': url,
+      'Check Interval (mins)': Number(intervalMins) || 15,
+      'Alert Email': alertEmail || '',
+    }}),
   });
-  if (!res.ok) throw new Error(`Airtable PATCH failed: ${res.status} ${await res.text()}`);
-  return res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Airtable PATCH failed: ${res.status} ${text}`);
+  return JSON.parse(text);
 }
 
 async function deleteProject(airtableId) {
   const res = await fetch(`${BASE_URL}/${airtableId}`, { method: 'DELETE', headers });
-  if (!res.ok) throw new Error(`Airtable DELETE failed: ${res.status} ${await res.text()}`);
-  return res.json();
+  const text = await res.text();
+  if (!res.ok) throw new Error(`Airtable DELETE failed: ${res.status} ${text}`);
+  return JSON.parse(text);
 }
 
 module.exports = { getProjects, addProject, updateProject, deleteProject };
