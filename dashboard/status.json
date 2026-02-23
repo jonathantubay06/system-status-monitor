@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-23T20:27:07.549Z",
+  "updatedAt": "2026-02-23T21:08:41.913Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -10,9 +10,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "jordan-ranch-portal",
       "checkPage": "/events",
-      "checkedAt": "2026-02-23T20:25:57.169Z",
+      "checkedAt": "2026-02-23T21:08:29.207Z",
       "status": "down",
-      "responseMs": 69358,
+      "responseMs": 69296,
       "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
@@ -38,9 +38,9 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "kingdomlandkids",
       "checkPage": "",
-      "checkedAt": "2026-02-23T20:25:58.059Z",
+      "checkedAt": "2026-02-23T21:08:30.268Z",
       "status": "operational",
-      "responseMs": 889,
+      "responseMs": 1059,
       "httpStatus": 200,
       "components": [
         {
@@ -78,10 +78,11 @@
       "alertEmail": "jonathantubay@ymail.com",
       "id": "george-adams-insurance-gai",
       "checkPage": "/capacity",
-      "checkedAt": "2026-02-23T20:27:07.523Z",
-      "status": "down",
-      "responseMs": 69464,
-      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://gainsurance.softr.app/capacity\", waiting until \"domcontentloaded\"\n",
+      "checkedAt": "2026-02-23T21:08:41.886Z",
+      "status": "operational",
+      "responseMs": 11618,
+      "httpStatus": 200,
+      "pageTitle": "Capacity",
       "components": [
         {
           "name": "Page loads",
@@ -92,8 +93,18 @@
           "status": "operational"
         },
         {
-          "name": "Page loads",
-          "status": "down"
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "No rows detected"
         }
       ]
     }
