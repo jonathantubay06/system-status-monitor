@@ -603,7 +603,7 @@ async function loadStatus() {
 // ── Cards ─────────────────────────────────────────────────────────────────────
 function buildCard(r, delay) {
   const cls  = sc(r.status);
-  const slow = r.responseMs > 3000;
+  const slow = r.responseMs > 15000;
   const bad  = r.status === 'down';
   // Edit/Remove only shown inside admin panel
   const adminActions = '';
@@ -915,7 +915,7 @@ function openLogModal(idx) {
 
   const body = (entry.results || []).map(r => {
     const cls = sc(r.status);
-    const slow = r.responseMs > 3000;
+    const slow = r.responseMs > 15000;
     const compRows = (r.components || []).map(c => `
       <div class="log-comp-row">
         <span class="log-comp-name">${c.name}</span>
