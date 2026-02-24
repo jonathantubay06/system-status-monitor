@@ -6,6 +6,7 @@
     "monitor": "node scripts/monitor.js"
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "playwright": "^1.43.0"
   }
 }

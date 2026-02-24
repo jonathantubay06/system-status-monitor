@@ -15,7 +15,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { airtableId, name, type, url, intervalMins, alertEmail, checkPage } = JSON.parse(event.body||'{}');
+    const { airtableId, name, type, url, intervalMins, alertEmail, checkPage, loginEmail, loginPassword } = JSON.parse(event.body||'{}');
     if (!airtableId||!name||!type||!url) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'Missing fields' }) };
 
     const res = await fetch(`${BASE_URL}/${airtableId}`, {
@@ -26,6 +26,8 @@ exports.handler = async (event) => {
         'Check Interval (mins)': Number(intervalMins)||15,
         'Alert Email': alertEmail||'',
         'Check Page': checkPage||'',
+        'Login Email': loginEmail||'',
+        'Login Password': loginPassword||'',
       }}),
     });
     const text = await res.text();

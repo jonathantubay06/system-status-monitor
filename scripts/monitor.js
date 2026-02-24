@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
@@ -24,6 +25,8 @@ async function fetchProjects() {
     alertEmail:   r.fields['Alert Email'] || '',
     id:           slugify(r.fields['Project Name']),
     checkPage:    r.fields['Check Page'] || '',
+    loginEmail:   r.fields['Login Email'] || '',
+    loginPassword:r.fields['Login Password'] || '',
   })).filter(p => p.name && p.url);
 }
 
@@ -113,7 +116,7 @@ async function softrCheck(project, browser) {
 
     if (project.checkPage) {
       await page.goto(checkUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(5000); // Give Softr more time to render data
     }
 
     const pageTitle = await page.title();
@@ -156,12 +159,13 @@ async function softrCheck(project, browser) {
 
       // Also check if page has meaningful text content beyond just headers
       const pageText = await page.locator('body').innerText().catch(() => '');
-      const hasMeaningfulContent = pageText.length > 200;
+      // Use low threshold - if page has any reasonable content, data is loading
+      const hasMeaningfulContent = pageText.replace(/\s+/g, ' ').trim().length > 100;
 
       components.push({
         name: 'Data loads',
         status: (rowCount > 0 || hasMeaningfulContent) ? 'operational' : 'down',
-        detail: rowCount > 0 ? `${rowCount} record(s) found` : 'No rows detected',
+        detail: rowCount > 0 ? `${rowCount} record(s) found` : hasMeaningfulContent ? 'Content detected' : 'No data detected',
       });
     }
 
@@ -172,6 +176,95 @@ async function softrCheck(project, browser) {
     const status = anyDown ? 'down' : anyDegraded ? 'degraded' : 'operational';
 
     return { status, responseMs: Date.now() - start, httpStatus: response?.status(), pageTitle, components };
+  } catch (e) {
+    await context.close().catch(() => {});
+    components.push({ name: 'Page loads', status: 'down' });
+    return { status: 'down', responseMs: Date.now() - start, error: e.message, components };
+  }
+}
+
+
+// ── Custom website deep check (email/password login) ───────────────────────────────
+async function customCheck(project, browser) {
+  const start   = Date.now();
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 800 },
+    locale: 'en-US',
+  });
+  const page = await context.newPage();
+  const components = [];
+
+  try {
+    const response = await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    await page.waitForTimeout(3000);
+    const httpOk = response?.status() < 400;
+    components.push({ name: 'Page loads', status: httpOk ? 'operational' : 'degraded' });
+    if (!httpOk) { await context.close(); return { status: 'down', responseMs: Date.now() - start, components }; }
+
+    const email    = project.loginEmail    || process.env.PLAYWATCH_EMAIL;
+    const password = project.loginPassword || process.env.PLAYWATCH_PASSWORD;
+    if (!email || !password) {
+      components.push({ name: 'Login', status: 'degraded', detail: 'No credentials configured' });
+    } else {
+      // Wait for any input to appear
+      await page.waitForSelector('input', { timeout: 15000 }).catch(() => {});
+      await page.waitForTimeout(1500);
+
+      // Debug: log all input types
+
+      // Email is input[type="text"], password is input[type="password"]
+      const emailInput = page.locator('input[type="text"]').first();
+      await emailInput.click({ force: true });
+      await page.waitForTimeout(300);
+      await emailInput.pressSequentially(email, { delay: 80 });
+      await page.waitForTimeout(500);
+
+      // Debug: check value was typed
+      const emailVal = await emailInput.inputValue().catch(() => 'error');
+
+      const passInput = page.locator('input[type="password"]').first();
+      await passInput.click({ force: true });
+      await page.waitForTimeout(300);
+      await passInput.pressSequentially(password, { delay: 80 });
+      await page.waitForTimeout(500);
+
+      const passVal = await passInput.inputValue().catch(() => 'error');
+
+      // Try clicking the Log In button directly
+      await page.locator('button[type="submit"]').click({ force: true });
+
+
+
+      await page.waitForTimeout(8000); // Wait longer for redirect
+      const currentUrl = page.url();
+      
+      // Debug: log what happened
+      const pageContent = await page.locator('body').innerText().catch(() => '');
+      
+      // Debug: check what fields/buttons are on page
+      const inputs = await page.locator('input').count().catch(() => 0);
+      const buttons = await page.locator('button').count().catch(() => 0);
+
+      const stillOnLogin = /login|signin|sign-in/i.test(currentUrl);
+      const bodyText = pageContent;
+      const loginError = /invalid|incorrect|wrong password|failed/i.test(bodyText);
+      components.push({ name: 'Login', status: (!stillOnLogin && !loginError) ? 'operational' : 'down', detail: loginError ? 'Login failed - check credentials' : stillOnLogin ? 'Still on login page after submit' : null });
+      if (stillOnLogin || loginError) { await context.close(); return { status: 'down', responseMs: Date.now() - start, error: 'Login failed', components }; }
+    }
+
+    const hasNav = await page.locator('nav, header, [class*="nav"], [class*="header"], [class*="menu"], [class*="sidebar"]').count().catch(() => 0);
+    components.push({ name: 'Navigation', status: hasNav > 0 ? 'operational' : 'degraded' });
+
+    const pageText = await page.locator('body').innerText().catch(() => '');
+    const errorPatterns = [/something went wrong/i, /internal server error/i, /access denied/i, /page not found/i];
+    const errorFound = errorPatterns.find(re => re.test(pageText));
+    components.push({ name: 'No errors', status: errorFound ? 'down' : 'operational', detail: errorFound ? String(errorFound) : null });
+
+    await context.close();
+    const anyDown = components.some(c => c.status === 'down');
+    const anyDegraded = components.some(c => c.status === 'degraded');
+    return { status: anyDown ? 'down' : anyDegraded ? 'degraded' : 'operational', responseMs: Date.now() - start, components };
   } catch (e) {
     await context.close().catch(() => {});
     components.push({ name: 'Page loads', status: 'down' });
@@ -207,14 +300,16 @@ async function sendAlert(project, result) {
   projects.forEach(p => console.log(`   • [${p.type.toUpperCase()}] ${p.name}`));
   console.log('');
 
-  const hasSoftr = projects.some(p => p.type === 'softr');
-  const browser  = hasSoftr ? await chromium.launch() : null;
+  const needsBrowser = projects.some(p => p.type === 'softr' || p.type === 'custom');
+  const browser  = needsBrowser ? await chromium.launch() : null;
   const results  = [];
 
   for (const project of projects) {
     process.stdout.write(`Checking ${project.name} [${project.type}]... `);
     const result = project.type === 'softr'
       ? await softrCheck(project, browser)
+      : project.type === 'custom'
+      ? await customCheck(project, browser)
       : await shopifyCheck(project);
 
     console.log(`${result.status.toUpperCase()} (${result.responseMs}ms)`);

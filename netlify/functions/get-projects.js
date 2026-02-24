@@ -23,6 +23,9 @@ exports.handler = async () => {
       intervalMins: r.fields['Check Interval (mins)'] || 15,
       alertEmail:   r.fields['Alert Email'] || '',
       id:           slugify(r.fields['Project Name']),
+      checkPage:    r.fields['Check Page'] || '',
+      loginEmail:   r.fields['Login Email'] || '',
+      loginPassword:r.fields['Login Password'] || '',
     }));
     return {
       statusCode: 200,

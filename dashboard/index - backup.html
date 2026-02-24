@@ -25,7 +25,6 @@
   --text-bright: #ede8db;
   --accent: #8fad6a;
   --softr: #6a9fd8;
-  --custom: #c47ed8;
   --shopify: #95bf47;
   --input-bg: #111410;
 }
@@ -137,7 +136,6 @@ header {
 }
 .type-badge.softr   { color:var(--softr);   border-color:rgba(106,159,216,0.3); }
 .type-badge.shopify { color:var(--shopify); border-color:rgba(149,191,71,0.3); }
-.type-badge.custom  { color:var(--custom);  border-color:rgba(196,126,216,0.3); }
 
 .status-pill {
   font-size:0.52rem; letter-spacing:0.15em; text-transform:uppercase;
@@ -173,39 +171,6 @@ header {
 /* Card admin actions */
 .card-actions { display:flex; gap:0.5rem; margin-top:0.8rem; border-top:1px solid var(--border); padding-top:0.7rem; }
 .card-actions .btn { font-size:0.55rem; padding:0.3rem 0.7rem; }
-
-/* ── Components ── */
-.components-section { margin-top: 0.8rem; border-top: 1px solid var(--border); padding-top: 0.7rem; }
-.comp-label { font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.5rem; }
-.comp-row { display: flex; justify-content: space-between; align-items: center; padding: 0.2rem 0; }
-.comp-name { font-size: 0.6rem; color: var(--text); }
-.comp-status { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.comp-status.op   { color: var(--green); }
-.comp-status.deg  { color: var(--yellow); }
-.comp-status.down { color: var(--red); }
-
-/* ── Log Modal ── */
-.log-modal {
-  background: var(--surface); border: 1px solid var(--border2);
-  padding: 2rem; width: 100%; max-width: 640px;
-  position: relative; animation: slideUp 0.25s ease;
-  max-height: 80vh; overflow-y: auto;
-}
-.log-modal-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text-bright); margin-bottom: 0.25rem; }
-.log-modal-time  { font-size: 0.58rem; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 1.5rem; }
-.log-site { margin-bottom: 1.2rem; border: 1px solid var(--border); padding: 0.9rem 1rem; }
-.log-site-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
-.log-site-name { font-size: 0.75rem; color: var(--text-bright); }
-.log-site-meta  { font-size: 0.55rem; color: var(--text-dim); margin-top: 0.15rem; }
-.log-comp-row   { display: flex; justify-content: space-between; padding: 0.2rem 0; border-top: 1px solid var(--border); }
-.log-comp-name  { font-size: 0.58rem; color: var(--text); }
-.log-comp-status { font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.log-comp-status.op   { color: var(--green); }
-.log-comp-status.deg  { color: var(--yellow); }
-.log-comp-status.down { color: var(--red); }
-.log-error { margin-top: 0.5rem; padding: 0.4rem 0.6rem; background: var(--red-glow); border: 1px solid rgba(200,90,58,0.15); font-size: 0.55rem; color: #d47060; }
-.history-table tr.clickable { cursor: pointer; }
-.history-table tr.clickable:hover td { background: var(--surface2); }
 
 /* ── Admin Login Modal ── */
 .overlay {
@@ -389,7 +354,6 @@ footer { position:relative; z-index:1; text-align:center; padding:1.5rem; font-s
   <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
   <button class="filter-btn" onclick="setFilter('softr',this)">Softr</button>
   <button class="filter-btn" onclick="setFilter('shopify',this)">Shopify</button>
-  <button class="filter-btn" onclick="setFilter('custom',this)">Custom</button>
   <button class="filter-btn" onclick="setFilter('down',this)">Issues Only</button>
 </div>
 
@@ -462,7 +426,6 @@ footer { position:relative; z-index:1; text-align:center; padding:1.5rem; font-s
           <select class="form-select" id="fType" onchange="onTypeChange()">
             <option value="softr">Softr (Magic Link)</option>
             <option value="shopify">Shopify (Storefront URL)</option>
-            <option value="custom">Custom Website (Email / Password)</option>
           </select>
         </div>
       </div>
@@ -470,24 +433,6 @@ footer { position:relative; z-index:1; text-align:center; padding:1.5rem; font-s
         <label class="form-label" id="urlLabel">Magic Link URL</label>
         <input type="text" class="form-input" id="fUrl" placeholder="https://app.softr.app/magic-authentication?magic-token=..."/>
         <div class="form-hint" id="urlHint">Paste the full magic link from your Softr app</div>
-      </div>
-      <div class="form-group" id="checkPageGroup" style="display:none">
-        <label class="form-label">Check Page <span style="color:var(--text-dim);font-weight:normal">(optional)</span></label>
-        <input type="text" class="form-input" id="fCheckPage" placeholder="/events or /bonds"/>
-        <div class="form-hint">Path to navigate after login to verify data loads (e.g. /events)</div>
-      </div>
-      <div class="form-group" id="loginCredsGroup" style="display:none">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Login Email</label>
-            <input type="email" class="form-input" id="fLoginEmail" placeholder="user@example.com"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Login Password</label>
-            <input type="password" class="form-input" id="fLoginPassword" placeholder="••••••••"/>
-          </div>
-        </div>
-        <div class="form-hint">Credentials used to log in to the custom website</div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -505,16 +450,6 @@ footer { position:relative; z-index:1; text-align:center; padding:1.5rem; font-s
         <button class="btn primary" id="submitBtn" onclick="submitProject()">Add Project →</button>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Log Detail Modal -->
-<div class="overlay hidden" id="logModal">
-  <div class="log-modal">
-    <button class="close-btn" onclick="closeLogModal()">✕</button>
-    <div class="log-modal-title">Check Details</div>
-    <div class="log-modal-time" id="logModalTime"></div>
-    <div id="logModalBody"></div>
   </div>
 </div>
 
@@ -605,8 +540,11 @@ function buildCard(r, delay) {
   const cls  = sc(r.status);
   const slow = r.responseMs > 3000;
   const bad  = r.status === 'down';
-  // Edit/Remove only shown inside admin panel
-  const adminActions = '';
+  const adminActions = adminToken
+    ? `<div class="card-actions">
+         <button class="btn" onclick="editProject(${JSON.stringify(r).replace(/"/g,'&quot;')})">✎ Edit</button>
+         <button class="btn danger" onclick="deleteProject(${r.rowIndex},'${r.name}')">✕ Remove</button>
+       </div>` : '';
   return `
   <div class="card" style="animation-delay:${delay}ms">
     <div class="card-top ${cls}"></div>
@@ -630,16 +568,8 @@ function buildCard(r, delay) {
     <div class="spark-label"><span>4-hour history</span><span style="color:var(--text-dim)">48 checks</span></div>
     <div class="sparkline">${sparkline(r.id)}</div>
     ${r.error?`<div class="card-error">⚠ ${r.error}</div>`:''}
-    ${r.components && r.components.length ? `
-    <div class="components-section">
-      <div class="comp-label">COMPONENTS</div>
-      ${r.components.map(c => `
-        <div class="comp-row">
-          <span class="comp-name">${c.name}</span>
-          <span class="comp-status ${c.status === 'operational' ? 'op' : c.status === 'degraded' ? 'deg' : 'down'}">${c.status}</span>
-        </div>`).join('')}
-    </div>` : ''}
     ${r.alertEmail?`<div class="card-alert">● Alerts → ${r.alertEmail}</div>`:''}
+    ${adminActions}
   </div>`;
 }
 
@@ -665,39 +595,20 @@ function renderCards() {
 }
 
 // ── History ───────────────────────────────────────────────────────────────────
-let historyLimit = 10;
-
 function renderHistory() {
   if(!allResults.length) return;
   document.getElementById('historyHead').innerHTML =
     '<th>Time</th>'+allResults.map(r=>`<th>${r.name}</th>`).join('');
-  
-  const recent = allHistory.slice(-historyLimit).reverse();
-  const rows = recent.map((e, i)=>{
-    const idx = allHistory.length - 1 - i;
+  const rows = allHistory.slice(-15).reverse().map(e=>{
     const cells = allResults.map(r=>{
       const found = (e.results||[]).find(x=>x.id===r.id);
       if(!found) return '<td style="color:var(--text-dim)">—</td>';
       return `<td><span class="ht-dot ${sc(found.status)}"></span>${sl(found.status)} <span style="color:var(--text-dim)">(${found.responseMs}ms)</span></td>`;
     });
-    return `<tr class="clickable" onclick="openLogModal(${idx})" title="Click to view details"><td>${fmt(e.timestamp)}</td>${cells.join('')}</tr>`;
+    return `<tr><td>${fmt(e.timestamp)}</td>${cells.join('')}</tr>`;
   });
-
-  const showMoreBtn = allHistory.length > historyLimit
-    ? `<tr><td colspan="${allResults.length+1}" style="text-align:center;padding:0.8rem 0">
-        <button class="btn" style="font-size:0.55rem" onclick="loadMoreHistory()">
-          ↓ Show more (${allHistory.length - historyLimit} older entries)
-        </button>
-       </td></tr>`
-    : '';
-
   document.getElementById('historyBody').innerHTML =
-    (rows.join('') || '<tr><td colspan="10" style="color:var(--text-dim)">No history yet.</td></tr>') + showMoreBtn;
-}
-
-function loadMoreHistory() {
-  historyLimit = Math.min(historyLimit + 20, allHistory.length);
-  renderHistory();
+    rows.join('') || '<tr><td colspan="10" style="color:var(--text-dim)">No history yet.</td></tr>';
 }
 
 // ── Admin Login ───────────────────────────────────────────────────────────────
@@ -745,7 +656,6 @@ function openAdminPanel() {
   document.getElementById('adminPanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('show');
   loadAdminProjects();
-  onTypeChange(); // Ensure Check Page field visibility is correct when panel opens
 }
 
 function closeAdminPanel() {
@@ -788,21 +698,13 @@ async function loadAdminProjects() {
 // ── Form ──────────────────────────────────────────────────────────────────────
 function onTypeChange() {
   const type = document.getElementById('fType').value;
-  if (type === 'softr') {
-    document.getElementById('urlLabel').textContent = 'Magic Link URL';
-    document.getElementById('urlHint').textContent  = 'Paste the full magic link from your Softr app';
-    document.getElementById('fUrl').placeholder     = 'https://app.softr.app/magic-authentication?magic-token=...';
-  } else if (type === 'custom') {
-    document.getElementById('urlLabel').textContent = 'Login Page URL';
-    document.getElementById('urlHint').textContent  = 'e.g. https://go.kingdomlandkids.com/login';
-    document.getElementById('fUrl').placeholder     = 'https://yoursite.com/login';
-  } else {
-    document.getElementById('urlLabel').textContent = 'Storefront URL';
-    document.getElementById('urlHint').textContent  = 'e.g. https://yourstore.myshopify.com';
-    document.getElementById('fUrl').placeholder     = 'https://yourstore.myshopify.com';
-  }
-  document.getElementById('checkPageGroup').style.display  = type === 'softr'  ? 'block' : 'none';
-  document.getElementById('loginCredsGroup').style.display = type === 'custom' ? 'block' : 'none';
+  document.getElementById('urlLabel').textContent = type==='softr' ? 'Magic Link URL' : 'Storefront URL';
+  document.getElementById('urlHint').textContent  = type==='softr'
+    ? 'Paste the full magic link from your Softr app'
+    : 'e.g. https://yourstore.myshopify.com';
+  document.getElementById('fUrl').placeholder = type==='softr'
+    ? 'https://app.softr.app/magic-authentication?magic-token=...'
+    : 'https://yourstore.myshopify.com';
 }
 
 function fillEditForm(p) {
@@ -811,11 +713,8 @@ function fillEditForm(p) {
   document.getElementById('fName').value     = p.name;
   document.getElementById('fType').value     = p.type;
   document.getElementById('fUrl').value      = p.url;
-  document.getElementById('fInterval').value   = p.intervalMins;
-  document.getElementById('fEmail').value      = p.alertEmail || '';
-  document.getElementById('fCheckPage').value     = p.checkPage || '';
-  document.getElementById('fLoginEmail').value    = p.loginEmail || '';
-  document.getElementById('fLoginPassword').value = p.loginPassword || '';
+  document.getElementById('fInterval').value = p.intervalMins;
+  document.getElementById('fEmail').value    = p.alertEmail || '';
   document.getElementById('submitBtn').textContent = 'Save Changes →';
   document.getElementById('formTitle').textContent = 'EDITING PROJECT';
   document.getElementById('formSectionTitle').textContent = 'Edit Project';
@@ -829,11 +728,8 @@ function resetForm() {
   document.getElementById('fName').value     = '';
   document.getElementById('fType').value     = 'softr';
   document.getElementById('fUrl').value      = '';
-  document.getElementById('fInterval').value   = '15';
-  document.getElementById('fEmail').value      = '';
-  document.getElementById('fCheckPage').value     = '';
-  document.getElementById('fLoginEmail').value    = '';
-  document.getElementById('fLoginPassword').value = '';
+  document.getElementById('fInterval').value = '15';
+  document.getElementById('fEmail').value    = '';
   document.getElementById('formError').textContent = '';
   document.getElementById('submitBtn').textContent = 'Add Project →';
   document.getElementById('formTitle').textContent = 'NEW PROJECT';
@@ -845,12 +741,9 @@ async function submitProject() {
   const name     = document.getElementById('fName').value.trim();
   const type     = document.getElementById('fType').value;
   const url      = document.getElementById('fUrl').value.trim();
-  const interval   = parseInt(document.getElementById('fInterval').value) || 15;
-  const email      = document.getElementById('fEmail').value.trim();
-  const checkPage     = document.getElementById('fCheckPage').value.trim();
-  const loginEmail    = document.getElementById('fLoginEmail').value.trim();
-  const loginPassword = document.getElementById('fLoginPassword').value.trim();
-  const errEl         = document.getElementById('formError');
+  const interval = parseInt(document.getElementById('fInterval').value) || 15;
+  const email    = document.getElementById('fEmail').value.trim();
+  const errEl    = document.getElementById('formError');
 
   if(!name || !url) { errEl.textContent='Name and URL are required.'; return; }
   errEl.textContent = '';
@@ -861,8 +754,8 @@ async function submitProject() {
 
   try {
     const endpoint = editMode ? '/.netlify/functions/update-project' : '/.netlify/functions/add-project';
-    const body = { name, type, url, intervalMins: interval, alertEmail: email, checkPage, loginEmail, loginPassword };
-    if(editMode) body.airtableId = document.getElementById('editAirtableId').value;
+    const body = { name, type, url, intervalMins: interval, alertEmail: email };
+    if(editMode) body.rowIndex = parseInt(document.getElementById('editAirtableId').value);
 
     const res  = await fetch(endpoint, {
       method:'POST',
@@ -906,59 +799,9 @@ function editProject(r) {
   fillEditForm(r);
 }
 
-// ── Log Modal ─────────────────────────────────────────────────────────────────
-function openLogModal(idx) {
-  const entry = allHistory[idx];
-  if (!entry) return;
-
-  document.getElementById('logModalTime').textContent = fmt(entry.timestamp);
-
-  const body = (entry.results || []).map(r => {
-    const cls = sc(r.status);
-    const slow = r.responseMs > 3000;
-    const compRows = (r.components || []).map(c => `
-      <div class="log-comp-row">
-        <span class="log-comp-name">${c.name}</span>
-        <span class="log-comp-status ${sc(c.status)}">${c.status}</span>
-      </div>`).join('');
-
-    const errorBlock = r.error
-      ? `<div class="log-error">⚠ ${r.error}</div>` : '';
-
-    return `
-    <div class="log-site">
-      <div class="log-site-header">
-        <div>
-          <div class="log-site-name">${r.name}</div>
-          <div class="log-site-meta">${r.url || ''}</div>
-        </div>
-        <div>
-          <span class="status-pill ${cls}">${sl(r.status)}</span>
-          <span style="font-size:0.55rem;color:${slow?'var(--yellow)':'var(--text-dim)'};margin-left:0.5rem">${r.responseMs}ms</span>
-        </div>
-      </div>
-      ${compRows}
-      ${errorBlock}
-    </div>`;
-  }).join('');
-
-  document.getElementById('logModalBody').innerHTML = body || '<div style="color:var(--text-dim);font-size:0.65rem">No details available.</div>';
-  document.getElementById('logModal').classList.remove('hidden');
-}
-
-function closeLogModal() {
-  document.getElementById('logModal').classList.add('hidden');
-}
-
-// Close log modal on overlay click
-document.getElementById('logModal').addEventListener('click', function(e) {
-  if (e.target === this) closeLogModal();
-});
-
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadStatus();
 setInterval(loadStatus, 5 * 60 * 1000);
-onTypeChange(); // Show/hide Check Page field based on default type on page load
 </script>
 </body>
 </html>
