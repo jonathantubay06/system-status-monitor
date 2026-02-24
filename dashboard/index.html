@@ -489,15 +489,9 @@ footer { position:relative; z-index:1; text-align:center; padding:1.5rem; font-s
         </div>
         <div class="form-hint">Credentials used to log in to the custom website</div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Check Every (mins)</label>
-          <input type="number" class="form-input" id="fInterval" value="15" min="5" max="60"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Alert Email</label>
-          <input type="email" class="form-input" id="fEmail" placeholder="you@email.com"/>
-        </div>
+      <div class="form-group">
+        <label class="form-label">Alert Email</label>
+        <input type="email" class="form-input" id="fEmail" placeholder="you@email.com"/>
       </div>
       <div class="form-error" id="formError"></div>
       <div class="form-actions">
@@ -603,7 +597,7 @@ async function loadStatus() {
 // ── Cards ─────────────────────────────────────────────────────────────────────
 function buildCard(r, delay) {
   const cls  = sc(r.status);
-  const slow = r.responseMs > 25000;
+  const slow = r.responseMs > 3000;
   const bad  = r.status === 'down';
   // Edit/Remove only shown inside admin panel
   const adminActions = '';
@@ -619,7 +613,7 @@ function buildCard(r, delay) {
         <div class="card-url">${maskUrl(r.url)}</div>
         <div class="card-meta" style="margin-top:0.25rem">
           <div class="status-pill ${cls}">${sl(r.status)}</div>
-          <span style="font-size:0.53rem;color:var(--text-dim)">every ${r.intervalMins}min</span>
+          <span style="font-size:0.53rem;color:var(--text-dim)">every 5min</span>
         </div>
       </div>
     </div>
@@ -772,7 +766,7 @@ async function loadAdminProjects() {
         <div class="api-dot ${dotCls}"></div>
         <div class="api-info">
           <div class="api-name">${p.name}</div>
-          <div class="api-meta">${p.type} · every ${p.intervalMins}min${p.alertEmail?' · '+p.alertEmail:''}</div>
+          <div class="api-meta">${p.type} · every 5min${p.alertEmail?' · '+p.alertEmail:''}</div>
         </div>
         <div class="api-actions">
           <button class="icon-btn edit-btn" title="Edit" onclick='fillEditForm(${JSON.stringify(p)})'>✎</button>
@@ -811,7 +805,6 @@ function fillEditForm(p) {
   document.getElementById('fName').value     = p.name;
   document.getElementById('fType').value     = p.type;
   document.getElementById('fUrl').value      = p.url;
-  document.getElementById('fInterval').value   = p.intervalMins;
   document.getElementById('fEmail').value      = p.alertEmail || '';
   document.getElementById('fCheckPage').value     = p.checkPage || '';
   document.getElementById('fLoginEmail').value    = p.loginEmail || '';
@@ -829,7 +822,6 @@ function resetForm() {
   document.getElementById('fName').value     = '';
   document.getElementById('fType').value     = 'softr';
   document.getElementById('fUrl').value      = '';
-  document.getElementById('fInterval').value   = '15';
   document.getElementById('fEmail').value      = '';
   document.getElementById('fCheckPage').value     = '';
   document.getElementById('fLoginEmail').value    = '';
@@ -845,12 +837,11 @@ async function submitProject() {
   const name     = document.getElementById('fName').value.trim();
   const type     = document.getElementById('fType').value;
   const url      = document.getElementById('fUrl').value.trim();
-  const interval   = parseInt(document.getElementById('fInterval').value) || 15;
   const email      = document.getElementById('fEmail').value.trim();
   const checkPage     = document.getElementById('fCheckPage').value.trim();
   const loginEmail    = document.getElementById('fLoginEmail').value.trim();
   const loginPassword = document.getElementById('fLoginPassword').value.trim();
-  const errEl         = document.getElementById('formError');
+  const errEl      = document.getElementById('formError');
 
   if(!name || !url) { errEl.textContent='Name and URL are required.'; return; }
   errEl.textContent = '';
@@ -861,7 +852,7 @@ async function submitProject() {
 
   try {
     const endpoint = editMode ? '/.netlify/functions/update-project' : '/.netlify/functions/add-project';
-    const body = { name, type, url, intervalMins: interval, alertEmail: email, checkPage, loginEmail, loginPassword };
+    const body = { name, type, url, alertEmail: email, checkPage, loginEmail, loginPassword };
     if(editMode) body.airtableId = document.getElementById('editAirtableId').value;
 
     const res  = await fetch(endpoint, {
@@ -915,7 +906,7 @@ function openLogModal(idx) {
 
   const body = (entry.results || []).map(r => {
     const cls = sc(r.status);
-    const slow = r.responseMs > 25000;
+    const slow = r.responseMs > 3000;
     const compRows = (r.components || []).map(c => `
       <div class="log-comp-row">
         <span class="log-comp-name">${c.name}</span>

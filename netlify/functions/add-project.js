@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     const body = JSON.parse(event.body||'{}');
     if (body.__dryRun) return { statusCode:200, headers:ch(), body:JSON.stringify({ ok:true }) };
 
-    const { name, type, url, intervalMins, alertEmail, checkPage, loginEmail, loginPassword } = body;
+    const { name, type, url, alertEmail, checkPage, loginEmail, loginPassword } = body;
     if (!name||!type||!url) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'name, type and url required' }) };
 
     const res = await fetch(BASE_URL, {
@@ -26,7 +26,6 @@ exports.handler = async (event) => {
       headers: { Authorization:`Bearer ${API_TOKEN}`, 'Content-Type':'application/json' },
       body: JSON.stringify({ records:[{ fields:{
         'Project Name': name, 'Type': type, 'URL': url,
-        'Check Interval (mins)': Number(intervalMins)||15,
         'Alert Email': alertEmail||'',
         'Check Page': checkPage||'',
         'Login Email': loginEmail||'',

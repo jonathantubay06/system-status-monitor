@@ -20,7 +20,6 @@ exports.handler = async () => {
       name:         r.fields['Project Name'] || '',
       type:         (r.fields['Type']||'shopify').toLowerCase(),
       url:          r.fields['URL'] || '',
-      intervalMins: r.fields['Check Interval (mins)'] || 15,
       alertEmail:   r.fields['Alert Email'] || '',
       id:           slugify(r.fields['Project Name']),
       checkPage:    r.fields['Check Page'] || '',
