@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-24T09:08:29.519Z",
+  "updatedAt": "2026-02-24T10:09:15.641Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,9 +11,9 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T09:07:00.299Z",
+      "checkedAt": "2026-02-24T10:08:42.479Z",
       "status": "down",
-      "responseMs": 69204,
+      "responseMs": 69215,
       "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
@@ -40,9 +40,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T09:07:01.473Z",
+      "checkedAt": "2026-02-24T10:08:43.399Z",
       "status": "operational",
-      "responseMs": 1173,
+      "responseMs": 919,
       "httpStatus": 200,
       "components": [
         {
@@ -81,10 +81,11 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T09:08:10.897Z",
-      "status": "down",
-      "responseMs": 69424,
-      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://gainsurance.softr.app/trustee-bonds\", waiting until \"domcontentloaded\"\n",
+      "checkedAt": "2026-02-24T10:08:57.689Z",
+      "status": "operational",
+      "responseMs": 14290,
+      "httpStatus": 200,
+      "pageTitle": "Trustee Bonds",
       "components": [
         {
           "name": "Page loads",
@@ -95,8 +96,18 @@
           "status": "operational"
         },
         {
-          "name": "Page loads",
-          "status": "down"
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "Content detected"
         }
       ]
     },
@@ -110,9 +121,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-24T09:08:28.399Z",
+      "checkedAt": "2026-02-24T10:09:15.115Z",
       "status": "operational",
-      "responseMs": 17501,
+      "responseMs": 17426,
       "components": [
         {
           "name": "Page loads",
@@ -144,9 +155,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T09:08:29.494Z",
+      "checkedAt": "2026-02-24T10:09:15.605Z",
       "status": "operational",
-      "responseMs": 1095,
+      "responseMs": 490,
       "httpStatus": 200,
       "components": [
         {
