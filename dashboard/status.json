@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-24T02:03:39.708Z",
+  "updatedAt": "2026-02-24T02:18:40.103Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -12,11 +12,10 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T02:03:06.704Z",
-      "status": "operational",
-      "responseMs": 14804,
-      "httpStatus": 200,
-      "pageTitle": "Events",
+      "checkedAt": "2026-02-24T02:18:06.405Z",
+      "status": "down",
+      "responseMs": 69105,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -27,18 +26,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "10 record(s) found"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -53,9 +42,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T02:03:07.835Z",
+      "checkedAt": "2026-02-24T02:18:07.478Z",
       "status": "operational",
-      "responseMs": 1130,
+      "responseMs": 1072,
       "httpStatus": 200,
       "components": [
         {
@@ -95,9 +84,9 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-24T02:03:22.219Z",
+      "checkedAt": "2026-02-24T02:18:22.116Z",
       "status": "operational",
-      "responseMs": 14384,
+      "responseMs": 14638,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -136,9 +125,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-24T02:03:39.683Z",
+      "checkedAt": "2026-02-24T02:18:39.542Z",
       "status": "operational",
-      "responseMs": 17463,
+      "responseMs": 17426,
       "components": [
         {
           "name": "Page loads",
@@ -157,6 +146,48 @@
           "name": "No errors",
           "status": "operational",
           "detail": null
+        }
+      ]
+    },
+    {
+      "airtableId": "recZmxIPvPMwHPcq8",
+      "name": "Tool Mart, Inc",
+      "type": "shopify",
+      "url": "https://www.toolmarthou.com/",
+      "intervalMins": 2,
+      "alertEmail": "jonathantubay@ymail.com",
+      "id": "tool-mart-inc",
+      "checkPage": "",
+      "loginEmail": "",
+      "loginPassword": "",
+      "checkedAt": "2026-02-24T02:18:40.079Z",
+      "status": "operational",
+      "responseMs": 537,
+      "httpStatus": 200,
+      "components": [
+        {
+          "name": "Page loads",
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     }
