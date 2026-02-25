@@ -674,8 +674,8 @@ function showToast(msg, isErr=false) {
 async function loadStatus() {
   try {
     const [sRes, hRes] = await Promise.all([
-      fetch('./status.json?t='+Date.now()),
-      fetch('./history.json?t='+Date.now()).catch(()=>({ok:false})),
+      fetch('https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/status.json?t='+Date.now()),
+      fetch('https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/history.json?t='+Date.now()).catch(()=>({ok:false})),
     ]);
     if(!sRes.ok) throw new Error('status.json not found — run monitor first');
     const status = await sRes.json();
