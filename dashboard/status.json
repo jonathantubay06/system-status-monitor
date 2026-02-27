@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-27T03:38:35.612Z",
+  "updatedAt": "2026-02-27T05:08:04.131Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,11 +11,10 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T03:38:02.099Z",
-      "status": "operational",
-      "responseMs": 14369,
-      "httpStatus": 200,
-      "pageTitle": "Events",
+      "checkedAt": "2026-02-27T05:06:28.077Z",
+      "status": "down",
+      "responseMs": 69094,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -26,18 +25,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "10 record(s) found"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -51,9 +40,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T03:38:03.041Z",
+      "checkedAt": "2026-02-27T05:06:28.966Z",
       "status": "operational",
-      "responseMs": 942,
+      "responseMs": 888,
       "httpStatus": 200,
       "components": [
         {
@@ -92,11 +81,10 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T03:38:17.173Z",
-      "status": "operational",
-      "responseMs": 14131,
-      "httpStatus": 200,
-      "pageTitle": "Trustee Bonds",
+      "checkedAt": "2026-02-27T05:07:38.018Z",
+      "status": "down",
+      "responseMs": 69051,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://gainsurance.softr.app/trustee-bonds\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -107,18 +95,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "Content detected"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -132,9 +110,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-27T03:38:34.650Z",
+      "checkedAt": "2026-02-27T05:07:59.585Z",
       "status": "operational",
-      "responseMs": 17477,
+      "responseMs": 21567,
       "components": [
         {
           "name": "Page loads",
@@ -166,9 +144,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T03:38:35.587Z",
+      "checkedAt": "2026-02-27T05:08:04.105Z",
       "status": "operational",
-      "responseMs": 937,
+      "responseMs": 4520,
       "httpStatus": 200,
       "components": [
         {
