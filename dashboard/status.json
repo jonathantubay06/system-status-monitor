@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-27T09:59:55.918Z",
+  "updatedAt": "2026-02-27T10:35:57.104Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,9 +11,9 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T09:59:23.065Z",
+      "checkedAt": "2026-02-27T10:35:20.033Z",
       "status": "down",
-      "responseMs": 69452,
+      "responseMs": 69091,
       "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
@@ -40,9 +40,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T09:59:23.439Z",
+      "checkedAt": "2026-02-27T10:35:20.831Z",
       "status": "operational",
-      "responseMs": 374,
+      "responseMs": 797,
       "httpStatus": 200,
       "components": [
         {
@@ -81,9 +81,9 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T09:59:38.150Z",
+      "checkedAt": "2026-02-27T10:35:35.820Z",
       "status": "operational",
-      "responseMs": 14711,
+      "responseMs": 14989,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -121,9 +121,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-27T09:59:55.544Z",
+      "checkedAt": "2026-02-27T10:35:56.336Z",
       "status": "operational",
-      "responseMs": 17393,
+      "responseMs": 20516,
       "components": [
         {
           "name": "Page loads",
@@ -155,9 +155,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-27T09:59:55.890Z",
+      "checkedAt": "2026-02-27T10:35:57.078Z",
       "status": "operational",
-      "responseMs": 345,
+      "responseMs": 742,
       "httpStatus": 200,
       "components": [
         {
