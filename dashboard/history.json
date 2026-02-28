@@ -28496,5 +28496,195 @@
         ]
       }
     ]
+  },
+  {
+    "timestamp": "2026-02-28T15:36:38.377Z",
+    "results": [
+      {
+        "airtableId": "recBJcopy2vZyLcHx",
+        "name": "Jordan Ranch Portal",
+        "type": "softr",
+        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "jordan-ranch-portal",
+        "checkPage": "/events",
+        "loginEmail": "",
+        "loginPassword": "",
+        "checkedAt": "2026-02-28T15:36:04.358Z",
+        "status": "down",
+        "responseMs": 69668,
+        "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Page loads",
+            "status": "down"
+          }
+        ]
+      },
+      {
+        "airtableId": "recUS1iqlfWojro2l",
+        "name": "Kingdomlandkids",
+        "type": "shopify",
+        "url": "https://kingdomlandkids.com/",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomlandkids",
+        "checkPage": "",
+        "loginEmail": "",
+        "loginPassword": "",
+        "checkedAt": "2026-02-28T15:36:05.309Z",
+        "status": "operational",
+        "responseMs": 951,
+        "httpStatus": 200,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      },
+      {
+        "airtableId": "rec9nsO0vYvGzSYrI",
+        "name": "George Adams Insurance (GAI)",
+        "type": "softr",
+        "url": "https://gainsurance.softr.app/magic-authentication?magic-token=710a0d684d5a40c6a9c6e192a1b7f5cc",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "george-adams-insurance-gai",
+        "checkPage": "/trustee-bonds",
+        "loginEmail": "",
+        "loginPassword": "",
+        "checkedAt": "2026-02-28T15:36:19.867Z",
+        "status": "operational",
+        "responseMs": 14558,
+        "httpStatus": 200,
+        "pageTitle": "Trustee Bonds",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "Content detected"
+          }
+        ]
+      },
+      {
+        "airtableId": "recPyNs4klp4TqijD",
+        "name": "Kingdomland Playwatch",
+        "type": "custom",
+        "url": "https://go.kingdomlandkids.com/login",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomland-playwatch",
+        "checkPage": "",
+        "loginEmail": "jonathantubay@ymail.com",
+        "loginPassword": "!J0nthan2025",
+        "checkedAt": "2026-02-28T15:36:37.392Z",
+        "status": "operational",
+        "responseMs": 17524,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          }
+        ]
+      },
+      {
+        "airtableId": "recZmxIPvPMwHPcq8",
+        "name": "Tool Mart, Inc",
+        "type": "shopify",
+        "url": "https://www.toolmarthou.com/",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "tool-mart-inc",
+        "checkPage": "",
+        "loginEmail": "",
+        "loginPassword": "",
+        "checkedAt": "2026-02-28T15:36:38.351Z",
+        "status": "operational",
+        "responseMs": 959,
+        "httpStatus": 200,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      }
+    ]
   }
 ]
