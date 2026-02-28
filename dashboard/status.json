@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-28T17:52:46.060Z",
+  "updatedAt": "2026-02-28T18:20:24.293Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,33 +11,14 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T17:52:13.442Z",
-      "status": "operational",
-      "responseMs": 14230,
-      "httpStatus": 200,
-      "pageTitle": "Events",
+      "checkedAt": "2026-02-28T18:19:07.688Z",
+      "status": "down",
+      "responseMs": 60049,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Login",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "10 record(s) found"
+          "status": "down"
         }
       ]
     },
@@ -51,9 +32,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T17:52:13.603Z",
+      "checkedAt": "2026-02-28T18:19:08.319Z",
       "status": "operational",
-      "responseMs": 160,
+      "responseMs": 629,
       "httpStatus": 200,
       "components": [
         {
@@ -92,9 +73,9 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T17:52:27.757Z",
+      "checkedAt": "2026-02-28T18:20:06.451Z",
       "status": "operational",
-      "responseMs": 14153,
+      "responseMs": 58132,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -132,9 +113,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-28T17:52:45.237Z",
+      "checkedAt": "2026-02-28T18:20:23.803Z",
       "status": "operational",
-      "responseMs": 17479,
+      "responseMs": 17351,
       "components": [
         {
           "name": "Page loads",
@@ -166,9 +147,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T17:52:46.035Z",
+      "checkedAt": "2026-02-28T18:20:24.272Z",
       "status": "operational",
-      "responseMs": 796,
+      "responseMs": 469,
       "httpStatus": 200,
       "components": [
         {
