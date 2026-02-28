@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-28T11:31:24.960Z",
+  "updatedAt": "2026-02-28T11:52:01.025Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,11 +11,10 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T11:30:52.056Z",
-      "status": "operational",
-      "responseMs": 14308,
-      "httpStatus": 200,
-      "pageTitle": "Events",
+      "checkedAt": "2026-02-28T11:51:27.519Z",
+      "status": "down",
+      "responseMs": 69149,
+      "error": "page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://jordanranch.softr.app/events\", waiting until \"domcontentloaded\"\n",
       "components": [
         {
           "name": "Page loads",
@@ -26,18 +25,8 @@
           "status": "operational"
         },
         {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Data loads",
-          "status": "operational",
-          "detail": "10 record(s) found"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -51,9 +40,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T11:30:52.788Z",
+      "checkedAt": "2026-02-28T11:51:28.267Z",
       "status": "operational",
-      "responseMs": 732,
+      "responseMs": 746,
       "httpStatus": 200,
       "components": [
         {
@@ -92,9 +81,9 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T11:31:06.974Z",
+      "checkedAt": "2026-02-28T11:51:42.876Z",
       "status": "operational",
-      "responseMs": 14186,
+      "responseMs": 14608,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -132,9 +121,9 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-02-28T11:31:24.497Z",
+      "checkedAt": "2026-02-28T11:52:00.435Z",
       "status": "operational",
-      "responseMs": 17520,
+      "responseMs": 17559,
       "components": [
         {
           "name": "Page loads",
@@ -166,9 +155,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-02-28T11:31:24.928Z",
+      "checkedAt": "2026-02-28T11:52:00.984Z",
       "status": "operational",
-      "responseMs": 431,
+      "responseMs": 549,
       "httpStatus": 200,
       "components": [
         {
