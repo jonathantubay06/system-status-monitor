@@ -185,7 +185,7 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
   <!-- Body message -->
   ${bodyMessage ? `
   <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
-    <div style="font-size:15px;color:${textMain};line-height:1.7;white-space:pre-line">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    <div style="font-size:15px;color:${textMain};line-height:1.7">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
     <hr style="border:none;border-top:1px solid ${borderClr};margin:24px 0 0"/>
   </td></tr>` : ''}
 
