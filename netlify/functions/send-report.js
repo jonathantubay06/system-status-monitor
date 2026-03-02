@@ -182,13 +182,6 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
     </tr></table>
   </td></tr>
 
-  <!-- Body message -->
-  ${bodyMessage ? `
-  <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
-    <div style="font-size:15px;color:${textMain};line-height:1.7">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
-    <hr style="border:none;border-top:1px solid ${borderClr};margin:24px 0 0"/>
-  </td></tr>` : ''}
-
   <!-- Big stat numbers -->
   <tr><td style="background:${cardBg};padding:32px 40px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
     <table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>
@@ -258,6 +251,13 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
 
   <!-- Incidents -->
   ${incidentSection}
+
+  <!-- Body message -->
+  ${bodyMessage ? `
+  <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+    <hr style="border:none;border-top:1px solid ${borderClr};margin:0 0 24px"/>
+    <div style="font-size:15px;color:${textMain};line-height:1.7">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
+  </td></tr>` : ''}
 
   <!-- Footer -->
   <tr><td style="background:${cardBg};padding:24px 40px;border-top:1px solid ${borderClr};border-left:1px solid ${borderClr};border-right:1px solid ${borderClr};border-bottom:1px solid ${borderClr};border-radius:0 0 12px 12px">
