@@ -6,6 +6,7 @@ const path = require('path');
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const AIRTABLE_TOKEN   = process.env.AIRTABLE_TOKEN;
 const TABLE            = 'Projects';
+const MAX_RETRIES      = 2;
 
 function slugify(str) {
   return (str || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -29,6 +30,35 @@ async function fetchProjects() {
   })).filter(p => p.name && p.url);
 }
 
+// ── HTTP pre-check (quick ping to verify domain is reachable) ────────────────
+async function httpPreCheck(url) {
+  try {
+    const origin = new URL(url).origin;
+    const res = await fetch(origin, {
+      signal: AbortSignal.timeout(10000),
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; HealthMonitor/1.0)' },
+      redirect: 'follow',
+    });
+    return { reachable: true, status: res.status };
+  } catch {
+    return { reachable: false, status: 0 };
+  }
+}
+
+// ── Retry wrapper ────────────────────────────────────────────────────────────
+async function withRetry(fn, label, retries = MAX_RETRIES) {
+  let lastResult;
+  for (let attempt = 1; attempt <= retries + 1; attempt++) {
+    lastResult = await fn();
+    if (lastResult.status !== 'down') return lastResult;
+    if (attempt <= retries) {
+      console.log(`  ↻ Retry ${attempt}/${retries} for ${label}...`);
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
+  return lastResult;
+}
+
 // ── Shopify deep check ────────────────────────────────────────────────────────
 async function shopifyCheck(project) {
   const start = Date.now();
@@ -48,7 +78,6 @@ async function shopifyCheck(project) {
 
     const html = await res.text();
 
-    // Check key Shopify components via HTML content
     const hasHeader    = /<header|class="header|id="header/i.test(html);
     const hasNav       = /<nav|class="nav|role="navigation/i.test(html);
     const hasProducts  = /product|collection|\.product-/i.test(html);
@@ -88,15 +117,19 @@ async function softrCheck(project, browser) {
   const components = [];
 
   try {
-    // Step 1: Visit magic link — logs in and redirects to app root
+    // Step 1: Visit magic link
     const response = await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await page.waitForTimeout(8000); // Give Softr more time to process auth + redirect
 
-    // Page loads check
+    // Smart wait: wait for Softr app shell to appear instead of fixed 8s
+    await page.waitForSelector('nav, header, [class*="header"], [class*="sf-"], [class*="softr"]', { timeout: 15000 })
+      .catch(() => {});
+    // Brief extra wait for auth redirect to settle
+    await page.waitForTimeout(2000);
+
     const httpOk = response?.status() < 400;
     components.push({ name: 'Page loads', status: httpOk ? 'operational' : 'degraded' });
 
-    // Check if magic link itself failed (expired/invalid)
+    // Check if magic link failed
     const loginBodyText = await page.locator('body').innerText().catch(() => '');
     const magicLinkFailed = /magic link is no longer valid|link has expired|invalid link/i.test(loginBodyText);
     if (magicLinkFailed) {
@@ -108,14 +141,17 @@ async function softrCheck(project, browser) {
     }
     components.push({ name: 'Login', status: 'operational' });
 
-    // Step 2: Navigate to Check Page in same session (session still active after magic link)
-    const baseUrl = new URL(project.url).origin; // e.g. https://gainsurance.softr.app
+    // Step 2: Navigate to Check Page
+    const baseUrl = new URL(project.url).origin;
     const checkPath = project.checkPage || '/';
     const checkUrl = `${baseUrl}${checkPath}`;
 
     if (project.checkPage) {
       await page.goto(checkUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      await page.waitForTimeout(5000); // Give Softr more time to render data
+      // Smart wait: wait for data content instead of fixed 5s
+      await page.waitForSelector('table, [class*="list-item"], [class*="record"], [class*="sf-list"], [class*="data"]', { timeout: 12000 })
+        .catch(() => {});
+      await page.waitForTimeout(1000);
     }
 
     const pageTitle = await page.title();
@@ -125,7 +161,7 @@ async function softrCheck(project, browser) {
     const hasNav = await page.locator('nav, header, [class*="nav"], [class*="header"], [class*="menu"]').count().catch(() => 0);
     components.push({ name: 'Navigation', status: hasNav > 0 ? 'operational' : 'degraded' });
 
-    // Check for Softr error popups (invalid permissions, database missing, etc.)
+    // Check for Softr error popups
     const softrErrors = [
       /invalid permissions/i,
       /database is missing/i,
@@ -142,23 +178,20 @@ async function softrCheck(project, browser) {
 
     // Step 3: Check if data table/list has actual rows
     if (project.checkPage) {
-      // Softr renders data in various ways — check all common patterns
       const rowCount = await page.locator([
-        'table tbody tr',           // standard HTML table
-        'table tr + tr',            // table rows after header
-        '[class*="list-item"]',     // list blocks
-        '[class*="record-row"]',    // record rows
-        '[class*="sf-list"] > *',   // Softr list
-        '[class*="records"] > *',   // records container
-        '[class*="table-row"]',     // table row class
-        '[class*="grid-row"]',      // grid row
-        '[class*="data-row"]',      // data row
-        'tbody tr',                 // any tbody rows
+        'table tbody tr',
+        'table tr + tr',
+        '[class*="list-item"]',
+        '[class*="record-row"]',
+        '[class*="sf-list"] > *',
+        '[class*="records"] > *',
+        '[class*="table-row"]',
+        '[class*="grid-row"]',
+        '[class*="data-row"]',
+        'tbody tr',
       ].join(', ')).count().catch(() => 0);
 
-      // Also check if page has meaningful text content beyond just headers
       const pageText = await page.locator('body').innerText().catch(() => '');
-      // Use low threshold - if page has any reasonable content, data is loading
       const hasMeaningfulContent = pageText.replace(/\s+/g, ' ').trim().length > 100;
 
       components.push({
@@ -206,21 +239,14 @@ async function customCheck(project, browser) {
     if (!email || !password) {
       components.push({ name: 'Login', status: 'degraded', detail: 'No credentials configured' });
     } else {
-      // Wait for any input to appear
       await page.waitForSelector('input', { timeout: 15000 }).catch(() => {});
       await page.waitForTimeout(1500);
 
-      // Debug: log all input types
-
-      // Email is input[type="text"], password is input[type="password"]
       const emailInput = page.locator('input[type="text"]').first();
       await emailInput.click({ force: true });
       await page.waitForTimeout(300);
       await emailInput.pressSequentially(email, { delay: 80 });
       await page.waitForTimeout(500);
-
-      // Debug: check value was typed
-      const emailVal = await emailInput.inputValue().catch(() => 'error');
 
       const passInput = page.locator('input[type="password"]').first();
       await passInput.click({ force: true });
@@ -228,22 +254,12 @@ async function customCheck(project, browser) {
       await passInput.pressSequentially(password, { delay: 80 });
       await page.waitForTimeout(500);
 
-      const passVal = await passInput.inputValue().catch(() => 'error');
-
-      // Try clicking the Log In button directly
       await page.locator('button[type="submit"]').click({ force: true });
 
-
-
-      await page.waitForTimeout(8000); // Wait longer for redirect
+      await page.waitForTimeout(8000);
       const currentUrl = page.url();
-      
-      // Debug: log what happened
+
       const pageContent = await page.locator('body').innerText().catch(() => '');
-      
-      // Debug: check what fields/buttons are on page
-      const inputs = await page.locator('input').count().catch(() => 0);
-      const buttons = await page.locator('button').count().catch(() => 0);
 
       const stillOnLogin = /login|signin|sign-in/i.test(currentUrl);
       const bodyText = pageContent;
@@ -276,7 +292,7 @@ async function sendAlert(project, result) {
   if (!process.env.SENDGRID_API_KEY || !project.alertEmail) return;
   const failedComponents = (result.components || []).filter(c => c.status !== 'operational');
   const compText = failedComponents.length
-    ? `\nFailed components:\n${failedComponents.map(c => `  ✗ ${c.name}`).join('\n')}`
+    ? `\nFailed components:\n${failedComponents.map(c => `  - ${c.name}: ${c.detail || c.status}`).join('\n')}`
     : '';
   await fetch('https://api.sendgrid.com/v3/mail/send', {
     method: 'POST',
@@ -284,20 +300,28 @@ async function sendAlert(project, result) {
     body: JSON.stringify({
       personalizations: [{ to: [{ email: project.alertEmail }] }],
       from: { email: process.env.ALERT_FROM_EMAIL || 'monitor@noreply.com' },
-      subject: `🚨 ${project.name} is ${result.status.toUpperCase()}`,
-      content: [{ type: 'text/plain', value: `${project.name} is ${result.status.toUpperCase()}\nURL: ${project.url}\nResponse: ${result.responseMs}ms${compText}\n${result.error ? 'Error: '+result.error : ''}\nChecked: ${new Date().toUTCString()}` }],
+      subject: `${project.name} is ${result.status.toUpperCase()}`,
+      content: [{ type: 'text/plain', value: `${project.name} is ${result.status.toUpperCase()}\nURL: ${new URL(project.url).origin}\nResponse: ${result.responseMs}ms${compText}\n${result.error ? 'Error: '+result.error : ''}\nChecked: ${new Date().toUTCString()}\n\nNote: This alert was sent after ${MAX_RETRIES + 1} consecutive check attempts and confirmed the issue persists.` }],
     }),
   }).catch(e => console.error('Email alert failed:', e.message));
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 (async () => {
-  console.log('🚀 System Status Health Monitor\n');
-  console.log('📋 Loading projects from Airtable...');
+  console.log('System Status Health Monitor v4.1\n');
+  console.log('Loading projects from Airtable...');
   const projects = await fetchProjects();
   console.log(`   Found ${projects.length} project(s):`);
-  projects.forEach(p => console.log(`   • [${p.type.toUpperCase()}] ${p.name}`));
+  projects.forEach(p => console.log(`   - [${p.type.toUpperCase()}] ${p.name}`));
   console.log('');
+
+  // Load previous status for confirmed-down logic
+  const outDir = path.join(__dirname, '..', 'dashboard');
+  const statusFile = path.join(outDir, 'status.json');
+  let prevResults = [];
+  if (fs.existsSync(statusFile)) {
+    try { prevResults = JSON.parse(fs.readFileSync(statusFile, 'utf8')).results || []; } catch {}
+  }
 
   const needsBrowser = projects.some(p => p.type === 'softr' || p.type === 'custom');
   const browser  = needsBrowser ? await chromium.launch() : null;
@@ -305,27 +329,56 @@ async function sendAlert(project, result) {
 
   for (const project of projects) {
     process.stdout.write(`Checking ${project.name} [${project.type}]... `);
-    const result = project.type === 'softr'
-      ? await softrCheck(project, browser)
+
+    // HTTP pre-check for browser-based checks
+    if (project.type === 'softr' || project.type === 'custom') {
+      const ping = await httpPreCheck(project.url);
+      if (!ping.reachable) {
+        console.log(`DOWN (domain unreachable)`);
+        const result = { status: 'down', responseMs: 0, error: 'Domain unreachable - server did not respond', components: [{ name: 'Page loads', status: 'down' }] };
+        results.push({ ...project, checkedAt: new Date().toISOString(), ...result });
+        continue;
+      }
+    }
+
+    // Run check with retry logic
+    const checkFn = project.type === 'softr'
+      ? () => softrCheck(project, browser)
       : project.type === 'custom'
-      ? await customCheck(project, browser)
-      : await shopifyCheck(project);
+      ? () => customCheck(project, browser)
+      : () => shopifyCheck(project);
+
+    const needsRetry = project.type === 'softr' || project.type === 'custom';
+    const result = needsRetry
+      ? await withRetry(checkFn, project.name)
+      : await checkFn();
 
     console.log(`${result.status.toUpperCase()} (${result.responseMs}ms)`);
-    if (result.error) console.log(`  ⚠ ${result.error}`);
+    if (result.error) console.log(`  ! ${result.error}`);
     if (result.components) {
       result.components.forEach(c => {
-        const icon = c.status === 'operational' ? '✓' : '✗';
-        console.log(`  ${icon} ${c.name}: ${c.status}`);
+        const icon = c.status === 'operational' ? '+' : '-';
+        console.log(`  ${icon} ${c.name}: ${c.status}${c.detail ? ' ('+c.detail+')' : ''}`);
       });
     }
-    if (result.status !== 'operational') await sendAlert(project, result);
+
+    // Confirmed-down alerting: only alert if previous check was also not operational
+    const prev = prevResults.find(r => r.id === project.id || r.name === project.name);
+    const wasDownBefore = prev && prev.status !== 'operational';
+    const isDownNow = result.status !== 'operational';
+
+    if (isDownNow && wasDownBefore) {
+      console.log(`  >> Confirmed down (2 consecutive failures) - sending alert`);
+      await sendAlert(project, result);
+    } else if (isDownNow && !wasDownBefore) {
+      console.log(`  >> First failure - will alert on next consecutive failure`);
+    }
+
     results.push({ ...project, checkedAt: new Date().toISOString(), ...result });
   }
 
   if (browser) await browser.close();
 
-  const outDir = path.join(__dirname, '..', 'dashboard');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'status.json'), JSON.stringify({ updatedAt: new Date().toISOString(), results }, null, 2));
 
@@ -338,13 +391,20 @@ async function sendAlert(project, result) {
 
   const down = results.filter(r => r.status === 'down');
   if (down.length && process.env.SLACK_WEBHOOK_URL) {
-    await fetch(process.env.SLACK_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: `🚨 *Health Alert*\n${down.map(s => `❌ *${s.name}* is DOWN`).join('\n')}` }),
-    }).catch(() => {});
+    // Only send Slack alert for confirmed-down (2 consecutive failures)
+    const confirmedDown = down.filter(d => {
+      const prev = prevResults.find(r => r.id === d.id || r.name === d.name);
+      return prev && prev.status !== 'operational';
+    });
+    if (confirmedDown.length) {
+      await fetch(process.env.SLACK_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: `*Health Alert*\n${confirmedDown.map(s => `${s.name} is DOWN (confirmed - 2 consecutive failures)`).join('\n')}` }),
+      }).catch(() => {});
+    }
   }
 
-  console.log(`\n✅ Done. ${results.length} site(s) checked.`);
+  console.log(`\nDone. ${results.length} site(s) checked.`);
   if (down.length) process.exit(1);
 })();

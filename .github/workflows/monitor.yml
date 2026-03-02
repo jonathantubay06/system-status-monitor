@@ -2,6 +2,9 @@ name: Health Monitor
 
 on:
   schedule:
+    # Runs every 15 min on paper, but GitHub free-tier throttles
+    # scheduled workflows — actual interval is typically 30-60 min.
+    # The dashboard calculates the real interval from history data.
     - cron: '*/15 * * * *'
   workflow_dispatch:
 
