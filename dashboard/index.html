@@ -531,6 +531,34 @@ header {
 .state-msg { text-align: center; padding: 5rem 2rem; color: var(--text-dim); font-size: 0.9rem; }
 .state-msg.err { color: var(--red); }
 
+/* ── Report Modal ── */
+.report-modal {
+  background: var(--surface); border: 1px solid var(--border2);
+  padding: 2rem; width: 100%; max-width: 520px;
+  position: relative; animation: slideUp 0.25s ease; border-radius: var(--radius-lg);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.report-modal .modal-title { text-align: center; }
+.report-modal .modal-sub { text-align: center; }
+.report-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.report-date-row input[type="date"] { color-scheme: dark; }
+.report-sending { display: none; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.5rem 0; }
+.report-sending.show { display: flex; }
+.report-sending .spinner {
+  width: 16px; height: 16px; border: 2px solid var(--border2);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.report-btn {
+  background: none; border: 1px solid var(--border); color: var(--text-dim);
+  font-family: inherit; font-size: 0.7rem; font-weight: 500;
+  padding: 0.3rem 0.65rem; cursor: pointer; transition: all 0.15s;
+  border-radius: 6px; display: inline-flex; align-items: center; gap: 0.3rem;
+  white-space: nowrap;
+}
+.report-btn:hover { border-color: #4C6BCD; color: #4C6BCD; background: rgba(76,107,205,0.08); }
+
 /* Footer */
 footer {
   max-width: 1200px; margin: 0 auto; padding: 2rem;
@@ -720,6 +748,40 @@ footer a:hover { color: var(--text-bright); }
   </div>
 </div>
 
+<!-- Report Modal -->
+<div class="overlay hidden" id="reportModal">
+  <div class="report-modal">
+    <button class="close-btn" onclick="closeReportModal()">&#x2715;</button>
+    <div class="login-icon-wrap"><span class="login-icon" style="background:rgba(76,107,205,0.12);border-color:rgba(76,107,205,0.2)">&#x1F4E7;</span></div>
+    <div class="modal-title">Send Health Report</div>
+    <div class="modal-sub" id="reportModalSub">Project Name</div>
+    <input type="hidden" id="reportProjectId"/>
+    <div class="form-group">
+      <label class="form-label">Recipient Email</label>
+      <input type="email" class="form-input" id="reportEmail" placeholder="client@example.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Date Range</label>
+      <div class="report-date-row">
+        <div>
+          <input type="date" class="form-input" id="reportFrom"/>
+          <div class="form-hint">From</div>
+        </div>
+        <div>
+          <input type="date" class="form-input" id="reportTo"/>
+          <div class="form-hint">To</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-error" id="reportError"></div>
+    <div class="report-sending" id="reportSending"><div class="spinner"></div><span style="font-size:0.82rem;color:var(--text-dim)">Generating &amp; sending report...</span></div>
+    <div class="form-actions">
+      <button class="btn" onclick="closeReportModal()">Cancel</button>
+      <button class="btn primary" id="reportSendBtn" onclick="sendReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F4E8; Send Report</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -873,7 +935,7 @@ function buildCard(r,delay){
           return'<div class="comp-row"><div><span class="comp-name">'+c.name+'</span>'+(desc?'<div class="comp-hint">'+desc+'</div>':'')+'</div><span class="comp-status '+sc(c.status)+'">'+(friendly[c.status]||c.status)+'</span></div>';
         }).join('')+
       '</div>':'')+
-    (r.alertEmail?'<div class="card-alert">Alerts &rarr; '+r.alertEmail+'</div>':'')+
+    (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button>':'')+'</div>':'')+
   '</div>';
 }
 
@@ -916,7 +978,7 @@ async function submitLogin(){
   var pw=document.getElementById('loginPassword').value.trim();if(!pw)return;
   var testRes=await fetch('/.netlify/functions/add-project',{method:'POST',headers:{'Authorization':'Bearer '+pw,'Content-Type':'application/json'},body:JSON.stringify({__dryRun:true})});
   if(testRes.status===401){document.getElementById('loginError').textContent='Incorrect password.';return}
-  adminToken=pw;sessionStorage.setItem('adminToken',pw);closeLogin();openAdminPanel();
+  adminToken=pw;sessionStorage.setItem('adminToken',pw);closeLogin();if(allResults.length)renderCards();openAdminPanel();
 }
 
 function openAdminPanel(){document.getElementById('adminPanel').classList.add('open');document.getElementById('panelOverlay').classList.add('show');loadAdminProjects();onTypeChange()}
@@ -1048,6 +1110,139 @@ function closeLogModal(){document.getElementById('logModal').classList.add('hidd
 document.getElementById('logModal').addEventListener('click',function(e){if(e.target===this)closeLogModal()});
 
 function togglePw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.classList.add('active')}else{i.type='password';btn.classList.remove('active')}i.focus()}
+
+/* ── Report Feature ── */
+function openReportModal(projectId){
+  var project=allResults.find(function(r){return r.id===projectId});
+  if(!project)return;
+  document.getElementById('reportProjectId').value=projectId;
+  document.getElementById('reportModalSub').textContent=project.name;
+  document.getElementById('reportEmail').value=project.alertEmail||'';
+  document.getElementById('reportError').textContent='';
+  document.getElementById('reportSending').classList.remove('show');
+  document.getElementById('reportSendBtn').disabled=false;
+  /* Default date range: 7 days ago to today */
+  var today=new Date();
+  var weekAgo=new Date(today);weekAgo.setDate(weekAgo.getDate()-7);
+  document.getElementById('reportTo').value=today.toISOString().split('T')[0];
+  document.getElementById('reportFrom').value=weekAgo.toISOString().split('T')[0];
+  document.getElementById('reportModal').classList.remove('hidden');
+  setTimeout(function(){document.getElementById('reportEmail').focus()},100);
+}
+
+function closeReportModal(){
+  document.getElementById('reportModal').classList.add('hidden');
+}
+document.getElementById('reportModal').addEventListener('click',function(e){if(e.target===this)closeReportModal()});
+
+function computeProjectStats(projectId,fromDate,toDate){
+  var from=new Date(fromDate+'T00:00:00');
+  var to=new Date(toDate+'T23:59:59');
+  /* Filter history entries within the date range */
+  var entries=[];
+  allHistory.forEach(function(h){
+    var ts=new Date(h.timestamp);
+    if(ts>=from&&ts<=to){
+      var r=(h.results||[]).find(function(x){return x.id===projectId});
+      if(r)entries.push({timestamp:h.timestamp,result:r});
+    }
+  });
+
+  if(!entries.length)return null;
+
+  var totalChecks=entries.length;
+  var operational=entries.filter(function(e){return e.result.status==='operational'}).length;
+  var uptimePercent=((operational/totalChecks)*100).toFixed(1);
+
+  /* Response time stats */
+  var responseTimes=entries.map(function(e){return e.result.responseMs||0}).filter(function(t){return t>0});
+  var avgResponseMs=responseTimes.length?Math.round(responseTimes.reduce(function(a,b){return a+b},0)/responseTimes.length):0;
+  var minResponseMs=responseTimes.length?Math.min.apply(null,responseTimes):0;
+  var maxResponseMs=responseTimes.length?Math.max.apply(null,responseTimes):0;
+
+  /* Incidents */
+  var incidents=entries.filter(function(e){return e.result.status!=='operational'}).map(function(e){
+    var fe=friendlyError(e.result.error);
+    return{
+      timestamp:fmt(e.timestamp),
+      status:e.result.status,
+      error:fe||e.result.error||'Issue detected'
+    };
+  });
+
+  /* Component health percentages */
+  var compMap={};
+  entries.forEach(function(e){
+    (e.result.components||[]).forEach(function(c){
+      if(!compMap[c.name])compMap[c.name]={total:0,operational:0};
+      compMap[c.name].total++;
+      if(c.status==='operational')compMap[c.name].operational++;
+    });
+  });
+  var components=Object.keys(compMap).map(function(name){
+    var c=compMap[name];
+    return{name:name,operationalPercent:((c.operational/c.total)*100).toFixed(1)};
+  });
+
+  return{
+    stats:{uptimePercent:uptimePercent,totalChecks:totalChecks,incidentCount:incidents.length,avgResponseMs:avgResponseMs,minResponseMs:minResponseMs,maxResponseMs:maxResponseMs},
+    components:components,
+    incidents:incidents
+  };
+}
+
+async function sendReport(){
+  var projectId=document.getElementById('reportProjectId').value;
+  var email=document.getElementById('reportEmail').value.trim();
+  var fromDate=document.getElementById('reportFrom').value;
+  var toDate=document.getElementById('reportTo').value;
+  var errEl=document.getElementById('reportError');
+  errEl.textContent='';
+
+  if(!email){errEl.textContent='Please enter a recipient email.';return}
+  if(!fromDate||!toDate){errEl.textContent='Please select both dates.';return}
+  if(new Date(fromDate)>new Date(toDate)){errEl.textContent='From date must be before To date.';return}
+
+  var project=allResults.find(function(r){return r.id===projectId});
+  if(!project){errEl.textContent='Project not found.';return}
+
+  var computed=computeProjectStats(projectId,fromDate,toDate);
+  if(!computed){errEl.textContent='No data found for this date range. Try a wider range.';return}
+
+  var btn=document.getElementById('reportSendBtn');
+  btn.disabled=true;
+  document.getElementById('reportSending').classList.add('show');
+
+  var fromLabel=new Date(fromDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var toLabel=new Date(toDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  try{
+    var res=await fetch('/.netlify/functions/send-report',{
+      method:'POST',
+      headers:{Authorization:'Bearer '+adminToken,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        recipientEmail:email,
+        projectName:project.name,
+        projectType:project.type,
+        projectUrl:maskUrl(project.url),
+        dateRange:{from:fromLabel,to:toLabel},
+        stats:computed.stats,
+        components:computed.components,
+        incidents:computed.incidents
+      })
+    });
+    var data=await res.json();
+    if(!res.ok)throw new Error(data.error||'Failed to send');
+    closeReportModal();
+    showToast('Report sent to '+email);
+  }catch(e){
+    errEl.textContent=e.message;
+    showToast('Failed: '+e.message,true);
+  }finally{
+    btn.disabled=false;
+    document.getElementById('reportSending').classList.remove('show');
+  }
+}
 
 loadStatus();
 setInterval(loadStatus,5*60*1000);
