@@ -19,14 +19,25 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { recipientEmail, projectName, projectType, projectUrl, dateRange, stats, components, incidents } = body;
+    const { recipientEmail, ccEmails, bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents } = body;
 
     if (!recipientEmail || !projectName) {
       return { statusCode: 400, headers: ch(), body: JSON.stringify({ error: 'recipientEmail and projectName required' }) };
     }
 
-    const html = generateReportHtml({ projectName, projectType, projectUrl, dateRange, stats, components, incidents });
+    const html = generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents });
     const subject = `Health Report: ${projectName} — ${dateRange.from} to ${dateRange.to}`;
+
+    /* Support multiple recipients (string or array) */
+    const toList = Array.isArray(recipientEmail)
+      ? recipientEmail.map(e => ({ email: e.trim() }))
+      : [{ email: recipientEmail.trim() }];
+
+    /* Build personalizations with optional CC */
+    const personalization = { to: toList };
+    if (ccEmails && ccEmails.length) {
+      personalization.cc = ccEmails.map(e => ({ email: e.trim() }));
+    }
 
     const sgRes = await fetch(SENDGRID_URL, {
       method: 'POST',
@@ -35,7 +46,7 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        personalizations: [{ to: [{ email: recipientEmail }] }],
+        personalizations: [personalization],
         from: { email: process.env.ALERT_FROM_EMAIL, name: 'SentryXP Status Monitor' },
         subject,
         content: [{ type: 'text/html', value: html }],
@@ -54,7 +65,7 @@ exports.handler = async (event) => {
 };
 
 /* ── HTML Email Generator ── */
-function generateReportHtml({ projectName, projectType, projectUrl, dateRange, stats, components, incidents }) {
+function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents }) {
   const blue = '#4C6BCD';
   const darkBlue = '#4d65ff';
   const lightBlue = '#C5D5F5';
@@ -170,6 +181,13 @@ function generateReportHtml({ projectName, projectType, projectUrl, dateRange, s
       </td>
     </tr></table>
   </td></tr>
+
+  <!-- Body message -->
+  ${bodyMessage ? `
+  <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+    <div style="font-size:15px;color:${textMain};line-height:1.7;white-space:pre-line">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    <hr style="border:none;border-top:1px solid ${borderClr};margin:24px 0 0"/>
+  </td></tr>` : ''}
 
   <!-- Big stat numbers -->
   <tr><td style="background:${cardBg};padding:32px 40px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">

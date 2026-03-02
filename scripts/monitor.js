@@ -400,7 +400,7 @@ async function sendAlert(project, result) {
       await fetch(process.env.SLACK_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: `*Health Alert*\n${confirmedDown.map(s => `${s.name} is DOWN (confirmed - 2 consecutive failures)`).join('\n')}` }),
+        body: JSON.stringify({ text: `*Health Alert*\n${confirmedDown.map(s => `${s.name} is DOWN (confirmed - 2 consecutive failures)`).join('\n')}\n\nhttps://projecthealthmonitoring.netlify.app/` }),
       }).catch(() => {});
     }
   }

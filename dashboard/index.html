@@ -758,7 +758,13 @@ footer a:hover { color: var(--text-bright); }
     <input type="hidden" id="reportProjectId"/>
     <div class="form-group">
       <label class="form-label">Recipient Email</label>
-      <input type="email" class="form-input" id="reportEmail" placeholder="client@example.com"/>
+      <input type="text" class="form-input" id="reportEmail" placeholder="client@example.com, client2@example.com"/>
+      <div class="form-hint">Separate multiple emails with commas</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">CC <span style="color:var(--text-dim);font-weight:400">(optional)</span></label>
+      <input type="text" class="form-input" id="reportCC" placeholder="email1@example.com, email2@example.com"/>
+      <div class="form-hint">Separate multiple emails with commas</div>
     </div>
     <div class="form-group">
       <label class="form-label">Date Range</label>
@@ -772,6 +778,11 @@ footer a:hover { color: var(--text-bright); }
           <div class="form-hint">To</div>
         </div>
       </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message to Client</label>
+      <textarea class="form-input" id="reportMessage" rows="5" style="resize:vertical;line-height:1.5"></textarea>
+      <div class="form-hint">This message will appear at the top of the email report</div>
     </div>
     <div class="form-error" id="reportError"></div>
     <div class="report-sending" id="reportSending"><div class="spinner"></div><span style="font-size:0.82rem;color:var(--text-dim)">Generating &amp; sending report...</span></div>
@@ -1112,12 +1123,16 @@ document.getElementById('logModal').addEventListener('click',function(e){if(e.ta
 function togglePw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.classList.add('active')}else{i.type='password';btn.classList.remove('active')}i.focus()}
 
 /* ── Report Feature ── */
+var defaultReportMessage="Hi,\n\nHere's your website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.\n\nBest regards,\nSentryXP Team";
+
 function openReportModal(projectId){
   var project=allResults.find(function(r){return r.id===projectId});
   if(!project)return;
   document.getElementById('reportProjectId').value=projectId;
   document.getElementById('reportModalSub').textContent=project.name;
   document.getElementById('reportEmail').value=project.alertEmail||'';
+  document.getElementById('reportCC').value='';
+  document.getElementById('reportMessage').value=defaultReportMessage;
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
   document.getElementById('reportSendBtn').disabled=false;
@@ -1194,6 +1209,8 @@ function computeProjectStats(projectId,fromDate,toDate){
 async function sendReport(){
   var projectId=document.getElementById('reportProjectId').value;
   var email=document.getElementById('reportEmail').value.trim();
+  var ccRaw=document.getElementById('reportCC').value.trim();
+  var message=document.getElementById('reportMessage').value.trim();
   var fromDate=document.getElementById('reportFrom').value;
   var toDate=document.getElementById('reportTo').value;
   var errEl=document.getElementById('reportError');
@@ -1202,6 +1219,13 @@ async function sendReport(){
   if(!email){errEl.textContent='Please enter a recipient email.';return}
   if(!fromDate||!toDate){errEl.textContent='Please select both dates.';return}
   if(new Date(fromDate)>new Date(toDate)){errEl.textContent='From date must be before To date.';return}
+
+  /* Parse multiple recipient emails */
+  var toEmails=email.split(',').map(function(e){return e.trim()}).filter(function(e){return e});
+  if(!toEmails.length){errEl.textContent='Please enter at least one recipient email.';return}
+
+  /* Parse CC emails */
+  var ccEmails=ccRaw?ccRaw.split(',').map(function(e){return e.trim()}).filter(function(e){return e}):[];
 
   var project=allResults.find(function(r){return r.id===projectId});
   if(!project){errEl.textContent='Project not found.';return}
@@ -1221,7 +1245,9 @@ async function sendReport(){
       method:'POST',
       headers:{Authorization:'Bearer '+adminToken,'Content-Type':'application/json'},
       body:JSON.stringify({
-        recipientEmail:email,
+        recipientEmail:toEmails,
+        ccEmails:ccEmails,
+        bodyMessage:message,
         projectName:project.name,
         projectType:project.type,
         projectUrl:maskUrl(project.url),
@@ -1234,7 +1260,7 @@ async function sendReport(){
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||'Failed to send');
     closeReportModal();
-    showToast('Report sent to '+email);
+    showToast('Report sent to '+toEmails.join(', '));
   }catch(e){
     errEl.textContent=e.message;
     showToast('Failed: '+e.message,true);

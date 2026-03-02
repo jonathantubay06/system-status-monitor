@@ -4,3 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+[dev]
+  port = 3001
+  functionsPort = 3002
