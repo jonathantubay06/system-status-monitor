@@ -1,6 +1,7 @@
 [build]
   publish = "dashboard"
   functions = "netlify/functions"
+  ignore = "git log -1 --pretty=%B | grep -q '\\[skip ci\\]'"
 
 [build.environment]
   NODE_VERSION = "20"
