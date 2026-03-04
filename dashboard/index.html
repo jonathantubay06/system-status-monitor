@@ -510,6 +510,146 @@ header {
 }
 .admin-form-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 1rem; font-weight: 600; }
 
+/* ── Incident Timeline ── */
+.incident-wrap {
+  max-width: 1200px; margin: 1.5rem auto 0; padding: 0 2rem;
+}
+.incident-title {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-dim); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.incident-title-icon { font-size: 0.8rem; }
+.incident-empty {
+  text-align: center; padding: 1.5rem; color: var(--text-dim); font-size: 0.82rem;
+  border: 1px dashed var(--border); border-radius: var(--radius); background: var(--surface);
+}
+.incident-item {
+  display: flex; gap: 0.75rem; padding: 0.6rem 0;
+}
+.incident-dot-col {
+  display: flex; flex-direction: column; align-items: center; width: 14px; flex-shrink: 0; padding-top: 0.25rem;
+}
+.incident-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.incident-dot.down { background: var(--red); box-shadow: 0 0 6px rgba(239,68,68,0.4); }
+.incident-dot.deg  { background: var(--yellow); box-shadow: 0 0 6px rgba(234,179,8,0.4); }
+.incident-line {
+  flex: 1; width: 2px; background: var(--border); margin-top: 4px;
+}
+.incident-content { flex: 1; min-width: 0; }
+.incident-header {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.15rem;
+}
+.incident-project {
+  font-size: 0.85rem; font-weight: 600; color: var(--text-bright);
+}
+.incident-ongoing {
+  font-size: 0.65rem; font-weight: 600; color: var(--red); background: var(--red-bg);
+  border: 1px solid var(--red-bd); padding: 0.1rem 0.4rem; border-radius: 4px;
+  animation: pulse 2.5s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.incident-meta {
+  font-size: 0.75rem; color: var(--text-dim); line-height: 1.4;
+}
+.incident-reason {
+  font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; font-style: italic;
+}
+
+/* ── Response Time Graph ── */
+.rt-range-bar {
+  display: flex; gap: 0.4rem; margin-bottom: 1rem;
+}
+.rt-chart-wrap {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.75rem; overflow: hidden;
+}
+.rt-chart-wrap canvas { display: block; width: 100%; height: auto; }
+.rt-legend {
+  display: flex; gap: 1.25rem; padding: 0.75rem 0 0;
+  font-size: 0.75rem; color: var(--text-dim); flex-wrap: wrap;
+}
+.rt-legend strong { color: var(--text-bright); font-weight: 600; }
+
+/* ── PDF Export ── */
+.pdf-btn:hover { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+.badge-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.badge-popover {
+  position: absolute; bottom: calc(100% + 8px); right: 0; z-index: 10;
+  background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius);
+  padding: 1rem; width: 340px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  animation: fadeIn 0.15s ease;
+}
+.badge-popover-title { font-size: 0.75rem; font-weight: 600; color: var(--text-bright); margin-bottom: 0.5rem; }
+.badge-popover-preview { text-align: center; margin-bottom: 0.75rem; padding: 0.5rem; background: var(--surface2); border-radius: 6px; }
+.badge-popover-code {
+  font-size: 0.68rem; font-family: monospace; background: var(--input-bg); border: 1px solid var(--border);
+  padding: 0.5rem; border-radius: 6px; word-break: break-all; color: var(--text-dim); cursor: pointer;
+  transition: border-color 0.15s; margin-bottom: 0.4rem; display: block;
+}
+.badge-popover-code:hover { border-color: var(--accent); }
+.badge-popover-hint { font-size: 0.65rem; color: var(--text-dim); }
+
+@media print {
+  body.printing header,
+  body.printing .banner,
+  body.printing .filter-bar,
+  body.printing #gridWrap,
+  body.printing .incident-wrap,
+  body.printing .history-wrap,
+  body.printing footer,
+  body.printing .overlay,
+  body.printing .admin-panel,
+  body.printing .panel-overlay,
+  body.printing .toast { display: none !important; }
+  body.printing #printReport {
+    display: block !important;
+    position: relative; width: 100%;
+    background: #fff; color: #1a1a1a; padding: 2rem;
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  body.printing .print-header {
+    text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid #e5e7eb;
+  }
+  body.printing .print-logo { font-size: 1.2rem; font-weight: 700; color: #7c3aed; }
+  body.printing .print-project { font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin: 0.5rem 0 0.2rem; }
+  body.printing .print-range { font-size: 0.85rem; color: #6b7280; }
+  body.printing .print-stats { display: flex; gap: 1rem; margin: 1.5rem 0; }
+  body.printing .print-stat {
+    flex: 1; text-align: center; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 8px;
+  }
+  body.printing .print-stat-value { font-size: 1.8rem; font-weight: 700; }
+  body.printing .print-stat-label {
+    font-size: 0.7rem; text-transform: uppercase; color: #6b7280; margin-top: 0.25rem; letter-spacing: 0.05em;
+  }
+  body.printing .print-section-title {
+    font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #6b7280;
+    margin: 1.5rem 0 0.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid #e5e7eb; letter-spacing: 0.05em;
+  }
+  body.printing .print-comp-row {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0;
+    border-bottom: 1px solid #f3f4f6; font-size: 0.82rem;
+  }
+  body.printing .print-comp-name { flex: 1; color: #374151; }
+  body.printing .print-comp-bar { width: 120px; height: 8px; border-radius: 4px; background: #e5e7eb; overflow: hidden; }
+  body.printing .print-comp-fill { height: 100%; border-radius: 4px; }
+  body.printing .print-comp-pct { width: 50px; text-align: right; font-weight: 600; font-size: 0.78rem; }
+  body.printing .print-incident-row {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0;
+    border-bottom: 1px solid #f3f4f6; font-size: 0.78rem;
+  }
+  body.printing .print-incident-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  body.printing .print-footer {
+    text-align: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e7eb;
+    font-size: 0.72rem; color: #9ca3af;
+  }
+}
+body.printing { background: #fff !important; }
+
 /* Toast */
 .toast {
   position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
@@ -620,6 +760,11 @@ footer a:hover { color: var(--text-bright); }
 </div>
 
 <div id="gridWrap"><div class="state-msg">Fetching status data...</div></div>
+
+<div class="incident-wrap" id="incidentWrap" style="display:none">
+  <div class="incident-title"><span class="incident-title-icon">&#x26A0;</span> Incident Timeline</div>
+  <div id="incidentList"></div>
+</div>
 
 <div class="history-wrap">
   <div class="section-title">Recent checks</div>
@@ -793,6 +938,33 @@ footer a:hover { color: var(--text-bright); }
   </div>
 </div>
 
+<!-- Response Time Graph -->
+<div class="overlay hidden" id="rtGraphModal">
+  <div class="log-modal" style="max-width:720px">
+    <div class="log-modal-header">
+      <div class="log-modal-info">
+        <div class="log-modal-title" id="rtGraphTitle">Response Time</div>
+        <div class="log-modal-time" id="rtGraphSub">Click a time range to adjust</div>
+      </div>
+      <button class="close-btn" onclick="closeRtGraph()">&#x2715;</button>
+    </div>
+    <div class="log-modal-body" style="padding:1rem 1.5rem 1.5rem">
+      <div class="rt-range-bar" id="rtRangeBar">
+        <button class="filter-btn" onclick="setRtRange('24h',this)">24h</button>
+        <button class="filter-btn active" onclick="setRtRange('7d',this)">7d</button>
+        <button class="filter-btn" onclick="setRtRange('28d',this)">28d</button>
+      </div>
+      <div class="rt-chart-wrap">
+        <canvas id="rtCanvas"></canvas>
+      </div>
+      <div class="rt-legend" id="rtLegend"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Print Report Container -->
+<div id="printReport" style="display:none"></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -896,6 +1068,7 @@ async function loadStatus(){
 
     document.getElementById('filterBar').style.display='flex';
     renderCards();
+    renderIncidentTimeline();
     renderHistory();
   }catch(e){
     document.getElementById('gridWrap').innerHTML='<div class="state-msg err">'+e.message+'</div>';
@@ -923,10 +1096,10 @@ function buildCard(r,delay){
       '</div>'+
     '</div>'+
     '<div class="metrics">'+
-      '<div class="metric">'+
-        '<div class="metric-label">Response <i class="tip">?<span class="tip-text">How fast the site responds. Under 5s is good.</span></i></div>'+
+      '<div class="metric" style="cursor:pointer" title="Click for response time graph" onclick="event.stopPropagation();openRtGraph(\''+r.id+'\')">'+
+        '<div class="metric-label">Response <i class="tip">?<span class="tip-text">How fast the site responds. Under 5s is good. Click for graph.</span></i></div>'+
         '<div class="metric-value '+(bad?'bad':slow?'slow':'')+'">'+r.responseMs+'<span style="font-size:0.65em;font-weight:500">ms</span></div>'+
-        '<div class="metric-hint">'+rl+'</div>'+
+        '<div class="metric-hint">'+rl+' &#x1F4C8;</div>'+
       '</div>'+
       '<div class="metric">'+
         '<div class="metric-label">Uptime <i class="tip">?<span class="tip-text">% of checks that passed. 99%+ is excellent.</span></i></div>'+
@@ -946,7 +1119,7 @@ function buildCard(r,delay){
           return'<div class="comp-row"><div><span class="comp-name">'+c.name+'</span>'+(desc?'<div class="comp-hint">'+desc+'</div>':'')+'</div><span class="comp-status '+sc(c.status)+'">'+(friendly[c.status]||c.status)+'</span></div>';
         }).join('')+
       '</div>':'')+
-    (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button>':'')+'</div>':'')+
+    (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<span style="display:flex;gap:0.35rem;position:relative"><button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button><button class="report-btn pdf-btn" onclick="event.stopPropagation();downloadPdf(\''+r.id+'\')">&#x1F4C4; PDF</button><button class="report-btn badge-btn" onclick="event.stopPropagation();toggleBadgePopover(this,\''+r.id+'\')">&#x1F3F7; Badge</button></span>':'')+'</div>':'')+
   '</div>';
 }
 
@@ -1268,6 +1441,271 @@ async function sendReport(){
     btn.disabled=false;
     document.getElementById('reportSending').classList.remove('show');
   }
+}
+
+/* ── Incident Timeline ── */
+function detectIncidents(){
+  var incidents=[];
+  var projectIds=allResults.map(function(r){return r.id});
+  var sorted=allHistory.slice().sort(function(a,b){return new Date(a.timestamp)-new Date(b.timestamp)});
+  projectIds.forEach(function(pid){
+    var project=allResults.find(function(r){return r.id===pid});
+    var inIncident=false,incStart=null,incStatus=null,incError=null;
+    sorted.forEach(function(entry){
+      var r=(entry.results||[]).find(function(x){return x.id===pid});
+      if(!r)return;
+      if(!inIncident&&r.status!=='operational'){
+        inIncident=true;incStart=entry.timestamp;incStatus=r.status;incError=r.error||null;
+      }else if(inIncident&&r.status==='operational'){
+        incidents.push({projectId:pid,projectName:project?project.name:pid,status:incStatus,error:incError,start:incStart,end:entry.timestamp,duration:new Date(entry.timestamp)-new Date(incStart)});
+        inIncident=false;
+      }
+    });
+    if(inIncident){
+      incidents.push({projectId:pid,projectName:project?project.name:pid,status:incStatus,error:incError,start:incStart,end:null,duration:Date.now()-new Date(incStart)});
+    }
+  });
+  incidents.sort(function(a,b){return new Date(b.start)-new Date(a.start)});
+  return incidents;
+}
+
+function renderIncidentTimeline(){
+  var wrap=document.getElementById('incidentWrap');
+  var incidents=detectIncidents();
+  if(!incidents.length){
+    wrap.style.display='block';
+    document.getElementById('incidentList').innerHTML='<div class="incident-empty">&#x2705; No incidents detected in recent history</div>';
+    return;
+  }
+  wrap.style.display='block';
+  var html=incidents.slice(0,20).map(function(inc,i){
+    var cls=inc.status==='down'?'down':'deg';
+    var statusLabel=inc.status==='down'?'Down':'Degraded';
+    var durMin=Math.round(inc.duration/60000);
+    var durStr=durMin<1?'< 1m':durMin<60?durMin+'m':Math.floor(durMin/60)+'h '+(durMin%60)+'m';
+    var ongoing=!inc.end;
+    var fe=friendlyError(inc.error);
+    var isLast=i===Math.min(incidents.length,20)-1;
+    return'<div class="incident-item">'+
+      '<div class="incident-dot-col"><span class="incident-dot '+cls+'"></span>'+(isLast?'':'<span class="incident-line"></span>')+'</div>'+
+      '<div class="incident-content">'+
+        '<div class="incident-header">'+
+          '<span class="incident-project">'+inc.projectName+'</span>'+
+          '<span class="status-pill '+cls+'">'+statusLabel+'</span>'+
+          (ongoing?'<span class="incident-ongoing">Ongoing</span>':'')+
+        '</div>'+
+        '<div class="incident-meta">'+
+          fmt(inc.start)+(inc.end?' &mdash; '+fmt(inc.end):' &mdash; now')+
+          ' &middot; '+durStr+
+        '</div>'+
+        (fe?'<div class="incident-reason">'+fe+'</div>':'')+
+      '</div></div>';
+  }).join('');
+  document.getElementById('incidentList').innerHTML=html;
+}
+
+/* ── Response Time Graph ── */
+var rtCurrentProject='',rtCurrentRange='7d';
+
+function openRtGraph(projectId){
+  rtCurrentProject=projectId;rtCurrentRange='7d';
+  var project=allResults.find(function(r){return r.id===projectId});
+  document.getElementById('rtGraphTitle').textContent='Response Time: '+(project?project.name:projectId);
+  document.getElementById('rtGraphSub').textContent='Click a time range to adjust';
+  document.querySelectorAll('#rtRangeBar .filter-btn').forEach(function(b,i){b.className='filter-btn'+(i===1?' active':'')});
+  drawRtChart();
+  document.getElementById('rtGraphModal').classList.remove('hidden');
+}
+
+function setRtRange(range,btn){
+  rtCurrentRange=range;
+  document.querySelectorAll('#rtRangeBar .filter-btn').forEach(function(b){b.className='filter-btn'});
+  btn.className='filter-btn active';
+  drawRtChart();
+}
+
+function drawRtChart(){
+  var canvas=document.getElementById('rtCanvas');
+  var dpr=window.devicePixelRatio||1;
+  var W=660,H=260;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  var ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  var pad={top:20,right:20,bottom:40,left:55};
+  var now=Date.now();
+  var rangeMs=rtCurrentRange==='24h'?86400000:rtCurrentRange==='7d'?604800000:2419200000;
+  var cutoff=now-rangeMs;
+
+  var points=[];
+  allHistory.forEach(function(h){
+    var ts=new Date(h.timestamp).getTime();
+    if(ts<cutoff)return;
+    var r=(h.results||[]).find(function(x){return x.id===rtCurrentProject});
+    if(r&&r.responseMs)points.push({t:ts,ms:r.responseMs,status:r.status});
+  });
+
+  ctx.clearRect(0,0,W,H);
+
+  if(!points.length){
+    ctx.fillStyle='#71717a';ctx.font='13px Inter, sans-serif';ctx.textAlign='center';
+    ctx.fillText('No data for this range',W/2,H/2);
+    document.getElementById('rtLegend').innerHTML='';
+    return;
+  }
+
+  var tMin=points[0].t,tMax=points[points.length-1].t;
+  var msMax=Math.max.apply(null,points.map(function(p){return p.ms}));
+  msMax=Math.ceil(msMax/1000)*1000;
+  if(msMax<2000)msMax=2000;
+
+  var plotW=W-pad.left-pad.right;
+  var plotH=H-pad.top-pad.bottom;
+  function xPos(t){return pad.left+((t-tMin)/(tMax-tMin||1))*plotW}
+  function yPos(ms){return pad.top+plotH-(ms/msMax)*plotH}
+
+  /* Grid */
+  ctx.strokeStyle='#27272a';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){
+    var gy=pad.top+(g/4)*plotH;
+    ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(W-pad.right,gy);ctx.stroke();
+    var msLabel=Math.round(msMax*(1-g/4));
+    ctx.fillStyle='#71717a';ctx.font='10px Inter, sans-serif';ctx.textAlign='right';
+    ctx.fillText(msLabel>=1000?(msLabel/1000).toFixed(1)+'s':msLabel+'ms',pad.left-8,gy+3);
+  }
+
+  /* Line */
+  ctx.beginPath();ctx.strokeStyle='#a78bfa';ctx.lineWidth=2;ctx.lineJoin='round';
+  points.forEach(function(p,i){
+    var x=xPos(p.t),y=yPos(p.ms);
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  /* Fill */
+  ctx.lineTo(xPos(points[points.length-1].t),pad.top+plotH);
+  ctx.lineTo(xPos(points[0].t),pad.top+plotH);
+  ctx.closePath();ctx.fillStyle='rgba(167,139,250,0.08)';ctx.fill();
+
+  /* Incident dots */
+  points.forEach(function(p){
+    if(p.status!=='operational'){
+      var x=xPos(p.t),y=yPos(p.ms);
+      ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);
+      ctx.fillStyle=p.status==='down'?'#ef4444':'#eab308';ctx.fill();
+    }
+  });
+
+  /* X-axis */
+  var labelCount=rtCurrentRange==='24h'?6:rtCurrentRange==='7d'?7:5;
+  ctx.fillStyle='#71717a';ctx.font='10px Inter, sans-serif';ctx.textAlign='center';
+  for(var l=0;l<labelCount;l++){
+    var lt=tMin+(l/(labelCount-1))*(tMax-tMin);
+    var lx=xPos(lt);
+    var d=new Date(lt);
+    var label=rtCurrentRange==='24h'?d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false}):d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    ctx.fillText(label,lx,H-pad.bottom+18);
+  }
+
+  /* Legend */
+  var avgMs=Math.round(points.reduce(function(a,p){return a+p.ms},0)/points.length);
+  var maxMs=Math.max.apply(null,points.map(function(p){return p.ms}));
+  var minMs=Math.min.apply(null,points.map(function(p){return p.ms}));
+  document.getElementById('rtLegend').innerHTML=
+    '<span>Avg: <strong>'+avgMs+'ms</strong></span>'+
+    '<span>Min: <strong>'+minMs+'ms</strong></span>'+
+    '<span>Max: <strong>'+maxMs+'ms</strong></span>'+
+    '<span>'+points.length+' data points</span>';
+}
+
+function closeRtGraph(){document.getElementById('rtGraphModal').classList.add('hidden')}
+document.getElementById('rtGraphModal').addEventListener('click',function(e){if(e.target===this)closeRtGraph()});
+
+/* ── PDF Export ── */
+function downloadPdf(projectId){
+  var project=allResults.find(function(r){return r.id===projectId});
+  if(!project)return;
+  var today=new Date();
+  var weekAgo=new Date(today);weekAgo.setDate(weekAgo.getDate()-7);
+  var fromDate=weekAgo.toISOString().split('T')[0];
+  var toDate=today.toISOString().split('T')[0];
+  var computed=computeProjectStats(projectId,fromDate,toDate);
+  if(!computed){showToast('No data available for PDF',true);return}
+  var fromLabel=new Date(fromDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var toLabel=new Date(toDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  document.getElementById('printReport').innerHTML=buildPrintHtml(project,computed,fromLabel,toLabel);
+  document.body.classList.add('printing');
+  setTimeout(function(){window.print()},100);
+}
+
+function buildPrintHtml(project,computed,fromLabel,toLabel){
+  var s=computed.stats;
+  var uptimeColor=parseFloat(s.uptimePercent)>=99?'#16a34a':parseFloat(s.uptimePercent)>=95?'#ca8a04':'#dc2626';
+  var html='<div class="print-header">'+
+    '<div class="print-logo">SentryXP</div>'+
+    '<div class="print-project">'+project.name+'</div>'+
+    '<div class="print-range">'+project.type.toUpperCase()+' &middot; '+fromLabel+' &mdash; '+toLabel+'</div>'+
+  '</div>'+
+  '<div class="print-stats">'+
+    '<div class="print-stat"><div class="print-stat-value" style="color:'+uptimeColor+'">'+s.uptimePercent+'%</div><div class="print-stat-label">Uptime</div></div>'+
+    '<div class="print-stat"><div class="print-stat-value">'+s.totalChecks+'</div><div class="print-stat-label">Total Checks</div></div>'+
+    '<div class="print-stat"><div class="print-stat-value">'+s.avgResponseMs+'<span style="font-size:0.5em">ms</span></div><div class="print-stat-label">Avg Response</div></div>'+
+    '<div class="print-stat"><div class="print-stat-value">'+s.incidentCount+'</div><div class="print-stat-label">Incidents</div></div>'+
+  '</div>';
+
+  if(computed.components.length){
+    html+='<div class="print-section-title">Component Health</div>';
+    computed.components.forEach(function(c){
+      var pct=parseFloat(c.operationalPercent);
+      var color=pct>=99?'#16a34a':pct>=95?'#ca8a04':'#dc2626';
+      html+='<div class="print-comp-row">'+
+        '<div class="print-comp-name">'+c.name+'</div>'+
+        '<div class="print-comp-bar"><div class="print-comp-fill" style="width:'+pct+'%;background:'+color+'"></div></div>'+
+        '<div class="print-comp-pct" style="color:'+color+'">'+c.operationalPercent+'%</div>'+
+      '</div>';
+    });
+  }
+
+  if(computed.incidents.length){
+    html+='<div class="print-section-title">Incidents ('+computed.incidents.length+')</div>';
+    computed.incidents.slice(0,15).forEach(function(inc){
+      var dotColor=inc.status==='down'?'#dc2626':'#ca8a04';
+      html+='<div class="print-incident-row">'+
+        '<div class="print-incident-dot" style="background:'+dotColor+'"></div>'+
+        '<span style="flex:1;color:#374151">'+inc.timestamp+'</span>'+
+        '<span style="font-weight:600;color:'+dotColor+'">'+inc.status.toUpperCase()+'</span>'+
+        '<span style="color:#6b7280;flex:2;text-align:right">'+inc.error+'</span>'+
+      '</div>';
+    });
+  }
+
+  html+='<div class="print-footer">Generated by SentryXP &middot; '+new Date().toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'})+'</div>';
+  return html;
+}
+
+window.addEventListener('afterprint',function(){document.body.classList.remove('printing')});
+
+/* ── Badge Popover ── */
+function toggleBadgePopover(btn,projectId){
+  var existing=btn.parentElement.querySelector('.badge-popover');
+  if(existing){existing.remove();return}
+  document.querySelectorAll('.badge-popover').forEach(function(p){p.remove()});
+  var baseUrl=location.origin+'/.netlify/functions/badge?project='+projectId;
+  var statusUrl=baseUrl+'&type=status';
+  var uptimeUrl=baseUrl+'&type=uptime';
+  var pop=document.createElement('div');
+  pop.className='badge-popover';
+  pop.onclick=function(e){e.stopPropagation()};
+  pop.innerHTML='<div class="badge-popover-title">Embeddable Badges</div>'+
+    '<div class="badge-popover-preview"><img src="'+uptimeUrl+'" alt="uptime badge" onerror="this.alt=\'Badge preview (deploy first)\'"/>&nbsp;<img src="'+statusUrl+'" alt="status badge" onerror="this.alt=\'Badge preview (deploy first)\'"/></div>'+
+    '<div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.3rem">Markdown</div>'+
+    '<code class="badge-popover-code" onclick="navigator.clipboard.writeText(this.textContent);showToast(\'Copied!\')">![Uptime]('+uptimeUrl+')</code>'+
+    '<div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.3rem;margin-top:0.5rem">HTML</div>'+
+    '<code class="badge-popover-code" onclick="navigator.clipboard.writeText(this.textContent);showToast(\'Copied!\')">&lt;img src="'+uptimeUrl+'" alt="uptime"&gt;</code>'+
+    '<div class="badge-popover-hint">Click to copy. Badges auto-update every 5 minutes.</div>';
+  btn.parentElement.appendChild(pop);
+  setTimeout(function(){document.addEventListener('click',function closePop(){pop.remove();document.removeEventListener('click',closePop)})},0);
 }
 
 loadStatus();
