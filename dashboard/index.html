@@ -1451,14 +1451,21 @@ function detectIncidents(){
   projectIds.forEach(function(pid){
     var project=allResults.find(function(r){return r.id===pid});
     var inIncident=false,incStart=null,incStatus=null,incError=null;
+    var consecutiveDown=0;
     sorted.forEach(function(entry){
       var r=(entry.results||[]).find(function(x){return x.id===pid});
       if(!r)return;
-      if(!inIncident&&r.status!=='operational'){
-        inIncident=true;incStart=entry.timestamp;incStatus=r.status;incError=r.error||null;
-      }else if(inIncident&&r.status==='operational'){
-        incidents.push({projectId:pid,projectName:project?project.name:pid,status:incStatus,error:incError,start:incStart,end:entry.timestamp,duration:new Date(entry.timestamp)-new Date(incStart)});
-        inIncident=false;
+      if(r.status!=='operational'){
+        consecutiveDown++;
+        if(!inIncident&&consecutiveDown>=2){
+          inIncident=true;incStart=entry.timestamp;incStatus=r.status;incError=r.error||null;
+        }
+      }else{
+        if(inIncident){
+          incidents.push({projectId:pid,projectName:project?project.name:pid,status:incStatus,error:incError,start:incStart,end:entry.timestamp,duration:new Date(entry.timestamp)-new Date(incStart)});
+          inIncident=false;
+        }
+        consecutiveDown=0;
       }
     });
     if(inIncident){
