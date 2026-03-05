@@ -1003,27 +1003,49 @@ function calcInterval(){
   return'~'+(mins/60).toFixed(1)+' hr';
 }
 
+/* Confirmed status: treat single non-op checks as operational (fluke filter) */
+function confirmedStatus(id,idx){
+  var hist=allHistory;
+  var r=(hist[idx].results||[]).find(function(x){return x.id===id});
+  if(!r||r.status==='operational')return r?r.status:'unknown';
+  var prev=idx>0?(hist[idx-1].results||[]).find(function(x){return x.id===id}):null;
+  var next=idx<hist.length-1?(hist[idx+1].results||[]).find(function(x){return x.id===id}):null;
+  if((prev&&prev.status!=='operational')||(next&&next.status!=='operational'))return r.status;
+  return'operational';
+}
 function uptime(id){
   var e=allHistory.flatMap(function(h){return(h.results||[]).filter(function(r){return r.id===id})});
   if(!e.length)return{pct:'--',label:'No data'};
-  var pct=(e.filter(function(r){return r.status==='operational'}).length/e.length)*100;
+  var confirmed=0;
+  allHistory.forEach(function(h,i){var s=confirmedStatus(id,i);if(s==='operational')confirmed++});
+  var pct=(confirmed/allHistory.length)*100;
   var label=pct>=99.5?'Excellent':pct>=95?'Good':pct>=80?'Fair':'Poor';
   return{pct:pct.toFixed(1)+'%',label:label};
 }
 function resLabel(ms){return ms<2000?'Fast':ms<5000?'Normal':ms<15000?'Slow':'Very slow'}
 function sparkline(id){
-  var bars=allHistory.slice(-48).map(function(e){
+  var start=Math.max(0,allHistory.length-48);
+  var bars=allHistory.slice(-48).map(function(e,i){
     var r=(e.results||[]).find(function(r){return r.id===id});
-    return'<div class="sb '+(r?sc(r.status):'unk')+'" title="'+fmtS(e.timestamp)+(r?': '+(friendly[r.status]||r.status)+' ('+r.responseMs+'ms)':'')+'"></div>';
+    var s=confirmedStatus(id,start+i);
+    return'<div class="sb '+(r?sc(s):'unk')+'" title="'+fmtS(e.timestamp)+(r?': '+(friendly[s]||s)+' ('+r.responseMs+'ms)':'')+'"></div>';
   });
   while(bars.length<48)bars.unshift('<div class="sb unk"></div>');
   return bars.join('');
 }
 function sparkSummary(id){
-  var entries=allHistory.slice(-48).map(function(e){return(e.results||[]).find(function(r){return r.id===id})}).filter(Boolean);
+  var start=Math.max(0,allHistory.length-48);
+  var entries=allHistory.slice(-48);
   if(!entries.length)return'';
-  var ok=entries.filter(function(r){return r.status==='operational'}).length;
-  var fail=entries.length-ok;
+  var ok=0,total=0;
+  entries.forEach(function(e,i){
+    var r=(e.results||[]).find(function(r){return r.id===id});
+    if(!r)return;
+    total++;
+    if(confirmedStatus(id,start+i)==='operational')ok++;
+  });
+  if(!total)return'';
+  var fail=total-ok;
   if(fail===0)return'All '+ok+' checks passed';
   return ok+' passed, '+fail+' issue'+(fail>1?'s':'');
 }
