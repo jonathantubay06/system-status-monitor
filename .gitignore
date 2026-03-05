@@ -7,6 +7,5 @@
 # Dependencies
 node_modules
 
-# Local test data
-dashboard/history.json"dashboard/history.json" 
-"dashboard/status.json" 
+# Claude Code local config
+.claude/
