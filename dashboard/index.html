@@ -511,16 +511,21 @@ header {
 .admin-form-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 1rem; font-weight: 600; }
 
 /* ── Client-Reported Issues ── */
-.client-reports-wrap {
-  max-width: 1200px; margin: 1.5rem auto 0; padding: 0 2rem;
+.cr-card-badge {
+  display: flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.7rem;
+  background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.15);
+  border-radius: 8px; cursor: pointer; transition: all 0.15s; margin-top: 0.6rem;
 }
-.client-reports-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+.cr-card-badge:hover { background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.3); }
+.cr-card-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #f97316;
+  box-shadow: 0 0 6px rgba(249,115,22,0.4); flex-shrink: 0;
 }
-.client-reports-title {
-  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--text-dim); display: flex; align-items: center; gap: 0.4rem;
+.cr-card-badge-text {
+  font-size: 0.75rem; font-weight: 500; color: #f97316;
+}
+.cr-card-badge-arrow {
+  margin-left: auto; font-size: 0.7rem; color: var(--text-dim);
 }
 .cr-nav {
   display: flex; align-items: center; gap: 0.5rem;
@@ -838,16 +843,24 @@ footer a:hover { color: var(--text-bright); }
   <div id="incidentList"></div>
 </div>
 
-<div class="client-reports-wrap" id="clientReportsWrap" style="display:none">
-  <div class="client-reports-header">
-    <div class="client-reports-title">&#x1F4CB; Client-Reported Issues</div>
-    <div class="cr-nav">
-      <button class="cr-nav-btn" onclick="crNav(-1)">&#x25C0; Prev</button>
-      <span class="cr-range" id="crRange"></span>
-      <button class="cr-nav-btn" onclick="crNav(1)">Next &#x25B6;</button>
+<!-- Client Reports Modal -->
+<div class="overlay hidden" id="crModal">
+  <div class="log-modal" style="max-width:640px">
+    <div class="log-modal-header">
+      <div class="log-modal-info">
+        <div class="log-modal-title" id="crModalTitle">Client-Reported Issues</div>
+        <div class="log-modal-time">
+          <div class="cr-nav">
+            <button class="cr-nav-btn" onclick="crNav(-1)">&#x25C0; Prev</button>
+            <span class="cr-range" id="crRange"></span>
+            <button class="cr-nav-btn" onclick="crNav(1)">Next &#x25B6;</button>
+          </div>
+        </div>
+      </div>
+      <button class="close-btn" onclick="closeCrModal()">&#x2715;</button>
     </div>
+    <div class="log-modal-body" id="crList" style="padding:1rem 1.5rem 1.5rem"></div>
   </div>
-  <div id="crList"></div>
 </div>
 
 <div class="history-wrap">
@@ -1178,7 +1191,6 @@ async function loadStatus(){
     document.getElementById('filterBar').style.display='flex';
     renderCards();
     renderIncidentTimeline();
-    renderClientReports();
     renderHistory();
   }catch(e){
     document.getElementById('gridWrap').innerHTML='<div class="state-msg err">'+e.message+'</div>';
@@ -1229,6 +1241,7 @@ function buildCard(r,delay){
           return'<div class="comp-row"><div><span class="comp-name">'+c.name+'</span>'+(desc?'<div class="comp-hint">'+desc+'</div>':'')+'</div><span class="comp-status '+sc(c.status)+'">'+(friendly[c.status]||c.status)+'</span></div>';
         }).join('')+
       '</div>':'')+
+    crCardBadge(r.id)+
     (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<span style="display:flex;gap:0.35rem;position:relative"><button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button><button class="report-btn pdf-btn" onclick="event.stopPropagation();downloadPdf(\''+r.id+'\')">&#x1F4C4; PDF</button><button class="report-btn badge-btn" onclick="event.stopPropagation();toggleBadgePopover(this,\''+r.id+'\')">&#x1F3F7; Badge</button></span>':'')+'</div>':'')+
   '</div>';
 }
@@ -1538,7 +1551,7 @@ async function sendReport(){
         stats:computed.stats,
         components:computed.components,
         incidents:computed.incidents,
-        clientReports:allClientReports.filter(function(r){var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')})
+        clientReports:allClientReports.filter(function(r){if(r.projectId!==projectId)return false;var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')})
       })
     });
     var data=await res.json();
@@ -1622,9 +1635,32 @@ function renderIncidentTimeline(){
   document.getElementById('incidentList').innerHTML=html;
 }
 
-/* ── Client-Reported Issues ── */
+/* ── Client-Reported Issues (per-project modal) ── */
 var allClientReports=[];
-var crOffset=0; /* 0 = current week, -1 = prev week, etc. */
+var crOffset=0;
+var crCurrentProject='';
+
+function crCardBadge(projectId){
+  var count=allClientReports.filter(function(r){return r.projectId===projectId}).length;
+  if(!count)return'';
+  return'<div class="cr-card-badge" onclick="event.stopPropagation();openCrModal(\''+projectId+'\')">'+
+    '<span class="cr-card-badge-dot"></span>'+
+    '<span class="cr-card-badge-text">'+count+' client report'+(count!==1?'s':'')+'</span>'+
+    '<span class="cr-card-badge-arrow">&#x25B6;</span>'+
+  '</div>';
+}
+
+function openCrModal(projectId){
+  crCurrentProject=projectId;crOffset=0;
+  var project=allResults.find(function(r){return r.id===projectId});
+  document.getElementById('crModalTitle').textContent='Client-Reported Issues: '+(project?project.name:projectId);
+  renderCrModal();
+  document.getElementById('crModal').classList.remove('hidden');
+}
+function closeCrModal(){document.getElementById('crModal').classList.add('hidden')}
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('crModal').addEventListener('click',function(e){if(e.target===this)closeCrModal()});
+});
 
 function crDateRange(offset){
   var today=new Date();today.setHours(0,0,0,0);
@@ -1633,19 +1669,15 @@ function crDateRange(offset){
   return{start:start,end:end};
 }
 
-function crNav(dir){crOffset+=dir;renderClientReports()}
+function crNav(dir){crOffset+=dir;renderCrModal()}
 
-function renderClientReports(){
-  var wrap=document.getElementById('clientReportsWrap');
-  if(!allClientReports.length){wrap.style.display='none';return}
-  wrap.style.display='block';
-
+function renderCrModal(){
   var range=crDateRange(crOffset);
   var opts={month:'short',day:'numeric',year:'numeric'};
   document.getElementById('crRange').textContent=range.start.toLocaleDateString('en-US',opts)+' \u2013 '+range.end.toLocaleDateString('en-US',opts);
 
-  /* Filter reports in this 7-day window */
   var filtered=allClientReports.filter(function(r){
+    if(r.projectId!==crCurrentProject)return false;
     var d=new Date(r.date+'T00:00:00');
     return d>=range.start&&d<=range.end;
   });
@@ -1655,7 +1687,6 @@ function renderClientReports(){
     return;
   }
 
-  /* Sort by date desc */
   filtered.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
 
   var html=filtered.map(function(r,i){
@@ -1676,7 +1707,6 @@ function renderClientReports(){
       '</div></div>';
   }).join('');
 
-  /* Definitions legend — only for definitions present this week */
   var defs={
     'Bug':'Confirmed code defect',
     'Edge Case':'Works, but needs UX improvement',

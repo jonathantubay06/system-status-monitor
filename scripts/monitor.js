@@ -333,6 +333,7 @@ async function fetchClientReports() {
       const parsed = new Date(dateStr);
       if (isNaN(parsed.getTime())) continue;
       reports.push({
+        projectId: 'jordan-ranch-portal',
         date: parsed.toISOString().split('T')[0],
         request: (r[requestCol] || '').trim(),
         issue: (r[issueCol] || '').trim(),

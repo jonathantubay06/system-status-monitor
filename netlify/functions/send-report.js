@@ -109,7 +109,10 @@ function buildClientReportsSection(clientReports, cardBg, borderClr, textMain, t
     <tr><td style="background:${cardBg};padding:32px 40px 12px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
       <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${textDim};padding-bottom:12px">
-          &#x1F4CB; Client-Reported Issues (${clientReports.length})
+          &#x1F4CB; Client-Reported Incidents (${clientReports.length})
+        </td></tr>
+        <tr><td style="font-size:11px;color:${textDim};padding-bottom:10px;font-style:italic">
+          Reported directly by client users
         </td></tr>
         <tr><td>
           <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid ${borderClr};border-radius:8px;overflow:hidden">
@@ -193,7 +196,10 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
       <tr><td style="padding:32px 40px 12px">
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
           <tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${textDim};padding-bottom:12px">
-            &#x26A0; Incidents (${incidents.length})
+            &#x26A0; System-Detected Incidents (${incidents.length})
+          </td></tr>
+          <tr><td style="font-size:11px;color:${textDim};padding-bottom:10px;font-style:italic">
+            Detected automatically by health check monitoring
           </td></tr>
           <tr><td>
             <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid ${borderClr};border-radius:8px;overflow:hidden">
