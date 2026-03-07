@@ -12,7 +12,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-01-09",
     "request": "Client Name connection",
-    "issue": "This isn't a system issue. The suggestions Cortney sees when typing come from her own browser remembering what she's typed before — not from our system.",
+    "issue": "This isn't a system issue. The suggestions Cortney sees when typing come from her own browser remembering what she's typed before — not from our system.\nSince the last Immersion Outfitters event was back in October 2024, her browser probably just forgot it. She can type the name manually and it will work fine.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
@@ -39,7 +39,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-04",
     "request": "Room Booking Issue",
-    "issue": "Booked rooms not appearing after refresh",
+    "issue": "",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
@@ -48,7 +48,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-04",
     "request": "ISSUE: portal is not working",
-    "issue": "Investigated and experienced intermittently loading",
+    "issue": "investigated and experienced intermittently loading.",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
     "raisedBy": "Cortney"
@@ -56,8 +56,8 @@
   {
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-05",
-    "request": "ISSUE: portal is not working (continued)",
-    "issue": "User cannot upload excel file in participants",
+    "request": "ISSUE: portal is not working (Client did not create a separate ticket)",
+    "issue": "User cannot upload excel file in participants.\nWas able to replicate",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
@@ -66,7 +66,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-10",
     "request": "Send mass email through Portal",
-    "issue": "Request to send a mass email to all facilitators of upcoming events",
+    "issue": "- Request to send a mass email to all facilitators of upcoming events",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
@@ -75,7 +75,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-17",
     "request": "Facilitator side",
-    "issue": "Meeting rooms require scrolling on facilitator view",
+    "issue": "",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
     "raisedBy": "Cortney"
@@ -84,7 +84,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-21",
     "request": "Errors with the portal",
-    "issue": "Multiple errors in the portal",
+    "issue": "multiple errors in the portal",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue, Bug",
     "raisedBy": "Cortney"
@@ -93,7 +93,7 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-02-22",
     "request": "The portal is not loading",
-    "issue": "Portal not loading at all - blank page",
+    "issue": "Portal not loading at all",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue, Bug",
     "raisedBy": "Cortney"
@@ -105,15 +105,15 @@
     "issue": "Facilitator not able to see the event",
     "definition": "Maintenance",
     "subDefinition": "Bug",
-    "raisedBy": "Cortney"
+    "raisedBy": ""
   },
   {
     "projectId": "jordan-ranch-portal",
     "date": "2026-03-03",
     "request": "Replace in Documents",
-    "issue": "Replace a document - Amenities and Activities sheet",
+    "issue": "Replace a document",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": ""
   }
 ]
