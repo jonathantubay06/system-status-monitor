@@ -19,13 +19,13 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { recipientEmail, ccEmails, bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents } = body;
+    const { recipientEmail, ccEmails, bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
 
     if (!recipientEmail || !projectName) {
       return { statusCode: 400, headers: ch(), body: JSON.stringify({ error: 'recipientEmail and projectName required' }) };
     }
 
-    const html = generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents });
+    const html = generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
     const subject = `Health Report: ${projectName} — ${dateRange.from} to ${dateRange.to}`;
 
     /* Support multiple recipients (string or array) */
@@ -64,8 +64,70 @@ exports.handler = async (event) => {
   }
 };
 
+/* ── Client Reports Email Section ── */
+function buildClientReportsSection(clientReports, cardBg, borderClr, textMain, textDim) {
+  if (!clientReports || !clientReports.length) return '';
+  const orange = '#f97316';
+  const esc = s => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  const rows = clientReports.map(r => {
+    const defColor = (r.definition || '').toLowerCase() === 'service request' ? '#60a5fa' : orange;
+    const dateLabel = new Date(r.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `
+      <tr>
+        <td style="padding:8px 12px;font-size:13px;color:${textDim};border-bottom:1px solid ${borderClr};white-space:nowrap">${dateLabel}</td>
+        <td style="padding:8px 12px;font-size:13px;color:${textMain};font-weight:600;border-bottom:1px solid ${borderClr}">${esc(r.request || r.issue)}</td>
+        <td style="padding:8px 12px;border-bottom:1px solid ${borderClr}">
+          <span style="display:inline-block;font-size:11px;font-weight:600;color:${defColor};background:${defColor}15;border:1px solid ${defColor}33;padding:2px 8px;border-radius:4px">${esc(r.definition)}</span>
+        </td>
+      </tr>
+      <tr>
+        <td style="border-bottom:1px solid ${borderClr}"></td>
+        <td colspan="2" style="padding:0 12px 8px;font-size:12px;color:${textDim};border-bottom:1px solid ${borderClr};font-style:italic">
+          ${r.issue && r.request ? esc(r.issue) + ' ' : ''}${r.subDefinition ? '&mdash; ' + esc(r.subDefinition) : ''}
+        </td>
+      </tr>`;
+  }).join('');
+
+  /* Definitions for sub-definitions present */
+  const defs = {
+    'Bug': 'Confirmed code defect',
+    'Edge Case': 'Works, but needs UX improvement',
+    'Not A System Issue': 'Browser or user behavior, not a bug',
+    'Softr Issue (Global)': 'Platform-level outage from Softr',
+    'Airtable Issue': 'Backend data issue from Airtable',
+  };
+  const seen = {};
+  clientReports.forEach(r => { if (r.subDefinition) seen[r.subDefinition] = true; });
+  const defKeys = Object.keys(defs).filter(k => seen[k]);
+  const defsHtml = defKeys.length ? `
+    <tr><td colspan="3" style="padding:12px 12px 4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:${textDim}">Definitions</td></tr>
+    ${defKeys.map(k => `<tr><td colspan="3" style="padding:2px 12px;font-size:12px;color:${textDim}"><strong style="color:${textMain};font-weight:500">${k}</strong> &mdash; ${defs[k]}</td></tr>`).join('')}
+  ` : '';
+
+  return `
+    <tr><td style="background:${cardBg};padding:32px 40px 12px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${textDim};padding-bottom:12px">
+          &#x1F4CB; Client-Reported Issues (${clientReports.length})
+        </td></tr>
+        <tr><td>
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid ${borderClr};border-radius:8px;overflow:hidden">
+            <tr style="background:${borderClr}">
+              <th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:${textDim};text-align:left">Date</th>
+              <th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:${textDim};text-align:left">Issue</th>
+              <th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:${textDim};text-align:left">Type</th>
+            </tr>
+            ${rows}
+            ${defsHtml}
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>`;
+}
+
 /* ── HTML Email Generator ── */
-function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents }) {
+function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports }) {
   const blue = '#4C6BCD';
   const darkBlue = '#4d65ff';
   const lightBlue = '#C5D5F5';
@@ -251,6 +313,9 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
 
   <!-- Incidents -->
   ${incidentSection}
+
+  <!-- Client-Reported Issues -->
+  ${buildClientReportsSection(clientReports, cardBg, borderClr, textMain, textDim)}
 
   <!-- Body message -->
   ${bodyMessage ? `

@@ -510,6 +510,78 @@ header {
 }
 .admin-form-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 1rem; font-weight: 600; }
 
+/* ── Client-Reported Issues ── */
+.client-reports-wrap {
+  max-width: 1200px; margin: 1.5rem auto 0; padding: 0 2rem;
+}
+.client-reports-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+}
+.client-reports-title {
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-dim); display: flex; align-items: center; gap: 0.4rem;
+}
+.cr-nav {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.cr-nav-btn {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
+  font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 6px; cursor: pointer;
+  font-family: inherit; transition: all 0.15s;
+}
+.cr-nav-btn:hover { background: var(--surface3); color: var(--text-bright); border-color: var(--border2); }
+.cr-range {
+  font-size: 0.78rem; font-weight: 500; color: var(--text); white-space: nowrap;
+}
+.cr-empty {
+  text-align: center; padding: 1.2rem; color: var(--text-dim); font-size: 0.82rem;
+  border: 1px dashed var(--border); border-radius: var(--radius); background: var(--surface);
+}
+.cr-item {
+  display: flex; gap: 0.75rem; padding: 0.5rem 0;
+}
+.cr-dot-col {
+  display: flex; flex-direction: column; align-items: center; width: 14px; flex-shrink: 0; padding-top: 0.25rem;
+}
+.cr-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  background: #f97316; box-shadow: 0 0 6px rgba(249,115,22,0.4);
+}
+.cr-line {
+  flex: 1; width: 2px; background: var(--border); margin-top: 4px;
+}
+.cr-content { flex: 1; min-width: 0; }
+.cr-item-header {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.15rem;
+}
+.cr-request {
+  font-size: 0.85rem; font-weight: 600; color: var(--text-bright);
+}
+.cr-pill {
+  font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.4rem; border-radius: 4px;
+  display: inline-block;
+}
+.cr-pill.maintenance { color: #f97316; background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2); }
+.cr-pill.service { color: var(--blue); background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.2); }
+.cr-issue {
+  font-size: 0.75rem; color: var(--text-dim); line-height: 1.4;
+}
+.cr-sub {
+  font-size: 0.7rem; color: var(--text-dim); margin-top: 0.1rem; font-style: italic;
+}
+.cr-defs {
+  margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border);
+}
+.cr-defs-title {
+  font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-dim); margin-bottom: 0.35rem;
+}
+.cr-def-row {
+  font-size: 0.72rem; color: var(--text-dim); line-height: 1.6;
+}
+.cr-def-row strong { color: var(--text); font-weight: 500; }
+
 /* ── Incident Timeline ── */
 .incident-wrap {
   max-width: 1200px; margin: 1.5rem auto 0; padding: 0 2rem;
@@ -764,6 +836,18 @@ footer a:hover { color: var(--text-bright); }
 <div class="incident-wrap" id="incidentWrap" style="display:none">
   <div class="incident-title"><span class="incident-title-icon">&#x26A0;</span> Incident Timeline</div>
   <div id="incidentList"></div>
+</div>
+
+<div class="client-reports-wrap" id="clientReportsWrap" style="display:none">
+  <div class="client-reports-header">
+    <div class="client-reports-title">&#x1F4CB; Client-Reported Issues</div>
+    <div class="cr-nav">
+      <button class="cr-nav-btn" onclick="crNav(-1)">&#x25C0; Prev</button>
+      <span class="cr-range" id="crRange"></span>
+      <button class="cr-nav-btn" onclick="crNav(1)">Next &#x25B6;</button>
+    </div>
+  </div>
+  <div id="crList"></div>
 </div>
 
 <div class="history-wrap">
@@ -1054,13 +1138,16 @@ function showToast(msg,isErr){var t=document.getElementById('toast');t.textConte
 
 async function loadStatus(){
   try{
-    var[sRes,hRes]=await Promise.all([
-      fetch((location.hostname==='localhost'?'':'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/')+'/status.json?t='+Date.now()),
-      fetch((location.hostname==='localhost'?'':'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/')+'/history.json?t='+Date.now()).catch(function(){return{ok:false}}),
+    var base=(location.hostname==='localhost'?'':'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/');
+    var[sRes,hRes,crRes]=await Promise.all([
+      fetch(base+'/status.json?t='+Date.now()),
+      fetch(base+'/history.json?t='+Date.now()).catch(function(){return{ok:false}}),
+      fetch(base+'/client-reports.json?t='+Date.now()).catch(function(){return{ok:false}}),
     ]);
     if(!sRes.ok)throw new Error('status.json not found');
     var status=await sRes.json();
     allHistory=hRes.ok?await hRes.json():[];
+    allClientReports=crRes&&crRes.ok?await crRes.json():[];
     allResults=status.results||[];
 
     /* ── Empty state: waiting for first check ── */
@@ -1091,6 +1178,7 @@ async function loadStatus(){
     document.getElementById('filterBar').style.display='flex';
     renderCards();
     renderIncidentTimeline();
+    renderClientReports();
     renderHistory();
   }catch(e){
     document.getElementById('gridWrap').innerHTML='<div class="state-msg err">'+e.message+'</div>';
@@ -1449,7 +1537,8 @@ async function sendReport(){
         dateRange:{from:fromLabel,to:toLabel},
         stats:computed.stats,
         components:computed.components,
-        incidents:computed.incidents
+        incidents:computed.incidents,
+        clientReports:allClientReports.filter(function(r){var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')})
       })
     });
     var data=await res.json();
@@ -1532,6 +1621,82 @@ function renderIncidentTimeline(){
   }).join('');
   document.getElementById('incidentList').innerHTML=html;
 }
+
+/* ── Client-Reported Issues ── */
+var allClientReports=[];
+var crOffset=0; /* 0 = current week, -1 = prev week, etc. */
+
+function crDateRange(offset){
+  var today=new Date();today.setHours(0,0,0,0);
+  var end=new Date(today);end.setDate(end.getDate()+(offset*7));
+  var start=new Date(end);start.setDate(start.getDate()-6);
+  return{start:start,end:end};
+}
+
+function crNav(dir){crOffset+=dir;renderClientReports()}
+
+function renderClientReports(){
+  var wrap=document.getElementById('clientReportsWrap');
+  if(!allClientReports.length){wrap.style.display='none';return}
+  wrap.style.display='block';
+
+  var range=crDateRange(crOffset);
+  var opts={month:'short',day:'numeric',year:'numeric'};
+  document.getElementById('crRange').textContent=range.start.toLocaleDateString('en-US',opts)+' \u2013 '+range.end.toLocaleDateString('en-US',opts);
+
+  /* Filter reports in this 7-day window */
+  var filtered=allClientReports.filter(function(r){
+    var d=new Date(r.date+'T00:00:00');
+    return d>=range.start&&d<=range.end;
+  });
+
+  if(!filtered.length){
+    document.getElementById('crList').innerHTML='<div class="cr-empty">No data.</div>';
+    return;
+  }
+
+  /* Sort by date desc */
+  filtered.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+
+  var html=filtered.map(function(r,i){
+    var isLast=i===filtered.length-1;
+    var defClass=r.definition.toLowerCase()==='service request'?'service':'maintenance';
+    var dateLabel=new Date(r.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    return'<div class="cr-item">'+
+      '<div class="cr-dot-col"><span class="cr-dot"></span>'+(isLast?'':'<span class="cr-line"></span>')+'</div>'+
+      '<div class="cr-content">'+
+        '<div class="cr-item-header">'+
+          '<span class="cr-request">'+esc(r.request||r.issue)+'</span>'+
+          (r.definition?'<span class="cr-pill '+defClass+'">'+esc(r.definition)+'</span>':'')+
+        '</div>'+
+        '<div class="cr-issue">'+dateLabel+(r.raisedBy?' &middot; '+esc(r.raisedBy):'')+
+          (r.issue&&r.request?' &mdash; '+esc(r.issue):'')+
+        '</div>'+
+        (r.subDefinition?'<div class="cr-sub">'+esc(r.subDefinition)+'</div>':'')+
+      '</div></div>';
+  }).join('');
+
+  /* Definitions legend — only for definitions present this week */
+  var defs={
+    'Bug':'Confirmed code defect',
+    'Edge Case':'Works, but needs UX improvement',
+    'Not A System Issue':'Browser or user behavior, not a bug',
+    'Softr Issue (Global)':'Platform-level outage from Softr',
+    'Airtable Issue':'Backend data issue from Airtable'
+  };
+  var seen={};
+  filtered.forEach(function(r){if(r.subDefinition)seen[r.subDefinition]=true});
+  var defKeys=Object.keys(defs).filter(function(k){return seen[k]});
+  if(defKeys.length){
+    html+='<div class="cr-defs"><div class="cr-defs-title">Definitions</div>';
+    defKeys.forEach(function(k){html+='<div class="cr-def-row"><strong>'+k+'</strong> &mdash; '+defs[k]+'</div>'});
+    html+='</div>';
+  }
+
+  document.getElementById('crList').innerHTML=html;
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
 /* ── Response Time Graph ── */
 var rtCurrentProject='',rtCurrentRange='7d';

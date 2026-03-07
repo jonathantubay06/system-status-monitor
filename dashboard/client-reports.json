@@ -1,0 +1,106 @@
+[
+  {
+    "date": "2026-01-01",
+    "request": "Mobile version",
+    "issue": "Cortney cant copy paste. But, Sentry tried multiple times and it is working",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-01-09",
+    "request": "Client Name connection",
+    "issue": "This isn't a system issue. The suggestions Cortney sees when typing come from her own browser remembering what she's typed before — not from our system.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-01-12",
+    "request": "Error I keep getting",
+    "issue": "Gets an error when loading a page or loading the Edit Event window",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-01-14",
+    "request": "download participants",
+    "issue": "Client wants the download participant function for the facilitator",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-04",
+    "request": "Room Booking Issue",
+    "issue": "Booked rooms not appearing after refresh",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-04",
+    "request": "ISSUE: portal is not working",
+    "issue": "Investigated and experienced intermittently loading",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-05",
+    "request": "ISSUE: portal is not working (continued)",
+    "issue": "User cannot upload excel file in participants",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-10",
+    "request": "Send mass email through Portal",
+    "issue": "Request to send a mass email to all facilitators of upcoming events",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-17",
+    "request": "Facilitator side",
+    "issue": "Meeting rooms require scrolling on facilitator view",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-21",
+    "request": "Errors with the portal",
+    "issue": "Multiple errors in the portal",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue, Bug",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-02-22",
+    "request": "The portal is not loading",
+    "issue": "Portal not loading at all - blank page",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue, Bug",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-03-03",
+    "request": "Men of St. Mark Coptic Orthodox Church",
+    "issue": "Facilitator not able to see the event",
+    "definition": "Maintenance",
+    "subDefinition": "Bug",
+    "raisedBy": "Cortney"
+  },
+  {
+    "date": "2026-03-03",
+    "request": "Replace in Documents",
+    "issue": "Replace a document - Amenities and Activities sheet",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  }
+]

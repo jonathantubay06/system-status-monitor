@@ -306,6 +306,75 @@ async function sendAlert(project, result) {
   }).catch(e => console.error('Email alert failed:', e.message));
 }
 
+// ── Fetch client-reported issues from Google Sheet ───────────────────────────
+async function fetchClientReports() {
+  const sheetId = '1mokCRIxI5Cw4_PChoWd3jkv3268n85k4tjD3AdB8zXY';
+  const sheetName = '2026';
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+  try {
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) { console.log('  ! Google Sheet fetch failed:', res.status); return []; }
+    const csv = await res.text();
+    const rows = parseCSV(csv);
+    if (rows.length < 2) return [];
+    const headers = rows[0];
+    const dateCol = headers.findIndex(h => /date reported/i.test(h));
+    const issueCol = headers.findIndex(h => /issues raised/i.test(h));
+    const defCol = headers.findIndex(h => /^issue definition$/i.test(h));
+    const subDefCol = headers.findIndex(h => /issue sub definition/i.test(h));
+    const raisedCol = headers.findIndex(h => /raised by/i.test(h));
+    const requestCol = headers.findIndex(h => /^request$/i.test(h));
+    if (dateCol < 0 || issueCol < 0) { console.log('  ! Could not find required columns'); return []; }
+    const reports = [];
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+      const dateStr = (r[dateCol] || '').trim();
+      if (!dateStr) continue;
+      const parsed = new Date(dateStr);
+      if (isNaN(parsed.getTime())) continue;
+      reports.push({
+        date: parsed.toISOString().split('T')[0],
+        request: (r[requestCol] || '').trim(),
+        issue: (r[issueCol] || '').trim(),
+        definition: defCol >= 0 ? (r[defCol] || '').trim() : '',
+        subDefinition: subDefCol >= 0 ? (r[subDefCol] || '').trim() : '',
+        raisedBy: raisedCol >= 0 ? (r[raisedCol] || '').trim() : '',
+      });
+    }
+    return reports;
+  } catch (e) {
+    console.log('  ! Client reports fetch error:', e.message);
+    return [];
+  }
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else field += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\n' || (c === '\r' && text[i + 1] === '\n')) {
+        row.push(field); field = '';
+        if (row.some(f => f.trim())) rows.push(row);
+        row = [];
+        if (c === '\r') i++;
+      } else field += c;
+    }
+  }
+  row.push(field);
+  if (row.some(f => f.trim())) rows.push(row);
+  return rows;
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 (async () => {
   console.log('System Status Health Monitor v4.1\n');
@@ -388,6 +457,12 @@ async function sendAlert(project, result) {
   history.push({ timestamp: new Date().toISOString(), results });
   if (history.length > 672) history = history.slice(-672);
   fs.writeFileSync(histFile, JSON.stringify(history, null, 2));
+
+  // Fetch and save client-reported issues from Google Sheet
+  console.log('\nFetching client-reported issues from Google Sheet...');
+  const clientReports = await fetchClientReports();
+  fs.writeFileSync(path.join(outDir, 'client-reports.json'), JSON.stringify(clientReports, null, 2));
+  console.log(`   Saved ${clientReports.length} client report(s)`);
 
   const down = results.filter(r => r.status === 'down');
   if (down.length && process.env.SLACK_WEBHOOK_URL) {
