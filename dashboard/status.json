@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-07T18:19:43.180Z",
+  "updatedAt": "2026-03-07T18:54:39.244Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -11,9 +11,9 @@
       "checkPage": "/events",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-03-07T18:19:05.189Z",
+      "checkedAt": "2026-03-07T18:53:58.654Z",
       "status": "operational",
-      "responseMs": 6814,
+      "responseMs": 7294,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -51,9 +51,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-03-07T18:19:05.970Z",
+      "checkedAt": "2026-03-07T18:53:59.098Z",
       "status": "operational",
-      "responseMs": 781,
+      "responseMs": 443,
       "httpStatus": 200,
       "components": [
         {
@@ -92,9 +92,9 @@
       "checkPage": "/trustee-bonds",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-03-07T18:19:27.770Z",
+      "checkedAt": "2026-03-07T18:54:18.318Z",
       "status": "operational",
-      "responseMs": 20776,
+      "responseMs": 18200,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -132,14 +132,27 @@
       "checkPage": "",
       "loginEmail": "jonathantubay@ymail.com",
       "loginPassword": "!J0nthan2025",
-      "checkedAt": "2026-03-07T18:19:37.770Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-03-07T18:54:38.884Z",
+      "status": "operational",
+      "responseMs": 17371,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
         }
       ]
     },
@@ -153,9 +166,9 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "checkedAt": "2026-03-07T18:19:43.155Z",
+      "checkedAt": "2026-03-07T18:54:39.220Z",
       "status": "operational",
-      "responseMs": 5384,
+      "responseMs": 336,
       "httpStatus": 200,
       "components": [
         {
