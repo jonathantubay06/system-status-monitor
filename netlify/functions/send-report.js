@@ -303,6 +303,28 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
     </table>
   </td></tr>
 
+  <!-- Monthly SLA -->
+  <tr><td style="background:${cardBg};padding:0 40px 24px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:${textDim};padding-bottom:10px">
+        Monthly SLA
+      </td></tr>
+      <tr><td>
+        <table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>
+          <td style="width:100%;padding:0">
+            <div style="background:${borderClr};border-radius:4px;height:10px;overflow:hidden">
+              <div style="background:${uptimeColor};width:${Math.min(uptimeNum, 100)}%;height:10px;border-radius:4px"></div>
+            </div>
+          </td>
+          <td style="padding:0 0 0 12px;white-space:nowrap;font-size:14px;font-weight:700;color:${uptimeColor}">${stats.uptimePercent}%</td>
+        </tr></table>
+      </td></tr>
+      <tr><td style="font-size:12px;color:${textDim};padding-top:6px">
+        Target: 99.5% &middot; ${uptimeNum >= 99.5 ? '&#x2705; Meeting SLA' : '&#x274C; Below SLA target'}
+      </td></tr>
+    </table>
+  </td></tr>
+
   <!-- Component health bars -->
   ${components && components.length ? `
   <tr><td style="background:${cardBg};padding:0 40px 32px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">

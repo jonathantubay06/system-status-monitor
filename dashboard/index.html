@@ -800,6 +800,29 @@ body.printing { background: #fff !important; }
 }
 .report-btn:hover { border-color: #4C6BCD; color: #4C6BCD; background: rgba(76,107,205,0.08); }
 
+/* ── SLA Bar ── */
+.sla-bar-wrap {
+  margin-bottom: 1rem; padding: 0.6rem 0.85rem;
+  background: var(--surface2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);
+}
+:root.light .sla-bar-wrap { border-color: var(--border); }
+.sla-bar-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;
+}
+.sla-bar-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 500; }
+.sla-bar-value { font-size: 0.75rem; font-weight: 700; }
+.sla-bar-track {
+  height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden;
+}
+.sla-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+.sla-bar-hint { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+/* ── RT Trend ── */
+.rt-trend { font-size: 0.68rem; font-weight: 600; margin-left: 0.35rem; }
+.rt-trend.faster { color: var(--green); }
+.rt-trend.slower { color: var(--yellow); }
+.rt-trend.same   { color: var(--text-dim); }
+
 /* ── Theme Toggle ── */
 .theme-toggle {
   background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
@@ -1242,6 +1265,42 @@ function sparkSummary(id){
   return ok+' passed, '+fail+' issue'+(fail>1?'s':'');
 }
 
+/* ── Monthly SLA ── */
+function monthlySLA(id){
+  var now=new Date();
+  var monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  var total=0,ok=0;
+  allHistory.forEach(function(h,i){
+    if(new Date(h.timestamp)<monthStart)return;
+    var r=(h.results||[]).find(function(x){return x.id===id});
+    if(!r)return;
+    total++;
+    if(confirmedStatus(id,i)==='operational')ok++;
+  });
+  if(!total)return{pct:100,checks:0,met:true};
+  var pct=(ok/total)*100;
+  return{pct:+pct.toFixed(2),checks:total,met:pct>=99.5};
+}
+
+/* ── Response Time Trend (this week vs last week) ── */
+function responseTimeTrend(id){
+  var now=Date.now();
+  var weekMs=7*86400000;
+  var thisWeek=[],lastWeek=[];
+  allHistory.forEach(function(h){
+    var t=new Date(h.timestamp).getTime();
+    var r=(h.results||[]).find(function(x){return x.id===id});
+    if(!r||!r.responseMs)return;
+    if(t>=now-weekMs)thisWeek.push(r.responseMs);
+    else if(t>=now-2*weekMs)lastWeek.push(r.responseMs);
+  });
+  if(!thisWeek.length||!lastWeek.length)return null;
+  var avgThis=thisWeek.reduce(function(a,b){return a+b},0)/thisWeek.length;
+  var avgLast=lastWeek.reduce(function(a,b){return a+b},0)/lastWeek.length;
+  var changePct=((avgThis-avgLast)/avgLast)*100;
+  return{changePct:+changePct.toFixed(1),avgThis:Math.round(avgThis),avgLast:Math.round(avgLast)};
+}
+
 function showToast(msg,isErr){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(isErr?' err':'');setTimeout(function(){t.className='toast'},3000)}
 
 async function loadStatus(){
@@ -1297,6 +1356,26 @@ function buildCard(r,delay){
   var ut=uptime(r.id),rl=resLabel(r.responseMs);
   var fe=friendlyError(r.error);
   var interval=calcInterval();
+  var trend=responseTimeTrend(r.id);
+  var sla=monthlySLA(r.id);
+
+  var trendHtml='';
+  if(trend){
+    var abs=Math.abs(trend.changePct);
+    if(abs<2)trendHtml='<span class="rt-trend same">&mdash; stable</span>';
+    else if(trend.changePct<0)trendHtml='<span class="rt-trend faster">&#x2193;'+abs+'% faster</span>';
+    else trendHtml='<span class="rt-trend slower">&#x2191;'+abs+'% slower</span>';
+  }
+
+  var slaColor=sla.met?'var(--green)':'var(--red)';
+  var slaBlock='<div class="sla-bar-wrap">'+
+    '<div class="sla-bar-header">'+
+      '<span class="sla-bar-label">Monthly SLA <i class="tip">?<span class="tip-text">Uptime this calendar month vs 99.5% target.</span></i></span>'+
+      '<span class="sla-bar-value" style="color:'+slaColor+'">'+sla.pct+'%</span>'+
+    '</div>'+
+    '<div class="sla-bar-track"><div class="sla-bar-fill" style="width:'+Math.min(sla.pct,100)+'%;background:'+slaColor+'"></div></div>'+
+    '<div class="sla-bar-hint">'+(sla.met?'&#x2705; Meeting':'&#x274C; Below')+' 99.5% target &middot; '+sla.checks+' checks this month</div>'+
+  '</div>';
 
   var errorBlock=r.error?('<div class="card-error">'+(fe?'<span class="error-friendly">'+fe+'</span>':'')+'<span class="error-technical">'+r.error+'</span></div>'):'';
 
@@ -1315,7 +1394,7 @@ function buildCard(r,delay){
     '<div class="metrics">'+
       '<div class="metric" style="cursor:pointer" title="Click for response time graph" onclick="event.stopPropagation();openRtGraph(\''+r.id+'\')">'+
         '<div class="metric-label">Response <i class="tip">?<span class="tip-text">How fast the site responds. Under 5s is good. Click for graph.</span></i></div>'+
-        '<div class="metric-value '+(bad?'bad':slow?'slow':'')+'">'+r.responseMs+'<span style="font-size:0.65em;font-weight:500">ms</span></div>'+
+        '<div class="metric-value '+(bad?'bad':slow?'slow':'')+'">'+r.responseMs+'<span style="font-size:0.65em;font-weight:500">ms</span>'+trendHtml+'</div>'+
         '<div class="metric-hint">'+rl+' &#x1F4C8;</div>'+
       '</div>'+
       '<div class="metric">'+
@@ -1324,6 +1403,7 @@ function buildCard(r,delay){
         '<div class="metric-hint">'+ut.label+'</div>'+
       '</div>'+
     '</div>'+
+    slaBlock+
     '<div class="spark-row"><span class="spark-label">History</span><span class="spark-label" style="color:var(--text-dim)">48 checks</span></div>'+
     '<div class="sparkline">'+sparkline(r.id)+'</div>'+
     '<div class="spark-summary">'+sparkSummary(r.id)+'</div>'+
