@@ -855,6 +855,16 @@ body.printing { background: #fff !important; }
 :root.light .overlay { background: rgba(0,0,0,0.3); }
 :root.light .panel-overlay { background: rgba(0,0,0,0.2); }
 .report-sending { display: none; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.5rem 0; }
+.report-preview-pane {
+  display: none; flex-direction: column; width: 100%; max-width: 520px;
+  height: 80vh; animation: slideUp 0.25s ease; border-radius: var(--radius-lg);
+  background: var(--surface); border: 1px solid var(--border2);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4); overflow: hidden;
+}
+.report-preview-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1rem; border-bottom: 1px solid var(--border2);
+}
 .report-sending.show { display: flex; }
 .report-sending .spinner {
   width: 16px; height: 16px; border: 2px solid var(--border2);
@@ -1224,10 +1234,19 @@ footer a:hover { color: var(--text-bright); }
     </div>
     <div class="form-error" id="reportError"></div>
     <div class="report-sending" id="reportSending"><div class="spinner"></div><span style="font-size:0.82rem;color:var(--text-dim)">Generating &amp; sending report...</span></div>
-    <div class="form-actions">
+    <div class="form-actions" id="reportFormActions">
       <button class="btn" onclick="closeReportModal()">Cancel</button>
-      <button class="btn primary" id="reportSendBtn" onclick="sendReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F4E8; Send Report</button>
+      <button class="btn primary" id="reportPreviewBtn" onclick="previewReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F50D; Preview Report</button>
     </div>
+  </div>
+  <!-- Preview pane (hidden by default) -->
+  <div class="report-preview-pane" id="reportPreviewPane" style="display:none">
+    <div class="report-preview-header">
+      <button class="btn" onclick="closePreview()">&#x2190; Back</button>
+      <span style="font-size:0.82rem;font-weight:600;color:var(--text)">Report Preview</span>
+      <button class="btn primary" id="reportSendBtn" onclick="sendReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F4E8; Send</button>
+    </div>
+    <iframe id="reportPreviewFrame" style="width:100%;flex:1;border:none;border-radius:8px;background:#0d1117"></iframe>
   </div>
 </div>
 
@@ -1819,11 +1838,16 @@ function openReportModal(projectId){
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
   document.getElementById('reportSendBtn').disabled=false;
-  /* Default date range: 7 days ago to today */
+  /* Default date range: 7 days ago to today (local timezone) */
   var today=new Date();
+  var toStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
   var weekAgo=new Date(today);weekAgo.setDate(weekAgo.getDate()-7);
-  document.getElementById('reportTo').value=today.toISOString().split('T')[0];
-  document.getElementById('reportFrom').value=weekAgo.toISOString().split('T')[0];
+  var fromStr=weekAgo.getFullYear()+'-'+String(weekAgo.getMonth()+1).padStart(2,'0')+'-'+String(weekAgo.getDate()).padStart(2,'0');
+  document.getElementById('reportTo').value=toStr;
+  document.getElementById('reportFrom').value=fromStr;
+  /* Show form, hide preview */
+  document.querySelector('.report-modal').style.display='';
+  document.getElementById('reportPreviewPane').style.display='none';
   document.getElementById('reportModal').classList.remove('hidden');
   setTimeout(function(){document.getElementById('reportEmail').focus()},100);
 }
@@ -1832,6 +1856,30 @@ function closeReportModal(){
   document.getElementById('reportModal').classList.add('hidden');
 }
 document.getElementById('reportModal').addEventListener('click',function(e){if(e.target===this)closeReportModal()});
+
+function previewReport(){
+  var projectId=document.getElementById('reportProjectId').value;
+  var email=document.getElementById('reportEmail').value.trim();
+  var fromDate=document.getElementById('reportFrom').value;
+  var toDate=document.getElementById('reportTo').value;
+  var errEl=document.getElementById('reportError');
+  errEl.textContent='';
+  if(!email){errEl.textContent='Please enter a recipient email.';return}
+  if(!fromDate||!toDate){errEl.textContent='Please select both dates.';return}
+  if(new Date(fromDate)>new Date(toDate)){errEl.textContent='From date must be before To date.';return}
+  /* Load report viewer in iframe */
+  var url='/.netlify/functions/view-report?project='+encodeURIComponent(projectId)+'&from='+fromDate+'&to='+toDate;
+  document.getElementById('reportPreviewFrame').src=url;
+  /* Switch to preview pane */
+  document.querySelector('.report-modal').style.display='none';
+  document.getElementById('reportPreviewPane').style.display='flex';
+}
+
+function closePreview(){
+  document.getElementById('reportPreviewFrame').src='';
+  document.querySelector('.report-modal').style.display='';
+  document.getElementById('reportPreviewPane').style.display='none';
+}
 
 function computeProjectStats(projectId,fromDate,toDate){
   var from=new Date(fromDate+'T00:00:00');
@@ -2282,8 +2330,8 @@ function downloadPdf(projectId){
   if(!project)return;
   var today=new Date();
   var weekAgo=new Date(today);weekAgo.setDate(weekAgo.getDate()-7);
-  var fromDate=weekAgo.toISOString().split('T')[0];
-  var toDate=today.toISOString().split('T')[0];
+  var fromDate=weekAgo.getFullYear()+'-'+String(weekAgo.getMonth()+1).padStart(2,'0')+'-'+String(weekAgo.getDate()).padStart(2,'0');
+  var toDate=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
   var computed=computeProjectStats(projectId,fromDate,toDate);
   if(!computed){showToast('No data available for PDF',true);return}
   var fromLabel=new Date(fromDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
