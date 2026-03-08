@@ -296,6 +296,7 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
           <div style="background:${incidentCount === 0 ? 'rgba(34,197,94,0.1)' : 'rgba(234,179,8,0.1)'};border:1px solid ${incidentCount === 0 ? 'rgba(34,197,94,0.2)' : 'rgba(234,179,8,0.2)'};border-radius:10px;padding:18px 16px">
             <div style="font-size:13px;color:${incidentCount === 0 ? green : yellow};font-weight:600;margin-bottom:4px">${incidentCount === 0 ? '&#x2705; No Issues' : '&#x26A0; Incidents'}</div>
             <div style="font-size:14px;color:${textMain};line-height:1.5"><strong style="color:${incidentCount === 0 ? green : yellow}">${incidentCount}</strong> incident${incidentCount !== 1 ? 's' : ''} ${incidentCount === 0 ? 'this period' : 'detected'}</div>
+            <div style="font-size:11px;color:${textDim};margin-top:4px;font-style:italic">From automated health checks</div>
           </div>
         </td>
       </tr>
