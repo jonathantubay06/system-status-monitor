@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <style>
 :root {
   --bg:       #09090b;
@@ -38,6 +39,26 @@
   --radius-lg:14px;
   --shadow:   0 1px 2px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
 }
+
+/* ── Light theme ── */
+:root.light {
+  --bg:       #f8fafc;
+  --surface:  #ffffff;
+  --surface2: #f1f5f9;
+  --surface3: #e2e8f0;
+  --border:   #e2e8f0;
+  --border2:  #cbd5e1;
+  --text:     #475569;
+  --text-dim: #94a3b8;
+  --text-bright:#0f172a;
+  --input-bg: #ffffff;
+  --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+}
+:root.light .metric { border-color: var(--border); }
+:root.light .card-error .error-friendly { color: #dc2626; }
+:root.light .card-error .error-technical { color: #9a4040; }
+:root.light .log-error .error-friendly { color: #dc2626; }
+:root.light .log-error .error-technical { color: #9a4040; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -759,6 +780,9 @@ body.printing { background: #fff !important; }
 .report-modal .modal-sub { text-align: center; }
 .report-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .report-date-row input[type="date"] { color-scheme: dark; }
+:root.light .report-date-row input[type="date"] { color-scheme: light; }
+:root.light .overlay { background: rgba(0,0,0,0.3); }
+:root.light .panel-overlay { background: rgba(0,0,0,0.2); }
 .report-sending { display: none; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.5rem 0; }
 .report-sending.show { display: flex; }
 .report-sending .spinner {
@@ -775,6 +799,39 @@ body.printing { background: #fff !important; }
   white-space: nowrap;
 }
 .report-btn:hover { border-color: #4C6BCD; color: #4C6BCD; background: rgba(76,107,205,0.08); }
+
+/* ── Theme Toggle ── */
+.theme-toggle {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.15s; flex-shrink: 0;
+}
+.theme-toggle:hover { background: var(--surface3); border-color: var(--border2); color: var(--text-bright); }
+
+/* ── Skeleton Loading ── */
+.skeleton-grid {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1rem;
+}
+.skeleton-card {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: 1.25rem 1.5rem; border-radius: var(--radius-lg);
+  min-height: 260px;
+}
+.skeleton-bar {
+  background: var(--surface2); border-radius: 6px;
+  position: relative; overflow: hidden;
+}
+.skeleton-bar::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+:root.light .skeleton-bar::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04), transparent);
+}
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
 
 /* Footer */
 footer {
@@ -811,6 +868,7 @@ footer a:hover { color: var(--text-bright); }
         <strong id="lastChecked">&mdash;</strong>
         <span id="lastCheckedAgo"></span>
       </div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode" id="themeBtn">&#x1F319;</button>
       <button class="btn" onclick="loadStatus()">Refresh</button>
       <button class="btn ghost" onclick="openAdmin()">Manage</button>
     </div>
@@ -836,7 +894,7 @@ footer a:hover { color: var(--text-bright); }
   <button class="filter-btn" onclick="setFilter('down',this)">Issues</button>
 </div>
 
-<div id="gridWrap"><div class="state-msg">Fetching status data...</div></div>
+<div id="gridWrap"></div>
 
 <div class="incident-wrap" id="incidentWrap" style="display:none">
   <div class="incident-title"><span class="incident-title-icon">&#x26A0;</span> Incident Timeline</div>
@@ -1066,6 +1124,43 @@ footer a:hover { color: var(--text-bright); }
 
 <script>
 var allResults=[], allHistory=[], adminToken=sessionStorage.getItem('adminToken')||'', currentFilter='all', editMode=false;
+
+/* ── Theme Toggle ── */
+(function(){
+  var saved=localStorage.getItem('theme');
+  if(saved==='light')document.documentElement.classList.add('light');
+  updateThemeIcon();
+})();
+function toggleTheme(){
+  document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme',document.documentElement.classList.contains('light')?'light':'dark');
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  var btn=document.getElementById('themeBtn');
+  if(btn)btn.innerHTML=document.documentElement.classList.contains('light')?'&#x2600;&#xFE0F;':'&#x1F319;';
+}
+
+/* ── Skeleton Loading ── */
+function showSkeletons(){
+  var html='<div class="skeleton-grid">';
+  for(var i=0;i<4;i++){
+    html+='<div class="skeleton-card">'+
+      '<div class="skeleton-bar" style="width:55%;height:16px;margin-bottom:8px"></div>'+
+      '<div class="skeleton-bar" style="width:35%;height:12px;margin-bottom:20px"></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">'+
+        '<div class="skeleton-bar" style="height:64px;border-radius:8px"></div>'+
+        '<div class="skeleton-bar" style="height:64px;border-radius:8px"></div>'+
+      '</div>'+
+      '<div class="skeleton-bar" style="width:40%;height:10px;margin-bottom:8px"></div>'+
+      '<div class="skeleton-bar" style="height:24px;margin-bottom:8px"></div>'+
+      '<div class="skeleton-bar" style="width:60%;height:10px"></div>'+
+    '</div>';
+  }
+  html+='</div>';
+  document.getElementById('gridWrap').innerHTML=html;
+}
+showSkeletons();
 
 var sc=function(s){return s==='operational'?'op':s==='down'?'down':s==='degraded'?'deg':'unk'};
 var sl=function(s){return s==='operational'?'Operational':s==='down'?'Down':s==='degraded'?'Degraded':'Unknown'};
@@ -1771,9 +1866,12 @@ function drawRtChart(){
   });
 
   ctx.clearRect(0,0,W,H);
+  var cs=getComputedStyle(document.documentElement);
+  var cBorder=cs.getPropertyValue('--border').trim()||'#27272a';
+  var cDim=cs.getPropertyValue('--text-dim').trim()||'#71717a';
 
   if(!points.length){
-    ctx.fillStyle='#71717a';ctx.font='13px Inter, sans-serif';ctx.textAlign='center';
+    ctx.fillStyle=cDim;ctx.font='13px Inter, sans-serif';ctx.textAlign='center';
     ctx.fillText('No data for this range',W/2,H/2);
     document.getElementById('rtLegend').innerHTML='';
     return;
@@ -1790,12 +1888,12 @@ function drawRtChart(){
   function yPos(ms){return pad.top+plotH-(ms/msMax)*plotH}
 
   /* Grid */
-  ctx.strokeStyle='#27272a';ctx.lineWidth=1;
+  ctx.strokeStyle=cBorder;ctx.lineWidth=1;
   for(var g=0;g<=4;g++){
     var gy=pad.top+(g/4)*plotH;
     ctx.beginPath();ctx.moveTo(pad.left,gy);ctx.lineTo(W-pad.right,gy);ctx.stroke();
     var msLabel=Math.round(msMax*(1-g/4));
-    ctx.fillStyle='#71717a';ctx.font='10px Inter, sans-serif';ctx.textAlign='right';
+    ctx.fillStyle=cDim;ctx.font='10px Inter, sans-serif';ctx.textAlign='right';
     ctx.fillText(msLabel>=1000?(msLabel/1000).toFixed(1)+'s':msLabel+'ms',pad.left-8,gy+3);
   }
 
@@ -1823,7 +1921,7 @@ function drawRtChart(){
 
   /* X-axis */
   var labelCount=rtCurrentRange==='24h'?6:rtCurrentRange==='7d'?7:5;
-  ctx.fillStyle='#71717a';ctx.font='10px Inter, sans-serif';ctx.textAlign='center';
+  ctx.fillStyle=cDim;ctx.font='10px Inter, sans-serif';ctx.textAlign='center';
   for(var l=0;l<labelCount;l++){
     var lt=tMin+(l/(labelCount-1))*(tMax-tMin);
     var lx=xPos(lt);
