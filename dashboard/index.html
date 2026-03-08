@@ -1599,7 +1599,7 @@ function buildCard(r,delay){
         }).join('')+
       '</div>':'')+
     crCardBadge(r.id)+
-    (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<span style="display:flex;gap:0.35rem;position:relative"><button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button><button class="report-btn pdf-btn" onclick="event.stopPropagation();downloadPdf(\''+r.id+'\')">&#x1F4C4; PDF</button><button class="report-btn badge-btn" onclick="event.stopPropagation();toggleBadgePopover(this,\''+r.id+'\')">&#x1F3F7; Badge</button><a class="report-btn" href="/report/'+r.id+'" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none">&#x1F4CA; Report</a></span>':'')+'</div>':'')+
+    (r.alertEmail||adminToken?'<div class="card-alert" style="justify-content:space-between">'+(r.alertEmail?'<span>Alerts &rarr; '+r.alertEmail+'</span>':'<span></span>')+(adminToken?'<span style="display:flex;gap:0.35rem;position:relative"><button class="report-btn" onclick="event.stopPropagation();openReportModal(\''+r.id+'\')">&#x1F4E7; Send Report</button><button class="report-btn pdf-btn" onclick="event.stopPropagation();downloadPdf(\''+r.id+'\')">&#x1F4C4; PDF</button><button class="report-btn badge-btn" onclick="event.stopPropagation();toggleBadgePopover(this,\''+r.id+'\')">&#x1F3F7; Badge</button><a class="report-btn" href="/.netlify/functions/view-report?project='+r.id+'" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none">&#x1F4CA; Report</a></span>':'')+'</div>':'')+
   '</div>';
 }
 
