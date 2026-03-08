@@ -19,13 +19,13 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { recipientEmail, ccEmails, bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
+    const { recipientEmail, ccEmails, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
 
     if (!recipientEmail || !projectName) {
       return { statusCode: 400, headers: ch(), body: JSON.stringify({ error: 'recipientEmail and projectName required' }) };
     }
 
-    const html = generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
+    const html = generateReportHtml({ bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
     const subject = `Health Report: ${projectName} — ${dateRange.from} to ${dateRange.to}`;
 
     /* Support multiple recipients (string or array) */
@@ -130,7 +130,7 @@ function buildClientReportsSection(clientReports, cardBg, borderClr, textMain, t
 }
 
 /* ── HTML Email Generator ── */
-function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports }) {
+function generateReportHtml({ bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports }) {
   const blue = '#4C6BCD';
   const darkBlue = '#4d65ff';
   const lightBlue = '#C5D5F5';
@@ -351,6 +351,12 @@ function generateReportHtml({ bodyMessage, projectName, projectType, projectUrl,
   <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
     <hr style="border:none;border-top:1px solid ${borderClr};margin:0 0 24px"/>
     <div style="font-size:15px;color:${textMain};line-height:1.7">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
+  </td></tr>` : ''}
+
+  <!-- View Online -->
+  ${projectId ? `
+  <tr><td style="background:${cardBg};padding:16px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr};text-align:center">
+    <a href="https://projecthealthmonitoring.netlify.app/report/${projectId}${dateRange.rawFrom ? '?from=' + dateRange.rawFrom + '&to=' + (dateRange.rawTo || '') : ''}" style="display:inline-block;background:${darkBlue};color:#ffffff;font-size:13px;font-weight:600;padding:10px 24px;border-radius:8px;text-decoration:none">View Report Online &#x2192;</a>
   </td></tr>` : ''}
 
   <!-- Footer -->

@@ -684,6 +684,28 @@ header {
 .incident-reason {
   font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; font-style: italic;
 }
+.incident-note {
+  background: var(--accent-bg); border: 1px solid rgba(167,139,250,0.2); border-radius: 6px;
+  padding: 0.4rem 0.6rem; margin-top: 0.35rem; font-size: 0.73rem; color: var(--accent); line-height: 1.4;
+}
+.incident-note-label { font-weight: 600; margin-right: 0.3rem; }
+.incident-note-date { color: var(--text-dim); font-size: 0.65rem; margin-left: 0.3rem; }
+.add-note-btn {
+  background: none; border: 1px dashed var(--border2); color: var(--text-dim);
+  font-family: inherit; font-size: 0.68rem; padding: 0.25rem 0.5rem; border-radius: 4px;
+  cursor: pointer; margin-top: 0.35rem; transition: all 0.15s;
+}
+.add-note-btn:hover { border-color: var(--accent); color: var(--accent); }
+.note-form { margin-top: 0.35rem; display: flex; gap: 0.3rem; }
+.note-form input {
+  flex: 1; background: var(--input-bg); border: 1px solid var(--border); color: var(--text);
+  font-family: inherit; font-size: 0.73rem; padding: 0.3rem 0.5rem; border-radius: 4px;
+}
+.note-form input:focus { outline: none; border-color: var(--accent); }
+.note-form button {
+  background: var(--accent); border: none; color: #fff; font-family: inherit;
+  font-size: 0.68rem; font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;
+}
 
 /* ── Response Time Graph ── */
 .rt-range-bar {
@@ -1200,7 +1222,7 @@ footer a:hover { color: var(--text-bright); }
 <div class="toast" id="toast"></div>
 
 <script>
-var allResults=[], allHistory=[], adminToken=sessionStorage.getItem('adminToken')||'', currentFilter='all', editMode=false;
+var allResults=[], allHistory=[], allIncidentNotes=[], adminToken=sessionStorage.getItem('adminToken')||'', currentFilter='all', editMode=false;
 
 /* ── Theme Toggle ── */
 (function(){
@@ -1422,15 +1444,17 @@ function showToast(msg,isErr){var t=document.getElementById('toast');t.textConte
 async function loadStatus(){
   try{
     var base=(location.hostname==='localhost'?'':'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/');
-    var[sRes,hRes,crRes]=await Promise.all([
+    var[sRes,hRes,crRes,notesRes]=await Promise.all([
       fetch(base+'/status.json?t='+Date.now()),
       fetch(base+'/history.json?t='+Date.now()).catch(function(){return{ok:false}}),
       fetch(base+'/client-reports.json?t='+Date.now()).catch(function(){return{ok:false}}),
+      fetch(base+'/incident-notes.json?t='+Date.now()).catch(function(){return{ok:false}}),
     ]);
     if(!sRes.ok)throw new Error('status.json not found');
     var status=await sRes.json();
     allHistory=hRes.ok?await hRes.json():[];
     allClientReports=crRes&&crRes.ok?await crRes.json():[];
+    allIncidentNotes=notesRes&&notesRes.ok?await notesRes.json():[];
     allResults=status.results||[];
 
     /* ── Empty state: waiting for first check ── */
@@ -1842,10 +1866,11 @@ async function sendReport(){
         recipientEmail:toEmails,
         ccEmails:ccEmails,
         bodyMessage:message,
+        projectId:projectId,
         projectName:project.name,
         projectType:project.type,
         projectUrl:maskUrl(project.url),
-        dateRange:{from:fromLabel,to:toLabel},
+        dateRange:{from:fromLabel,to:toLabel,rawFrom:fromDate,rawTo:toDate},
         stats:computed.stats,
         components:computed.components,
         incidents:computed.incidents,
@@ -1916,6 +1941,12 @@ function renderIncidentTimeline(){
     var ongoing=!inc.end;
     var fe=friendlyError(inc.error);
     var isLast=i===Math.min(incidents.length,20)-1;
+    var notes=allIncidentNotes.filter(function(n){return n.projectId===inc.projectId&&n.incidentStart===inc.start});
+    var notesHtml=notes.map(function(n){
+      var d=new Date(n.addedAt);var ds=d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      return'<div class="incident-note"><span class="incident-note-label">Note:</span>'+n.note.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'<span class="incident-note-date">'+ds+'</span></div>';
+    }).join('');
+    var noteBtn=adminToken&&!publicViewId?'<button class="add-note-btn" onclick="showNoteForm(this,\''+inc.projectId+'\',\''+inc.start+'\')">+ Add note</button>':'';
     return'<div class="incident-item">'+
       '<div class="incident-dot-col"><span class="incident-dot '+cls+'"></span>'+(isLast?'':'<span class="incident-line"></span>')+'</div>'+
       '<div class="incident-content">'+
@@ -1929,9 +1960,41 @@ function renderIncidentTimeline(){
           ' &middot; '+durStr+
         '</div>'+
         (fe?'<div class="incident-reason">'+fe+'</div>':'')+
+        notesHtml+noteBtn+
       '</div></div>';
   }).join('');
   document.getElementById('incidentList').innerHTML=html;
+}
+
+function showNoteForm(btn,pid,start){
+  var existing=btn.parentNode.querySelector('.note-form');
+  if(existing){existing.remove();return}
+  var form=document.createElement('div');form.className='note-form';
+  form.innerHTML='<input type="text" placeholder="Root cause or resolution note..." id="noteInput_'+pid+'"/><button onclick="saveIncidentNote(\''+pid+'\',\''+start+'\',this)">Save</button>';
+  btn.after(form);
+  form.querySelector('input').focus();
+}
+async function saveIncidentNote(pid,start,btn){
+  var form=btn.parentNode;
+  var input=form.querySelector('input');
+  var note=input.value.trim();
+  if(!note){input.focus();return}
+  btn.disabled=true;btn.textContent='Saving...';
+  try{
+    var res=await fetch('/.netlify/functions/save-incident-note',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+adminToken,'Content-Type':'application/json'},
+      body:JSON.stringify({projectId:pid,incidentStart:start,note:note})
+    });
+    if(!res.ok)throw new Error('Failed to save');
+    var data=await res.json();
+    allIncidentNotes=data.notes||allIncidentNotes;
+    renderIncidentTimeline();
+    showToast('Note saved');
+  }catch(e){
+    showToast('Error: '+e.message,true);
+    btn.disabled=false;btn.textContent='Save';
+  }
 }
 
 /* ── Client-Reported Issues (per-project modal) ── */
