@@ -800,6 +800,17 @@ body.printing { background: #fff !important; }
 }
 .report-btn:hover { border-color: #4C6BCD; color: #4C6BCD; background: rgba(76,107,205,0.08); }
 
+/* ── Public Status Page ── */
+body.public-view .btn.ghost,
+body.public-view .filter-bar,
+body.public-view .history-wrap,
+body.public-view .card-alert,
+body.public-view .admin-panel,
+body.public-view .panel-overlay { display: none !important; }
+body.public-view .banner-sub::after {
+  content: ' · Public status page'; font-style: italic;
+}
+
 /* ── SLA Bar ── */
 .sla-bar-wrap {
   margin-bottom: 1rem; padding: 0.6rem 0.85rem;
@@ -1164,6 +1175,10 @@ function updateThemeIcon(){
   if(btn)btn.innerHTML=document.documentElement.classList.contains('light')?'&#x2600;&#xFE0F;':'&#x1F319;';
 }
 
+/* ── Public Status Page ── */
+var publicViewId=(new URLSearchParams(location.search)).get('view')||'';
+if(publicViewId){document.body.classList.add('public-view')}
+
 /* ── Skeleton Loading ── */
 function showSkeletons(){
   var html='<div class="skeleton-grid">';
@@ -1425,11 +1440,15 @@ function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn
 
 function renderCards(){
   var filtered=allResults.filter(function(r){
+    if(publicViewId)return r.id===publicViewId;
     if(currentFilter==='all')return true;
     if(currentFilter==='down')return r.status!=='operational';
     return r.type===currentFilter;
   });
-  if(!filtered.length){document.getElementById('gridWrap').innerHTML='<div class="state-msg">No projects match this filter.</div>';return}
+  if(!filtered.length){
+    document.getElementById('gridWrap').innerHTML='<div class="state-msg">'+(publicViewId?'Project not found.':'No projects match this filter.')+'</div>';
+    return;
+  }
   document.getElementById('gridWrap').innerHTML='<div class="grid">'+filtered.map(function(r,i){return buildCard(r,i*50)}).join('')+'</div>';
 }
 
@@ -1778,6 +1797,7 @@ function detectIncidents(){
 function renderIncidentTimeline(){
   var wrap=document.getElementById('incidentWrap');
   var incidents=detectIncidents();
+  if(publicViewId)incidents=incidents.filter(function(inc){return inc.projectId===publicViewId});
   if(!incidents.length){
     wrap.style.display='block';
     document.getElementById('incidentList').innerHTML='<div class="incident-empty">&#x2705; No incidents detected in recent history</div>';
