@@ -25,6 +25,7 @@ exports.handler = async () => {
       checkPage:    r.fields['Check Page'] || '',
       loginEmail:   r.fields['Login Email'] || '',
       loginPassword:r.fields['Login Password'] || '',
+      group:        r.fields['Client'] || '',
     }));
     return {
       statusCode: 200,

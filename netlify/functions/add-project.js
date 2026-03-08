@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     const body = JSON.parse(event.body||'{}');
     if (body.__dryRun) return { statusCode:200, headers:ch(), body:JSON.stringify({ ok:true }) };
 
-    const { name, type, url, alertEmail, checkPage, loginEmail, loginPassword } = body;
+    const { name, type, url, alertEmail, checkPage, loginEmail, loginPassword, group } = body;
     if (!name||!type||!url) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'name, type and url required' }) };
 
     const res = await fetch(BASE_URL, {
@@ -30,6 +30,7 @@ exports.handler = async (event) => {
         'Check Page': checkPage||'',
         'Login Email': loginEmail||'',
         'Login Password': loginPassword||'',
+        'Client': group||'',
       }}]}),
     });
     const text = await res.text();

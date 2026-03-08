@@ -27,6 +27,7 @@ async function fetchProjects() {
     checkPage:    r.fields['Check Page'] || '',
     loginEmail:   r.fields['Login Email'] || '',
     loginPassword:r.fields['Login Password'] || '',
+    group:        r.fields['Client'] || '',
   })).filter(p => p.name && p.url);
 }
 

@@ -189,6 +189,22 @@ header {
 /* ── CSV Export ── */
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
 .section-header .section-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+/* ── Client Group Headers ── */
+.client-group-header {
+  font-size: 0.78rem; font-weight: 600; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.5rem 0; margin-top: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.client-group-header:first-child { margin-top: 0; }
+.client-group-header::before {
+  content: ''; flex: 0 0 3px; height: 14px; border-radius: 2px; background: var(--accent);
+}
+.client-group-header .group-count {
+  font-size: 0.68rem; font-weight: 500; color: var(--text-dim);
+  background: var(--surface2); padding: 1px 6px; border-radius: 4px; margin-left: auto;
+}
 .csv-btn {
   background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
   font-family: inherit; font-size: 0.7rem; padding: 0.3rem 0.65rem; border-radius: 6px;
@@ -1124,6 +1140,11 @@ footer a:hover { color: var(--text-bright); }
         <div class="form-hint">Credentials used to log in to the website</div>
       </div>
       <div class="form-group">
+        <label class="form-label">Client Group <span style="color:var(--text-dim)">(optional)</span></label>
+        <input type="text" class="form-input" id="fGroup" placeholder="e.g. Jordan Ranch"/>
+        <div class="form-hint">Group projects under a client name on the dashboard</div>
+      </div>
+      <div class="form-group">
         <label class="form-label">Alert Email</label>
         <input type="email" class="form-input" id="fEmail" placeholder="you@email.com"/>
       </div>
@@ -1580,6 +1601,26 @@ function renderCards(){
     document.getElementById('gridWrap').innerHTML='<div class="state-msg">'+(publicViewId?'Project not found.':'No projects match this filter.')+'</div>';
     return;
   }
+  /* Group by client when "All" and not public view */
+  if(currentFilter==='all'&&!publicViewId){
+    var groups={};var ungrouped=[];
+    filtered.forEach(function(r){
+      if(r.group){if(!groups[r.group])groups[r.group]=[];groups[r.group].push(r)}else ungrouped.push(r)
+    });
+    var groupNames=Object.keys(groups).sort();
+    if(groupNames.length>0){
+      var html='';var idx=0;
+      groupNames.forEach(function(g){
+        html+='<div class="client-group-header">'+g+'<span class="group-count">'+groups[g].length+'</span></div>';
+        html+='<div class="grid">'+groups[g].map(function(r){return buildCard(r,(idx++)*50)}).join('')+'</div>';
+      });
+      if(ungrouped.length){
+        html+='<div class="client-group-header">Ungrouped<span class="group-count">'+ungrouped.length+'</span></div>';
+        html+='<div class="grid">'+ungrouped.map(function(r){return buildCard(r,(idx++)*50)}).join('')+'</div>';
+      }
+      document.getElementById('gridWrap').innerHTML=html;return;
+    }
+  }
   document.getElementById('gridWrap').innerHTML='<div class="grid">'+filtered.map(function(r,i){return buildCard(r,i*50)}).join('')+'</div>';
 }
 
@@ -1630,7 +1671,7 @@ async function loadAdminProjects(){
     list.innerHTML=data.projects.map(function(p){
       var status=allResults.find(function(r){return r.id===p.id});
       var dotCls=status?sc(status.status):'unk';
-      return'<div class="admin-project-item"><div class="api-dot '+dotCls+'"></div><div class="api-info"><div class="api-name">'+p.name+'</div><div class="api-meta">'+p.type+' &middot; '+interval+(p.alertEmail?' &middot; '+p.alertEmail:'')+'</div></div><div class="api-actions"><button class="icon-btn edit-btn" title="Edit" onclick=\'fillEditForm('+JSON.stringify(p)+')\'>\u270E</button><button class="icon-btn del-btn" title="Delete" onclick="deleteProject('+p.airtableId+',\''+p.name.replace(/'/g,"\\'")+'\')">&#x2715;</button></div></div>';
+      return'<div class="admin-project-item"><div class="api-dot '+dotCls+'"></div><div class="api-info"><div class="api-name">'+p.name+'</div><div class="api-meta">'+p.type+' &middot; '+interval+(p.group?' &middot; '+p.group:'')+(p.alertEmail?' &middot; '+p.alertEmail:'')+'</div></div><div class="api-actions"><button class="icon-btn edit-btn" title="Edit" onclick=\'fillEditForm('+JSON.stringify(p)+')\'>\u270E</button><button class="icon-btn del-btn" title="Delete" onclick="deleteProject('+p.airtableId+',\''+p.name.replace(/'/g,"\\'")+'\')">&#x2715;</button></div></div>';
     }).join('');
   }catch(e){
     var isLocal=location.hostname==='localhost'||location.hostname==='127.0.0.1';
@@ -1659,6 +1700,7 @@ function fillEditForm(p){
   document.getElementById('fCheckPage').value=p.checkPage||'';
   document.getElementById('fLoginEmail').value=p.loginEmail||'';
   document.getElementById('fLoginPassword').value=p.loginPassword||'';
+  document.getElementById('fGroup').value=p.group||'';
   document.getElementById('submitBtn').textContent='Save Changes';
   document.getElementById('formTitle').textContent='EDITING';
   document.getElementById('formSectionTitle').textContent='Edit Project';
@@ -1667,7 +1709,7 @@ function fillEditForm(p){
 
 function resetForm(){
   editMode=false;
-  ['editAirtableId','fName','fUrl','fEmail','fCheckPage','fLoginEmail','fLoginPassword'].forEach(function(id){document.getElementById(id).value=''});
+  ['editAirtableId','fName','fUrl','fEmail','fCheckPage','fLoginEmail','fLoginPassword','fGroup'].forEach(function(id){document.getElementById(id).value=''});
   document.getElementById('fType').value='softr';
   document.getElementById('formError').textContent='';
   document.getElementById('submitBtn').textContent='Add Project';
@@ -1677,12 +1719,12 @@ function resetForm(){
 }
 
 async function submitProject(){
-  var name=document.getElementById('fName').value.trim(),type=document.getElementById('fType').value,url=document.getElementById('fUrl').value.trim(),email=document.getElementById('fEmail').value.trim(),checkPage=document.getElementById('fCheckPage').value.trim(),loginEmail=document.getElementById('fLoginEmail').value.trim(),loginPassword=document.getElementById('fLoginPassword').value.trim(),errEl=document.getElementById('formError');
+  var name=document.getElementById('fName').value.trim(),type=document.getElementById('fType').value,url=document.getElementById('fUrl').value.trim(),email=document.getElementById('fEmail').value.trim(),checkPage=document.getElementById('fCheckPage').value.trim(),loginEmail=document.getElementById('fLoginEmail').value.trim(),loginPassword=document.getElementById('fLoginPassword').value.trim(),group=document.getElementById('fGroup').value.trim(),errEl=document.getElementById('formError');
   if(!name||!url){errEl.textContent='Name and URL are required.';return}
   errEl.textContent='';var btn=document.getElementById('submitBtn');btn.textContent='Saving...';btn.disabled=true;
   try{
     var endpoint=editMode?'/.netlify/functions/update-project':'/.netlify/functions/add-project';
-    var body={name:name,type:type,url:url,alertEmail:email,checkPage:checkPage,loginEmail:loginEmail,loginPassword:loginPassword};
+    var body={name:name,type:type,url:url,alertEmail:email,checkPage:checkPage,loginEmail:loginEmail,loginPassword:loginPassword,group:group};
     if(editMode)body.airtableId=document.getElementById('editAirtableId').value;
     var res=await fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+adminToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
     var data=await res.json();if(!res.ok)throw new Error(data.error||'Failed');
