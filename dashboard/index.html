@@ -165,6 +165,35 @@ header {
 .filter-btn:hover { color: var(--text); background: var(--surface2); }
 .filter-btn.active { background: var(--surface2); border-color: var(--border); color: var(--text-bright); }
 
+/* ── Date Range Filter ── */
+.date-range-bar {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem 1rem;
+  display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+}
+.date-range-bar label { font-size: 0.72rem; color: var(--text-dim); font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
+.date-range-bar input[type="date"] {
+  background: var(--input-bg); border: 1px solid var(--border); color: var(--text);
+  font-family: inherit; font-size: 0.78rem; padding: 0.3rem 0.5rem; border-radius: 6px;
+}
+.date-range-bar input[type="date"]:focus { outline: none; border-color: var(--accent); }
+.date-range-bar .dr-btn {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  font-family: inherit; font-size: 0.72rem; padding: 0.32rem 0.7rem; border-radius: 6px;
+  cursor: pointer; font-weight: 500; transition: all 0.15s;
+}
+.date-range-bar .dr-btn:hover { border-color: var(--border2); color: var(--text-bright); }
+.date-range-bar .dr-active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+
+/* ── CSV Export ── */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+.section-header .section-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.csv-btn {
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text-dim);
+  font-family: inherit; font-size: 0.7rem; padding: 0.3rem 0.65rem; border-radius: 6px;
+  cursor: pointer; font-weight: 500; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.3rem;
+}
+.csv-btn:hover { border-color: var(--border2); color: var(--text-bright); }
+
 /* ── Cards ── */
 .grid {
   max-width: 1200px; margin: 0 auto; padding: 0 2rem;
@@ -780,7 +809,8 @@ body.printing { background: #fff !important; }
 .report-modal .modal-sub { text-align: center; }
 .report-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .report-date-row input[type="date"] { color-scheme: dark; }
-:root.light .report-date-row input[type="date"] { color-scheme: light; }
+:root.light .report-date-row input[type="date"],
+:root.light .date-range-bar input[type="date"] { color-scheme: light; }
 :root.light .overlay { background: rgba(0,0,0,0.3); }
 :root.light .panel-overlay { background: rgba(0,0,0,0.2); }
 .report-sending { display: none; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.5rem 0; }
@@ -803,6 +833,7 @@ body.printing { background: #fff !important; }
 /* ── Public Status Page ── */
 body.public-view .btn.ghost,
 body.public-view .filter-bar,
+body.public-view .date-range-bar,
 body.public-view .history-wrap,
 body.public-view .card-alert,
 body.public-view .admin-panel,
@@ -928,6 +959,15 @@ footer a:hover { color: var(--text-bright); }
   <button class="filter-btn" onclick="setFilter('down',this)">Issues</button>
 </div>
 
+<div class="date-range-bar" id="dateRangeBar" style="display:none">
+  <label>From</label>
+  <input type="date" id="drFrom"/>
+  <label>To</label>
+  <input type="date" id="drTo"/>
+  <button class="dr-btn" onclick="applyDateFilter()">Apply</button>
+  <button class="dr-btn" id="drClearBtn" onclick="clearDateFilter()" style="display:none">Clear</button>
+</div>
+
 <div id="gridWrap"></div>
 
 <div class="incident-wrap" id="incidentWrap" style="display:none">
@@ -956,7 +996,10 @@ footer a:hover { color: var(--text-bright); }
 </div>
 
 <div class="history-wrap">
-  <div class="section-title">Recent checks</div>
+  <div class="section-header">
+    <div class="section-title">Recent checks</div>
+    <button class="csv-btn" onclick="exportCsv()" title="Download history as CSV">&#x2B07; CSV</button>
+  </div>
   <div class="history-scroll">
     <table class="history-table">
       <thead><tr id="historyHead"></tr></thead>
@@ -1179,6 +1222,59 @@ function updateThemeIcon(){
 var publicViewId=(new URLSearchParams(location.search)).get('view')||'';
 if(publicViewId){document.body.classList.add('public-view')}
 
+/* ── Date Range Filter ── */
+var dateFilterFrom=null, dateFilterTo=null;
+function filteredHistory(){
+  if(!dateFilterFrom&&!dateFilterTo)return allHistory;
+  return allHistory.filter(function(h){
+    var t=new Date(h.timestamp).getTime();
+    if(dateFilterFrom&&t<dateFilterFrom)return false;
+    if(dateFilterTo&&t>dateFilterTo)return false;
+    return true;
+  });
+}
+function applyDateFilter(){
+  var from=document.getElementById('drFrom').value;
+  var to=document.getElementById('drTo').value;
+  if(!from&&!to){showToast('Pick at least one date',true);return}
+  dateFilterFrom=from?new Date(from+'T00:00:00').getTime():null;
+  dateFilterTo=to?new Date(to+'T23:59:59').getTime():null;
+  document.getElementById('drClearBtn').style.display='';
+  document.querySelector('.dr-btn').classList.add('dr-active');
+  renderCards();renderHistory();renderIncidentTimeline();
+}
+function clearDateFilter(){
+  dateFilterFrom=null;dateFilterTo=null;
+  document.getElementById('drFrom').value='';document.getElementById('drTo').value='';
+  document.getElementById('drClearBtn').style.display='none';
+  document.querySelector('.dr-btn').classList.remove('dr-active');
+  renderCards();renderHistory();renderIncidentTimeline();
+}
+
+/* ── CSV Export ── */
+function exportCsv(){
+  var hist=filteredHistory();
+  if(!hist.length){showToast('No history to export',true);return}
+  var ids=allResults.map(function(r){return r.id});
+  var names=allResults.map(function(r){return r.name});
+  var header=['Timestamp'];
+  names.forEach(function(n){header.push(n+' Status',n+' Response (ms)')});
+  var rows=[header.join(',')];
+  hist.slice().reverse().forEach(function(e){
+    var row=['"'+e.timestamp+'"'];
+    ids.forEach(function(id){
+      var r=(e.results||[]).find(function(x){return x.id===id});
+      row.push(r?r.status:'',r?r.responseMs:'');
+    });
+    rows.push(row.join(','));
+  });
+  var blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='status-history'+(dateFilterFrom||dateFilterTo?'-filtered':'')+'.csv';
+  a.click();URL.revokeObjectURL(a.href);
+  showToast('CSV downloaded');
+}
+
 /* ── Skeleton Loading ── */
 function showSkeletons(){
   var html='<div class="skeleton-grid">';
@@ -1244,35 +1340,40 @@ function confirmedStatus(id,idx){
   return'operational';
 }
 function uptime(id){
-  var e=allHistory.flatMap(function(h){return(h.results||[]).filter(function(r){return r.id===id})});
+  var hist=filteredHistory();
+  var e=hist.flatMap(function(h){return(h.results||[]).filter(function(r){return r.id===id})});
   if(!e.length)return{pct:'--',label:'No data'};
   var confirmed=0;
-  allHistory.forEach(function(h,i){var s=confirmedStatus(id,i);if(s==='operational')confirmed++});
-  var pct=(confirmed/allHistory.length)*100;
+  hist.forEach(function(h){var i=allHistory.indexOf(h);var s=confirmedStatus(id,i);if(s==='operational')confirmed++});
+  var pct=(confirmed/hist.length)*100;
   var label=pct>=99.5?'Excellent':pct>=95?'Good':pct>=80?'Fair':'Poor';
   return{pct:pct.toFixed(1)+'%',label:label};
 }
 function resLabel(ms){return ms<2000?'Fast':ms<5000?'Normal':ms<15000?'Slow':'Very slow'}
 function sparkline(id){
-  var start=Math.max(0,allHistory.length-48);
-  var bars=allHistory.slice(-48).map(function(e,i){
+  var hist=filteredHistory();
+  var start48=Math.max(0,hist.length-48);
+  var slice=hist.slice(-48);
+  var bars=slice.map(function(e){
+    var i=allHistory.indexOf(e);
     var r=(e.results||[]).find(function(r){return r.id===id});
-    var s=confirmedStatus(id,start+i);
+    var s=confirmedStatus(id,i);
     return'<div class="sb '+(r?sc(s):'unk')+'" title="'+fmtS(e.timestamp)+(r?': '+(friendly[s]||s)+' ('+r.responseMs+'ms)':'')+'"></div>';
   });
   while(bars.length<48)bars.unshift('<div class="sb unk"></div>');
   return bars.join('');
 }
 function sparkSummary(id){
-  var start=Math.max(0,allHistory.length-48);
-  var entries=allHistory.slice(-48);
+  var hist=filteredHistory();
+  var entries=hist.slice(-48);
   if(!entries.length)return'';
   var ok=0,total=0;
-  entries.forEach(function(e,i){
+  entries.forEach(function(e){
+    var i=allHistory.indexOf(e);
     var r=(e.results||[]).find(function(r){return r.id===id});
     if(!r)return;
     total++;
-    if(confirmedStatus(id,start+i)==='operational')ok++;
+    if(confirmedStatus(id,i)==='operational')ok++;
   });
   if(!total)return'';
   var fail=total-ok;
@@ -1358,6 +1459,7 @@ async function loadStatus(){
     document.getElementById('bannerStats').innerHTML='<div><strong>'+op+'</strong>Healthy</div><div><strong>'+deg+'</strong>Degraded</div><div><strong>'+down+'</strong>Down</div>';
 
     document.getElementById('filterBar').style.display='flex';
+    if(!publicViewId)document.getElementById('dateRangeBar').style.display='flex';
     renderCards();
     renderIncidentTimeline();
     renderHistory();
@@ -1457,9 +1559,10 @@ var historyLimit=10;
 function renderHistory(){
   if(!allResults.length){document.getElementById('historyBody').innerHTML='<tr><td style="color:var(--text-dim);padding:1rem">No history yet — waiting for first check.</td></tr>';return;}
   document.getElementById('historyHead').innerHTML='<th>Time</th>'+allResults.map(function(r){return'<th>'+r.name+'</th>'}).join('');
-  var recent=allHistory.slice(-historyLimit).reverse();
-  var rows=recent.map(function(e,i){
-    var idx=allHistory.length-1-i;
+  var hist=filteredHistory();
+  var recent=hist.slice(-historyLimit).reverse();
+  var rows=recent.map(function(e){
+    var idx=allHistory.indexOf(e);
     var cells=allResults.map(function(r){
       var found=(e.results||[]).find(function(x){return x.id===r.id});
       if(!found)return'<td style="color:var(--text-dim)">--</td>';
@@ -1467,10 +1570,11 @@ function renderHistory(){
     });
     return'<tr class="clickable" onclick="openLogModal('+idx+')"><td>'+fmt(e.timestamp)+'</td>'+cells.join('')+'</tr>';
   });
-  var more=allHistory.length>historyLimit?'<tr><td colspan="'+(allResults.length+1)+'" style="text-align:center;padding:0.7rem 0"><button class="btn" style="font-size:0.72rem" onclick="loadMoreHistory()">Show more ('+(allHistory.length-historyLimit)+' older)</button></td></tr>':'';
-  document.getElementById('historyBody').innerHTML=(rows.join('')||'<tr><td colspan="10" style="color:var(--text-dim)">No history yet.</td></tr>')+more;
+  var totalHist=hist.length;
+  var more=totalHist>historyLimit?'<tr><td colspan="'+(allResults.length+1)+'" style="text-align:center;padding:0.7rem 0"><button class="btn" style="font-size:0.72rem" onclick="loadMoreHistory()">Show more ('+(totalHist-historyLimit)+' older)</button></td></tr>':'';
+  document.getElementById('historyBody').innerHTML=(rows.join('')||'<tr><td colspan="10" style="color:var(--text-dim)">No history'+(dateFilterFrom||dateFilterTo?' in selected range':' yet')+'.</td></tr>')+more;
 }
-function loadMoreHistory(){historyLimit=Math.min(historyLimit+20,allHistory.length);renderHistory()}
+function loadMoreHistory(){historyLimit=Math.min(historyLimit+20,filteredHistory().length);renderHistory()}
 
 function openAdmin(){if(adminToken){openAdminPanel();return}document.getElementById('loginModal').classList.remove('hidden');setTimeout(function(){document.getElementById('loginPassword').focus()},100)}
 function closeLogin(){document.getElementById('loginModal').classList.add('hidden');document.getElementById('loginPassword').value='';document.getElementById('loginError').textContent=''}
