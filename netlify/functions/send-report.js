@@ -19,13 +19,13 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { recipientEmail, ccEmails, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
+    const { recipientEmail, ccEmails, greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
 
     if (!recipientEmail || !projectName) {
       return { statusCode: 400, headers: ch(), body: JSON.stringify({ error: 'recipientEmail and projectName required' }) };
     }
 
-    const html = generateReportHtml({ bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
+    const html = generateReportHtml({ greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
     const subject = `Health Report: ${projectName} — ${dateRange.from} to ${dateRange.to}`;
 
     /* Support multiple recipients (string or array) */
@@ -130,7 +130,8 @@ function buildClientReportsSection(clientReports, cardBg, borderClr, textMain, t
 }
 
 /* ── HTML Email Generator ── */
-function generateReportHtml({ bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports }) {
+function generateReportHtml({ greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports }) {
+  const greetText = (greeting || 'Hi,').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const blue = '#4C6BCD';
   const darkBlue = '#4d65ff';
   const lightBlue = '#C5D5F5';
@@ -250,6 +251,13 @@ function generateReportHtml({ bodyMessage, projectId, projectName, projectType, 
     </tr></table>
   </td></tr>
 
+  <!-- Greeting + Body message -->
+  <tr><td style="background:${cardBg};padding:28px 40px ${bodyMessage ? '0' : '28px'};border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+    <div style="font-size:16px;color:${textMain};font-weight:600;margin-bottom:12px">${greetText}</div>
+    ${bodyMessage ? `<div style="font-size:15px;color:${textMain};line-height:1.7;margin-bottom:8px">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
+    <hr style="border:none;border-top:1px solid ${borderClr};margin:20px 0 0"/>` : `<div style="font-size:15px;color:${textMain};line-height:1.7">Please find the health report for <strong>${projectName}</strong> below.</div>`}
+  </td></tr>
+
   <!-- Big stat numbers -->
   <tr><td style="background:${cardBg};padding:32px 40px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
     <table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>
@@ -346,12 +354,14 @@ function generateReportHtml({ bodyMessage, projectId, projectName, projectType, 
   <!-- Client-Reported Issues -->
   ${buildClientReportsSection(clientReports, cardBg, borderClr, textMain, textDim)}
 
-  <!-- Body message -->
-  ${bodyMessage ? `
-  <tr><td style="background:${cardBg};padding:28px 40px 0;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
-    <hr style="border:none;border-top:1px solid ${borderClr};margin:0 0 24px"/>
-    <div style="font-size:15px;color:${textMain};line-height:1.7">${bodyMessage.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
-  </td></tr>` : ''}
+  <!-- Sender signature -->
+  <tr><td style="background:${cardBg};padding:24px 40px 8px;border-left:1px solid ${borderClr};border-right:1px solid ${borderClr}">
+    <hr style="border:none;border-top:1px solid ${borderClr};margin:0 0 20px"/>
+    <div style="font-size:14px;color:${textMain};line-height:1.6">
+      Best regards,<br/>
+      <strong style="color:${lightBlue}">SentryXP Team</strong>
+    </div>
+  </td></tr>
 
   <!-- View Online -->
   ${projectId ? `

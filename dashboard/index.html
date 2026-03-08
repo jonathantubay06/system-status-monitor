@@ -1228,6 +1228,11 @@ footer a:hover { color: var(--text-bright); }
       </div>
     </div>
     <div class="form-group">
+      <label class="form-label">Greeting</label>
+      <input type="text" class="form-input" id="reportGreeting" placeholder="Hi," value="Hi,"/>
+      <div class="form-hint">Personalize: "Hi John," or "Hi Jordan Ranch Team,"</div>
+    </div>
+    <div class="form-group">
       <label class="form-label">Message to Client</label>
       <textarea class="form-input" id="reportMessage" rows="5" style="resize:vertical;line-height:1.5"></textarea>
       <div class="form-hint">This message will appear at the top of the email report</div>
@@ -1825,7 +1830,7 @@ document.getElementById('logModal').addEventListener('click',function(e){if(e.ta
 function togglePw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.classList.add('active')}else{i.type='password';btn.classList.remove('active')}i.focus()}
 
 /* ── Report Feature ── */
-var defaultReportMessage="Hi,\n\nHere's your website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.\n\nBest regards,\nSentryXP Team";
+var defaultReportMessage="Here's your website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.";
 
 function openReportModal(projectId){
   var project=allResults.find(function(r){return r.id===projectId});
@@ -1834,6 +1839,7 @@ function openReportModal(projectId){
   document.getElementById('reportModalSub').textContent=project.name;
   document.getElementById('reportEmail').value=project.alertEmail||'';
   document.getElementById('reportCC').value='';
+  document.getElementById('reportGreeting').value='Hi,';
   document.getElementById('reportMessage').value=defaultReportMessage;
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
@@ -1858,30 +1864,6 @@ function closeReportModal(){
   document.querySelector('.report-modal').style.display='';
 }
 document.getElementById('reportModal').addEventListener('click',function(e){if(e.target===this)closeReportModal()});
-
-function previewReport(){
-  var projectId=document.getElementById('reportProjectId').value;
-  var email=document.getElementById('reportEmail').value.trim();
-  var fromDate=document.getElementById('reportFrom').value;
-  var toDate=document.getElementById('reportTo').value;
-  var errEl=document.getElementById('reportError');
-  errEl.textContent='';
-  if(!email){errEl.textContent='Please enter a recipient email.';return}
-  if(!fromDate||!toDate){errEl.textContent='Please select both dates.';return}
-  if(new Date(fromDate)>new Date(toDate)){errEl.textContent='From date must be before To date.';return}
-  /* Load report viewer in iframe */
-  var url='/.netlify/functions/view-report?project='+encodeURIComponent(projectId)+'&from='+fromDate+'&to='+toDate;
-  document.getElementById('reportPreviewFrame').src=url;
-  /* Switch to preview pane */
-  document.querySelector('.report-modal').style.display='none';
-  document.getElementById('reportPreviewPane').style.display='flex';
-}
-
-function closePreview(){
-  document.getElementById('reportPreviewFrame').src='';
-  document.querySelector('.report-modal').style.display='';
-  document.getElementById('reportPreviewPane').style.display='none';
-}
 
 function computeProjectStats(projectId,fromDate,toDate){
   var from=new Date(fromDate+'T00:00:00');
@@ -1943,6 +1925,7 @@ async function sendReport(){
   var projectId=document.getElementById('reportProjectId').value;
   var email=document.getElementById('reportEmail').value.trim();
   var ccRaw=document.getElementById('reportCC').value.trim();
+  var greeting=document.getElementById('reportGreeting').value.trim()||'Hi,';
   var message=document.getElementById('reportMessage').value.trim();
   var fromDate=document.getElementById('reportFrom').value;
   var toDate=document.getElementById('reportTo').value;
@@ -1980,6 +1963,7 @@ async function sendReport(){
       body:JSON.stringify({
         recipientEmail:toEmails,
         ccEmails:ccEmails,
+        greeting:greeting,
         bodyMessage:message,
         projectId:projectId,
         projectName:project.name,
@@ -2010,6 +1994,7 @@ function previewReport(){
   var email=document.getElementById('reportEmail').value.trim();
   var fromDate=document.getElementById('reportFrom').value;
   var toDate=document.getElementById('reportTo').value;
+  var greeting=document.getElementById('reportGreeting').value.trim()||'Hi,';
   var message=document.getElementById('reportMessage').value.trim();
   var errEl=document.getElementById('reportError');
   errEl.textContent='';
@@ -2025,39 +2010,147 @@ function previewReport(){
   var crs=allClientReports.filter(function(r){if(r.projectId!==projectId)return false;var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')});
   var s=computed.stats,c=computed.components,inc=computed.incidents;
   var avgSec=(s.avgResponseMs/1000).toFixed(1),minSec=(s.minResponseMs/1000).toFixed(1),maxSec=(s.maxResponseMs/1000).toFixed(1);
-  var slaColor=parseFloat(s.uptimePercent)>=99.5?'#2ea043':'#f85149';
-  var slaMet=parseFloat(s.uptimePercent)>=99.5;
-  var h='<!DOCTYPE html><html><head><meta charset="utf-8"><style>'+
-    'body{margin:0;padding:1.5rem;background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px}'+
-    '.banner{background:linear-gradient(135deg,#1a2744,#1e3a5f);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}'+
-    '.banner h2{margin:0 0 0.25rem;color:#fff;font-size:1.1rem}.banner .url{color:#8b949e;font-size:0.8rem;word-break:break-all}'+
-    '.badge{display:inline-block;background:rgba(76,107,205,0.15);color:#93b4ff;font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:6px;margin-top:0.5rem}'+
-    '.msg{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.25rem;margin-bottom:1.5rem;line-height:1.7}'+
-    '.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center;margin-bottom:1.5rem}'+
-    '.sv{font-size:1.6rem;font-weight:700;color:#58a6ff}.sl{font-size:0.72rem;color:#8b949e;text-transform:uppercase;margin-top:2px}'+
-    '.ig{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem}'+
-    '.ib{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:0.75rem}'+
-    '.it{font-size:0.72rem;font-weight:600;margin-bottom:0.25rem}.iv{font-size:0.85rem}'+
-    '.st{background:#21262d;border-radius:6px;height:8px;margin:0.5rem 0}.sf{height:100%;border-radius:6px}'+
-    '.ct{font-size:0.78rem;font-weight:600;text-transform:uppercase;color:#8b949e;margin-bottom:0.75rem}'+
-    '.cr{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid #21262d}'+
-    '.bw{width:120px;background:#21262d;border-radius:4px;height:6px;margin-right:0.5rem}.bf{height:100%;border-radius:4px}'+
-    '.cp{font-size:0.78rem;min-width:40px;text-align:right}'+
-    '.ir{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:0.6rem 0.75rem;margin-bottom:0.5rem;font-size:0.82rem}'+
-    '.ft{text-align:center;padding:1.25rem;font-size:0.72rem;color:#484f58;border-top:1px solid #21262d;margin-top:1.5rem}'+
-    '</style></head><body>';
-  h+='<div class="banner"><h2>'+project.name+'</h2><div class="url">'+maskUrl(project.url)+'</div><div class="badge">'+fromLabel+' &mdash; '+toLabel+'</div></div>';
-  if(message)h+='<div class="msg">'+message.replace(/\n/g,'<br>')+'</div>';
-  h+='<div class="stats"><div><div class="sv" style="color:'+slaColor+'">'+s.uptimePercent+'%</div><div class="sl">Uptime</div></div><div><div class="sv">'+s.totalChecks+'</div><div class="sl">Checks</div></div><div><div class="sv">'+avgSec+'s</div><div class="sl">Avg Speed</div></div></div>';
-  h+='<div class="ig"><div class="ib"><div class="it" style="color:'+slaColor+'">&#x2705; Availability</div><div class="iv">Online '+s.uptimePercent+'% of the time</div></div>';
-  h+='<div class="ib"><div class="it" style="color:#d29922">&#x26A1; Response</div><div class="iv">Avg '+avgSec+'s ('+minSec+'s~'+maxSec+'s)</div></div>';
-  h+='<div class="ib"><div class="it" style="color:#58a6ff">&#x1F4CA; Monitoring</div><div class="iv">'+s.totalChecks+' health checks run</div></div>';
-  h+='<div class="ib"><div class="it" style="color:'+(s.incidentCount?'#f85149':'#2ea043')+'">'+(s.incidentCount?'&#x274C; '+s.incidentCount+' Issues':'&#x2705; No Issues')+'</div><div class="iv">'+s.incidentCount+' incidents</div></div></div>';
-  h+='<div style="margin-bottom:1.5rem"><div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:600"><span>Monthly SLA</span><span style="color:'+slaColor+'">'+s.uptimePercent+'%</span></div><div class="st"><div class="sf" style="width:'+Math.min(parseFloat(s.uptimePercent),100)+'%;background:'+slaColor+'"></div></div><div style="font-size:0.72rem;color:#8b949e">Target: 99.5% &middot; '+(slaMet?'&#x2705; Meeting':'&#x274C; Below')+' SLA</div></div>';
-  if(c.length){h+='<div class="ct">Component Health</div>';c.forEach(function(comp){var p=parseFloat(comp.operationalPercent);var col=p>=99?'#2ea043':p>=95?'#d29922':'#f85149';h+='<div class="cr"><span>'+comp.name+'</span><div style="display:flex;align-items:center"><div class="bw"><div class="bf" style="width:'+p+'%;background:'+col+'"></div></div><span class="cp" style="color:'+col+'">'+comp.operationalPercent+'%</span></div></div>';});}
-  if(inc.length){h+='<div class="ct" style="margin-top:1.25rem">Incidents ('+inc.length+')</div>';inc.forEach(function(i){h+='<div class="ir"><div style="color:#8b949e;font-size:0.72rem">'+i.timestamp+'</div><div>'+i.error+'</div></div>';});}
-  if(crs.length){h+='<div class="ct" style="margin-top:1.25rem">Client Reports ('+crs.length+')</div>';crs.forEach(function(r){var dl=new Date(r.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});h+='<div class="ir"><div style="color:#8b949e;font-size:0.72rem">'+dl+'</div><div>'+r.title+'</div></div>';});}
-  h+='<div class="ft">Generated by <strong>SentryXP Status Monitor</strong></div></body></html>';
+  var uptimeNum=parseFloat(s.uptimePercent)||0;
+  var blue='#4C6BCD',darkBlue='#4d65ff',lightBlue='#C5D5F5',bg='#111827',cardBg='#1e293b',borderClr='#334155',textMain='#f1f5f9',textDim='#94a3b8',green='#22c55e',yellow='#eab308',red='#ef4444';
+  var uptimeColor=uptimeNum>=99?green:uptimeNum>=95?yellow:red;
+  var incidentCount=s.incidentCount||0;
+  var typeBadge=project.type?'<span style="display:inline-block;background:'+blue+';color:#fff;font-size:11px;font-weight:600;padding:2px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;vertical-align:middle;margin-left:8px">'+project.type+'</span>':'';
+  var escH=function(str){return(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
+
+  /* Build HTML matching send-report.js email template exactly */
+  var h='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"/></head>'+
+  '<body style="margin:0;padding:0;background:'+bg+';font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif">'+
+  '<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background:'+bg+'">'+
+  '<tr><td align="center" style="padding:32px 16px">'+
+  '<table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;width:100%">';
+
+  /* Header */
+  h+='<tr><td style="padding:0 0 24px"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+    '<td style="font-size:18px;font-weight:700;color:'+lightBlue+';letter-spacing:-0.3px"><span style="color:'+blue+'">&#x25CF;</span> SentryXP</td>'+
+    '<td align="right"><span style="display:inline-block;background:'+darkBlue+';color:#ffffff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:4px;text-transform:uppercase;letter-spacing:1.5px">Health Report</span></td>'+
+    '</tr></table></td></tr>';
+
+  /* Banner */
+  h+='<tr><td style="background:linear-gradient(135deg,'+blue+','+darkBlue+');padding:28px 40px;border-radius:12px 12px 0 0">'+
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td>'+
+    '<div style="font-size:24px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;margin-bottom:4px">'+escH(project.name)+typeBadge+'</div>'+
+    '<div style="font-size:14px;color:rgba(255,255,255,0.75);margin-top:6px">'+maskUrl(project.url)+'</div>'+
+    '</td></tr><tr><td style="padding-top:16px">'+
+    '<span style="display:inline-block;background:rgba(255,255,255,0.15);color:#ffffff;font-size:13px;padding:6px 14px;border-radius:6px;font-weight:500">&#x1F4C5; '+fromLabel+' &mdash; '+toLabel+'</span>'+
+    '</td></tr></table></td></tr>';
+
+  /* Greeting + Body message */
+  h+='<tr><td style="background:'+cardBg+';padding:28px 40px '+(message?'0':'28px')+';border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+    '<div style="font-size:16px;color:'+textMain+';font-weight:600;margin-bottom:12px">'+escH(greeting)+'</div>';
+  if(message){
+    h+='<div style="font-size:15px;color:'+textMain+';line-height:1.7;margin-bottom:8px">'+escH(message).replace(/\n/g,'<br>')+'</div>'+
+      '<hr style="border:none;border-top:1px solid '+borderClr+';margin:20px 0 0"/>';
+  }else{
+    h+='<div style="font-size:15px;color:'+textMain+';line-height:1.7">Please find the health report for <strong>'+escH(project.name)+'</strong> below.</div>';
+  }
+  h+='</td></tr>';
+
+  /* Big stat numbers */
+  h+='<tr><td style="background:'+cardBg+';padding:32px 40px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+    '<td align="center" width="33%" style="padding:8px 0"><div style="font-size:42px;font-weight:800;color:'+uptimeColor+';line-height:1;letter-spacing:-1px">'+s.uptimePercent+'%</div><div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';margin-top:8px">Uptime</div></td>'+
+    '<td align="center" width="33%" style="padding:8px 0;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'"><div style="font-size:42px;font-weight:800;color:'+lightBlue+';line-height:1;letter-spacing:-1px">'+s.totalChecks+'</div><div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';margin-top:8px">Checks</div></td>'+
+    '<td align="center" width="33%" style="padding:8px 0"><div style="font-size:42px;font-weight:800;color:'+lightBlue+';line-height:1;letter-spacing:-1px">'+avgSec+'s</div><div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';margin-top:8px">Avg Speed</div></td>'+
+    '</tr></table></td></tr>';
+
+  /* Info cards 2x2 */
+  h+='<tr><td style="background:'+cardBg+';padding:0 40px 32px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+    '<td width="50%" style="padding:6px 6px 6px 0"><div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+green+';font-weight:600;margin-bottom:4px">&#x2705; Availability</div><div style="font-size:14px;color:'+textMain+';line-height:1.5">Your site was online <strong style="color:'+green+'">'+s.uptimePercent+'%</strong> of the time</div></div></td>'+
+    '<td width="50%" style="padding:6px 0 6px 6px"><div style="background:rgba(76,107,205,0.1);border:1px solid rgba(76,107,205,0.2);border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+blue+';font-weight:600;margin-bottom:4px">&#x26A1; Response Time</div><div style="font-size:14px;color:'+textMain+';line-height:1.5">Average speed: <strong style="color:'+blue+'">'+avgSec+'s</strong> ('+minSec+'s – '+maxSec+'s)</div></div></td>'+
+    '</tr><tr>'+
+    '<td width="50%" style="padding:6px 6px 6px 0"><div style="background:rgba(197,213,245,0.08);border:1px solid rgba(197,213,245,0.15);border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+lightBlue+';font-weight:600;margin-bottom:4px">&#x1F4CA; Monitoring</div><div style="font-size:14px;color:'+textMain+';line-height:1.5"><strong style="color:'+lightBlue+'">'+s.totalChecks+'</strong> health checks completed</div></div></td>'+
+    '<td width="50%" style="padding:6px 0 6px 6px"><div style="background:'+(incidentCount===0?'rgba(34,197,94,0.1)':'rgba(234,179,8,0.1)')+';border:1px solid '+(incidentCount===0?'rgba(34,197,94,0.2)':'rgba(234,179,8,0.2)')+';border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+(incidentCount===0?green:yellow)+';font-weight:600;margin-bottom:4px">'+(incidentCount===0?'&#x2705; No Issues':'&#x26A0; Incidents')+'</div><div style="font-size:14px;color:'+textMain+';line-height:1.5"><strong style="color:'+(incidentCount===0?green:yellow)+'">'+incidentCount+'</strong> incident'+(incidentCount!==1?'s':'')+' '+(incidentCount===0?'this period':'detected')+'</div><div style="font-size:11px;color:'+textDim+';margin-top:4px;font-style:italic">From automated health checks</div></div></td>'+
+    '</tr></table></td></tr>';
+
+  /* Monthly SLA */
+  h+='<tr><td style="background:'+cardBg+';padding:0 40px 24px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%">'+
+    '<tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';padding-bottom:10px">Monthly SLA</td></tr>'+
+    '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+    '<td style="width:100%;padding:0"><div style="background:'+borderClr+';border-radius:4px;height:10px;overflow:hidden"><div style="background:'+uptimeColor+';width:'+Math.min(uptimeNum,100)+'%;height:10px;border-radius:4px"></div></div></td>'+
+    '<td style="padding:0 0 0 12px;white-space:nowrap;font-size:14px;font-weight:700;color:'+uptimeColor+'">'+s.uptimePercent+'%</td>'+
+    '</tr></table></td></tr>'+
+    '<tr><td style="font-size:12px;color:'+textDim+';padding-top:6px">Target: 99.5% &middot; '+(uptimeNum>=99.5?'&#x2705; Meeting SLA':'&#x274C; Below SLA target')+'</td></tr>'+
+    '</table></td></tr>';
+
+  /* Component health */
+  if(c.length){
+    var compRows='';
+    c.forEach(function(comp){var p=parseFloat(comp.operationalPercent);var barCol=p>=99?green:p>=90?yellow:red;
+      compRows+='<tr><td style="padding:8px 12px;font-size:14px;color:'+textMain+';border-bottom:1px solid '+borderClr+'">'+comp.name+'</td>'+
+        '<td style="padding:8px 12px;border-bottom:1px solid '+borderClr+'"><table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+        '<td style="width:100%;padding:0"><div style="background:'+borderClr+';border-radius:4px;height:8px;overflow:hidden"><div style="background:'+barCol+';width:'+Math.min(p,100)+'%;height:8px;border-radius:4px"></div></div></td>'+
+        '<td style="padding:0 0 0 10px;white-space:nowrap;font-size:13px;font-weight:600;color:'+barCol+'">'+comp.operationalPercent+'%</td></tr></table></td></tr>';
+    });
+    h+='<tr><td style="background:'+cardBg+';padding:0 40px 32px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+      '<table cellpadding="0" cellspacing="0" border="0" width="100%">'+
+      '<tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';padding-bottom:12px">Component Health</td></tr>'+
+      '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid '+borderClr+';border-radius:8px;overflow:hidden">'+compRows+'</table></td></tr>'+
+      '</table></td></tr>';
+  }
+
+  /* Incidents */
+  if(inc.length){
+    var incRows='';
+    inc.slice(0,10).forEach(function(i){var sc=i.status==='down'?red:yellow;var sl=i.status==='down'?'Down':'Degraded';
+      incRows+='<tr><td style="padding:8px 12px;font-size:13px;color:'+textDim+';border-bottom:1px solid '+borderClr+';white-space:nowrap">'+i.timestamp+'</td>'+
+        '<td style="padding:8px 12px;font-size:13px;color:'+sc+';font-weight:600;border-bottom:1px solid '+borderClr+'">'+sl+'</td>'+
+        '<td style="padding:8px 12px;font-size:13px;color:'+textMain+';border-bottom:1px solid '+borderClr+'">'+(i.error||'Issue detected')+'</td></tr>';
+    });
+    h+='<tr><td style="padding:32px 40px 12px"><table cellpadding="0" cellspacing="0" border="0" width="100%">'+
+      '<tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';padding-bottom:12px">&#x26A0; System-Detected Incidents ('+inc.length+')</td></tr>'+
+      '<tr><td style="font-size:11px;color:'+textDim+';padding-bottom:10px;font-style:italic">Detected automatically by health check monitoring</td></tr>'+
+      '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid '+borderClr+';border-radius:8px;overflow:hidden">'+
+      '<tr style="background:'+borderClr+'"><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Time</th><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Status</th><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Details</th></tr>'+
+      incRows+'</table></td></tr></table></td></tr>';
+  }
+
+  /* Client-Reported Issues */
+  if(crs.length){
+    var crRows='';var orange='#f97316';
+    crs.forEach(function(r){var defColor=(r.definition||'').toLowerCase()==='service request'?'#60a5fa':orange;
+      var dl=new Date(r.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      crRows+='<tr><td style="padding:8px 12px;font-size:13px;color:'+textDim+';border-bottom:1px solid '+borderClr+';white-space:nowrap">'+dl+'</td>'+
+        '<td style="padding:8px 12px;font-size:13px;color:'+textMain+';font-weight:600;border-bottom:1px solid '+borderClr+'">'+escH(r.request||r.issue)+'</td>'+
+        '<td style="padding:8px 12px;border-bottom:1px solid '+borderClr+'"><span style="display:inline-block;font-size:11px;font-weight:600;color:'+defColor+';background:'+defColor+'15;border:1px solid '+defColor+'33;padding:2px 8px;border-radius:4px">'+escH(r.definition)+'</span></td></tr>'+
+        '<tr><td style="border-bottom:1px solid '+borderClr+'"></td><td colspan="2" style="padding:0 12px 8px;font-size:12px;color:'+textDim+';border-bottom:1px solid '+borderClr+';font-style:italic">'+
+        (r.issue&&r.request?escH(r.issue)+' ':'')+
+        (r.subDefinition?'&mdash; '+escH(r.subDefinition):'')+'</td></tr>';
+    });
+    h+='<tr><td style="background:'+cardBg+';padding:32px 40px 12px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+      '<table cellpadding="0" cellspacing="0" border="0" width="100%">'+
+      '<tr><td style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';padding-bottom:12px">&#x1F4CB; Client-Reported Incidents ('+crs.length+')</td></tr>'+
+      '<tr><td style="font-size:11px;color:'+textDim+';padding-bottom:10px;font-style:italic">Reported directly by client users</td></tr>'+
+      '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:1px solid '+borderClr+';border-radius:8px;overflow:hidden">'+
+      '<tr style="background:'+borderClr+'"><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Date</th><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Issue</th><th style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Type</th></tr>'+
+      crRows+'</table></td></tr></table></td></tr>';
+  }
+
+  /* Sender signature */
+  h+='<tr><td style="background:'+cardBg+';padding:24px 40px 8px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
+    '<hr style="border:none;border-top:1px solid '+borderClr+';margin:0 0 20px"/>'+
+    '<div style="font-size:14px;color:'+textMain+';line-height:1.6">Best regards,<br/><strong style="color:'+lightBlue+'">SentryXP Team</strong></div>'+
+    '</td></tr>';
+
+  /* View Online */
+  h+='<tr><td style="background:'+cardBg+';padding:16px 40px 0;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+';text-align:center">'+
+    '<a href="https://projecthealthmonitoring.netlify.app/report/'+projectId+'?from='+fromDate+'&to='+toDate+'" style="display:inline-block;background:'+darkBlue+';color:#ffffff;font-size:13px;font-weight:600;padding:10px 24px;border-radius:8px;text-decoration:none">View Report Online &#x2192;</a>'+
+    '</td></tr>';
+
+  /* Footer */
+  h+='<tr><td style="background:'+cardBg+';padding:24px 40px;border-top:1px solid '+borderClr+';border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+';border-bottom:1px solid '+borderClr+';border-radius:0 0 12px 12px">'+
+    '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
+    '<td style="font-size:12px;color:'+textDim+';line-height:1.6">Generated by <strong style="color:'+lightBlue+'">SentryXP Status Monitor</strong><br/>'+new Date().toLocaleString('en-US',{dateStyle:'full',timeStyle:'short'})+'</td>'+
+    '<td align="right" style="font-size:12px;color:'+textDim+'"><span style="color:'+blue+'">&#x25CF;</span> sentryxp.com</td>'+
+    '</tr></table></td></tr>';
+
+  h+='</table></td></tr></table></body></html>';
   document.querySelector('.report-modal').style.display='none';
   var pane=document.getElementById('reportPreviewPane');
   pane.style.display='flex';
@@ -2065,6 +2158,7 @@ function previewReport(){
 }
 
 function closePreview(){
+  document.getElementById('reportPreviewFrame').srcdoc='';
   document.getElementById('reportPreviewPane').style.display='none';
   document.querySelector('.report-modal').style.display='';
 }
@@ -2204,7 +2298,22 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 function crDateRange(offset){
+  /* If dashboard date filter is active, use those dates as the base range */
+  if(dateFilterFrom&&dateFilterTo&&offset===0){
+    var start=new Date(dateFilterFrom);start.setHours(0,0,0,0);
+    var end=new Date(dateFilterTo);end.setHours(0,0,0,0);
+    return{start:start,end:end};
+  }
   var today=new Date();today.setHours(0,0,0,0);
+  /* When filter is active, navigate relative to the filter end date */
+  if(dateFilterFrom&&dateFilterTo){
+    var baseEnd=new Date(dateFilterTo);baseEnd.setHours(0,0,0,0);
+    var baseStart=new Date(dateFilterFrom);baseStart.setHours(0,0,0,0);
+    var span=Math.round((baseEnd-baseStart)/(86400000))+1;
+    var end2=new Date(baseEnd);end2.setDate(end2.getDate()+(offset*span));
+    var start2=new Date(end2);start2.setDate(start2.getDate()-span+1);
+    return{start:start2,end:end2};
+  }
   var end=new Date(today);end.setDate(end.getDate()+(offset*7));
   var start=new Date(end);start.setDate(start.getDate()-6);
   return{start:start,end:end};
