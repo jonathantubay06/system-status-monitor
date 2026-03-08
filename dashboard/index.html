@@ -1854,6 +1854,8 @@ function openReportModal(projectId){
 
 function closeReportModal(){
   document.getElementById('reportModal').classList.add('hidden');
+  document.getElementById('reportPreviewPane').style.display='none';
+  document.querySelector('.report-modal').style.display='';
 }
 document.getElementById('reportModal').addEventListener('click',function(e){if(e.target===this)closeReportModal()});
 
@@ -2001,6 +2003,70 @@ async function sendReport(){
     btn.disabled=false;
     document.getElementById('reportSending').classList.remove('show');
   }
+}
+
+function previewReport(){
+  var projectId=document.getElementById('reportProjectId').value;
+  var email=document.getElementById('reportEmail').value.trim();
+  var fromDate=document.getElementById('reportFrom').value;
+  var toDate=document.getElementById('reportTo').value;
+  var message=document.getElementById('reportMessage').value.trim();
+  var errEl=document.getElementById('reportError');
+  errEl.textContent='';
+  if(!email){errEl.textContent='Please enter a recipient email.';return}
+  if(!fromDate||!toDate){errEl.textContent='Please select both dates.';return}
+  if(new Date(fromDate)>new Date(toDate)){errEl.textContent='From date must be before To date.';return}
+  var project=allResults.find(function(r){return r.id===projectId});
+  if(!project){errEl.textContent='Project not found.';return}
+  var computed=computeProjectStats(projectId,fromDate,toDate);
+  if(!computed){errEl.textContent='No data found for this date range. Try a wider range.';return}
+  var fromLabel=new Date(fromDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var toLabel=new Date(toDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  var crs=allClientReports.filter(function(r){if(r.projectId!==projectId)return false;var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')});
+  var s=computed.stats,c=computed.components,inc=computed.incidents;
+  var avgSec=(s.avgResponseMs/1000).toFixed(1),minSec=(s.minResponseMs/1000).toFixed(1),maxSec=(s.maxResponseMs/1000).toFixed(1);
+  var slaColor=parseFloat(s.uptimePercent)>=99.5?'#2ea043':'#f85149';
+  var slaMet=parseFloat(s.uptimePercent)>=99.5;
+  var h='<!DOCTYPE html><html><head><meta charset="utf-8"><style>'+
+    'body{margin:0;padding:1.5rem;background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px}'+
+    '.banner{background:linear-gradient(135deg,#1a2744,#1e3a5f);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}'+
+    '.banner h2{margin:0 0 0.25rem;color:#fff;font-size:1.1rem}.banner .url{color:#8b949e;font-size:0.8rem;word-break:break-all}'+
+    '.badge{display:inline-block;background:rgba(76,107,205,0.15);color:#93b4ff;font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:6px;margin-top:0.5rem}'+
+    '.msg{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:1.25rem;margin-bottom:1.5rem;line-height:1.7}'+
+    '.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center;margin-bottom:1.5rem}'+
+    '.sv{font-size:1.6rem;font-weight:700;color:#58a6ff}.sl{font-size:0.72rem;color:#8b949e;text-transform:uppercase;margin-top:2px}'+
+    '.ig{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem}'+
+    '.ib{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:0.75rem}'+
+    '.it{font-size:0.72rem;font-weight:600;margin-bottom:0.25rem}.iv{font-size:0.85rem}'+
+    '.st{background:#21262d;border-radius:6px;height:8px;margin:0.5rem 0}.sf{height:100%;border-radius:6px}'+
+    '.ct{font-size:0.78rem;font-weight:600;text-transform:uppercase;color:#8b949e;margin-bottom:0.75rem}'+
+    '.cr{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid #21262d}'+
+    '.bw{width:120px;background:#21262d;border-radius:4px;height:6px;margin-right:0.5rem}.bf{height:100%;border-radius:4px}'+
+    '.cp{font-size:0.78rem;min-width:40px;text-align:right}'+
+    '.ir{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:0.6rem 0.75rem;margin-bottom:0.5rem;font-size:0.82rem}'+
+    '.ft{text-align:center;padding:1.25rem;font-size:0.72rem;color:#484f58;border-top:1px solid #21262d;margin-top:1.5rem}'+
+    '</style></head><body>';
+  h+='<div class="banner"><h2>'+project.name+'</h2><div class="url">'+maskUrl(project.url)+'</div><div class="badge">'+fromLabel+' &mdash; '+toLabel+'</div></div>';
+  if(message)h+='<div class="msg">'+message.replace(/\n/g,'<br>')+'</div>';
+  h+='<div class="stats"><div><div class="sv" style="color:'+slaColor+'">'+s.uptimePercent+'%</div><div class="sl">Uptime</div></div><div><div class="sv">'+s.totalChecks+'</div><div class="sl">Checks</div></div><div><div class="sv">'+avgSec+'s</div><div class="sl">Avg Speed</div></div></div>';
+  h+='<div class="ig"><div class="ib"><div class="it" style="color:'+slaColor+'">&#x2705; Availability</div><div class="iv">Online '+s.uptimePercent+'% of the time</div></div>';
+  h+='<div class="ib"><div class="it" style="color:#d29922">&#x26A1; Response</div><div class="iv">Avg '+avgSec+'s ('+minSec+'s~'+maxSec+'s)</div></div>';
+  h+='<div class="ib"><div class="it" style="color:#58a6ff">&#x1F4CA; Monitoring</div><div class="iv">'+s.totalChecks+' health checks run</div></div>';
+  h+='<div class="ib"><div class="it" style="color:'+(s.incidentCount?'#f85149':'#2ea043')+'">'+(s.incidentCount?'&#x274C; '+s.incidentCount+' Issues':'&#x2705; No Issues')+'</div><div class="iv">'+s.incidentCount+' incidents</div></div></div>';
+  h+='<div style="margin-bottom:1.5rem"><div style="display:flex;justify-content:space-between;font-size:0.78rem;font-weight:600"><span>Monthly SLA</span><span style="color:'+slaColor+'">'+s.uptimePercent+'%</span></div><div class="st"><div class="sf" style="width:'+Math.min(parseFloat(s.uptimePercent),100)+'%;background:'+slaColor+'"></div></div><div style="font-size:0.72rem;color:#8b949e">Target: 99.5% &middot; '+(slaMet?'&#x2705; Meeting':'&#x274C; Below')+' SLA</div></div>';
+  if(c.length){h+='<div class="ct">Component Health</div>';c.forEach(function(comp){var p=parseFloat(comp.operationalPercent);var col=p>=99?'#2ea043':p>=95?'#d29922':'#f85149';h+='<div class="cr"><span>'+comp.name+'</span><div style="display:flex;align-items:center"><div class="bw"><div class="bf" style="width:'+p+'%;background:'+col+'"></div></div><span class="cp" style="color:'+col+'">'+comp.operationalPercent+'%</span></div></div>';});}
+  if(inc.length){h+='<div class="ct" style="margin-top:1.25rem">Incidents ('+inc.length+')</div>';inc.forEach(function(i){h+='<div class="ir"><div style="color:#8b949e;font-size:0.72rem">'+i.timestamp+'</div><div>'+i.error+'</div></div>';});}
+  if(crs.length){h+='<div class="ct" style="margin-top:1.25rem">Client Reports ('+crs.length+')</div>';crs.forEach(function(r){var dl=new Date(r.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});h+='<div class="ir"><div style="color:#8b949e;font-size:0.72rem">'+dl+'</div><div>'+r.title+'</div></div>';});}
+  h+='<div class="ft">Generated by <strong>SentryXP Status Monitor</strong></div></body></html>';
+  document.querySelector('.report-modal').style.display='none';
+  var pane=document.getElementById('reportPreviewPane');
+  pane.style.display='flex';
+  document.getElementById('reportPreviewFrame').srcdoc=h;
+}
+
+function closePreview(){
+  document.getElementById('reportPreviewPane').style.display='none';
+  document.querySelector('.report-modal').style.display='';
 }
 
 /* ── Incident Timeline ── */
