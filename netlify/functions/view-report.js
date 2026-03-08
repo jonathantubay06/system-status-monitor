@@ -7,7 +7,7 @@ const ch = () => ({
 
 exports.handler = async (event) => {
   try {
-    const parts = (event.path || '').replace(/^\/\.netlify\/functions\/view-report\/?/, '').replace(/^report\/?/, '').split('/').filter(Boolean);
+    const parts = (event.path || '').replace(/^\/\.netlify\/functions\/view-report\/?/, '').replace(/^\/?report\/?/, '').split('/').filter(Boolean);
     const projectId = parts[0] || (event.queryStringParameters || {}).project || '';
     const from = (event.queryStringParameters || {}).from || '';
     const to = (event.queryStringParameters || {}).to || '';
