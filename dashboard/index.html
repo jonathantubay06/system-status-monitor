@@ -174,7 +174,9 @@ header {
 .date-range-bar input[type="date"] {
   background: var(--input-bg); border: 1px solid var(--border); color: var(--text);
   font-family: inherit; font-size: 0.78rem; padding: 0.3rem 0.5rem; border-radius: 6px;
+  color-scheme: dark;
 }
+:root.light .date-range-bar input[type="date"] { color-scheme: light; }
 .date-range-bar input[type="date"]:focus { outline: none; border-color: var(--accent); }
 .date-range-bar .dr-btn {
   background: var(--surface2); border: 1px solid var(--border); color: var(--text);
@@ -745,6 +747,7 @@ header {
   body.printing header,
   body.printing .banner,
   body.printing .filter-bar,
+  body.printing .date-range-bar,
   body.printing #gridWrap,
   body.printing .incident-wrap,
   body.printing .history-wrap,
@@ -1283,7 +1286,9 @@ function exportCsv(){
   names.forEach(function(n){header.push(n+' Status',n+' Response (ms)')});
   var rows=[header.join(',')];
   hist.slice().reverse().forEach(function(e){
-    var row=['"'+e.timestamp+'"'];
+    var d=new Date(e.timestamp);
+    var fmt=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true});
+    var row=['"'+fmt+'"'];
     ids.forEach(function(id){
       var r=(e.results||[]).find(function(x){return x.id===id});
       row.push(r?r.status:'',r?r.responseMs:'');
