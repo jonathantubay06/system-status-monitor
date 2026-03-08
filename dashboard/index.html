@@ -1148,6 +1148,21 @@ footer a:hover { color: var(--text-bright); }
         <label class="form-label">Alert Email</label>
         <input type="email" class="form-input" id="fEmail" placeholder="you@email.com"/>
       </div>
+      <div class="form-group">
+        <label class="form-label">Alert Threshold <span style="color:var(--text-dim)">(minutes)</span></label>
+        <input type="number" class="form-input" id="fThreshold" min="0" placeholder="0 = alert immediately"/>
+        <div class="form-hint">Wait this many minutes of downtime before sending an alert (0 = immediate)</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Alert Channel</label>
+        <select class="form-input" id="fChannel">
+          <option value="email">Email</option>
+          <option value="slack">Slack</option>
+          <option value="both">Both</option>
+          <option value="none">None</option>
+        </select>
+        <div class="form-hint">How to receive downtime alerts for this project</div>
+      </div>
       <div class="form-error" id="formError"></div>
       <div class="form-actions">
         <button class="btn" onclick="resetForm()">Clear</button>
@@ -1701,6 +1716,8 @@ function fillEditForm(p){
   document.getElementById('fLoginEmail').value=p.loginEmail||'';
   document.getElementById('fLoginPassword').value=p.loginPassword||'';
   document.getElementById('fGroup').value=p.group||'';
+  document.getElementById('fThreshold').value=p.alertThreshold||0;
+  document.getElementById('fChannel').value=p.alertChannel||'email';
   document.getElementById('submitBtn').textContent='Save Changes';
   document.getElementById('formTitle').textContent='EDITING';
   document.getElementById('formSectionTitle').textContent='Edit Project';
@@ -1709,7 +1726,8 @@ function fillEditForm(p){
 
 function resetForm(){
   editMode=false;
-  ['editAirtableId','fName','fUrl','fEmail','fCheckPage','fLoginEmail','fLoginPassword','fGroup'].forEach(function(id){document.getElementById(id).value=''});
+  ['editAirtableId','fName','fUrl','fEmail','fCheckPage','fLoginEmail','fLoginPassword','fGroup','fThreshold'].forEach(function(id){document.getElementById(id).value=''});
+  document.getElementById('fChannel').value='email';
   document.getElementById('fType').value='softr';
   document.getElementById('formError').textContent='';
   document.getElementById('submitBtn').textContent='Add Project';
@@ -1719,12 +1737,12 @@ function resetForm(){
 }
 
 async function submitProject(){
-  var name=document.getElementById('fName').value.trim(),type=document.getElementById('fType').value,url=document.getElementById('fUrl').value.trim(),email=document.getElementById('fEmail').value.trim(),checkPage=document.getElementById('fCheckPage').value.trim(),loginEmail=document.getElementById('fLoginEmail').value.trim(),loginPassword=document.getElementById('fLoginPassword').value.trim(),group=document.getElementById('fGroup').value.trim(),errEl=document.getElementById('formError');
+  var name=document.getElementById('fName').value.trim(),type=document.getElementById('fType').value,url=document.getElementById('fUrl').value.trim(),email=document.getElementById('fEmail').value.trim(),checkPage=document.getElementById('fCheckPage').value.trim(),loginEmail=document.getElementById('fLoginEmail').value.trim(),loginPassword=document.getElementById('fLoginPassword').value.trim(),group=document.getElementById('fGroup').value.trim(),alertThreshold=document.getElementById('fThreshold').value,alertChannel=document.getElementById('fChannel').value,errEl=document.getElementById('formError');
   if(!name||!url){errEl.textContent='Name and URL are required.';return}
   errEl.textContent='';var btn=document.getElementById('submitBtn');btn.textContent='Saving...';btn.disabled=true;
   try{
     var endpoint=editMode?'/.netlify/functions/update-project':'/.netlify/functions/add-project';
-    var body={name:name,type:type,url:url,alertEmail:email,checkPage:checkPage,loginEmail:loginEmail,loginPassword:loginPassword,group:group};
+    var body={name:name,type:type,url:url,alertEmail:email,checkPage:checkPage,loginEmail:loginEmail,loginPassword:loginPassword,group:group,alertThreshold:alertThreshold,alertChannel:alertChannel};
     if(editMode)body.airtableId=document.getElementById('editAirtableId').value;
     var res=await fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+adminToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
     var data=await res.json();if(!res.ok)throw new Error(data.error||'Failed');

@@ -16,7 +16,7 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body||'{}');
-    const { airtableId, name, type, url, alertEmail, checkPage, loginEmail, loginPassword, group } = body;
+    const { airtableId, name, type, url, alertEmail, checkPage, loginEmail, loginPassword, group, alertThreshold, alertChannel } = body;
     if (!airtableId) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'airtableId required' }) };
     if (!name||!type||!url) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'name, type and url required' }) };
 
@@ -30,6 +30,8 @@ exports.handler = async (event) => {
         'Login Email': loginEmail||'',
         'Login Password': loginPassword||'',
         'Client': group||'',
+        'Alert Threshold (min)': parseInt(alertThreshold)||0,
+        'Alert Channel': alertChannel||'email',
       }}),
     });
     const text = await res.text();

@@ -28,6 +28,8 @@ async function fetchProjects() {
     loginEmail:   r.fields['Login Email'] || '',
     loginPassword:r.fields['Login Password'] || '',
     group:        r.fields['Client'] || '',
+    alertThreshold: parseInt(r.fields['Alert Threshold (min)']) || 0,
+    alertChannel: (r.fields['Alert Channel'] || 'email').toLowerCase(),
   })).filter(p => p.name && p.url);
 }
 
@@ -289,7 +291,31 @@ async function customCheck(project, browser) {
 }
 
 // ── Email alert ───────────────────────────────────────────────────────────────
+async function sendSlackAlert(project, result) {
+  if (!process.env.SLACK_WEBHOOK_URL) return;
+  const failedComponents = (result.components || []).filter(c => c.status !== 'operational');
+  const compText = failedComponents.length
+    ? '\n' + failedComponents.map(c => `  • ${c.name}: ${c.detail || c.status}`).join('\n')
+    : '';
+  await fetch(process.env.SLACK_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: `*${project.name} is ${result.status.toUpperCase()}*\nURL: ${new URL(project.url).origin}\nResponse: ${result.responseMs}ms${compText}\n${result.error ? 'Error: '+result.error : ''}` }),
+  }).catch(e => console.error('Slack alert failed:', e.message));
+}
+
 async function sendAlert(project, result) {
+  const channel = project.alertChannel || 'email';
+  if (channel === 'none') return;
+  if ((channel === 'email' || channel === 'both') && process.env.SENDGRID_API_KEY && project.alertEmail) {
+    await sendEmailAlert(project, result);
+  }
+  if ((channel === 'slack' || channel === 'both') && process.env.SLACK_WEBHOOK_URL) {
+    await sendSlackAlert(project, result);
+  }
+}
+
+async function sendEmailAlert(project, result) {
   if (!process.env.SENDGRID_API_KEY || !project.alertEmail) return;
   const failedComponents = (result.components || []).filter(c => c.status !== 'operational');
   const compText = failedComponents.length
@@ -434,13 +460,34 @@ function parseCSV(text) {
     }
 
     // Confirmed-down alerting: only alert if previous check was also not operational
+    // and downtime exceeds threshold (if set)
     const prev = prevResults.find(r => r.id === project.id || r.name === project.name);
     const wasDownBefore = prev && prev.status !== 'operational';
     const isDownNow = result.status !== 'operational';
 
     if (isDownNow && wasDownBefore) {
-      console.log(`  >> Confirmed down (2 consecutive failures) - sending alert`);
-      await sendAlert(project, result);
+      const threshold = project.alertThreshold || 0;
+      if (threshold > 0) {
+        // Calculate consecutive downtime from history
+        let downMinutes = 0;
+        const histFile2 = path.join(outDir, 'history.json');
+        let hist2 = [];
+        if (fs.existsSync(histFile2)) { try { hist2 = JSON.parse(fs.readFileSync(histFile2, 'utf8')); } catch {} }
+        for (let i = hist2.length - 1; i >= 0; i--) {
+          const hr = (hist2[i].results || []).find(x => x.id === project.id);
+          if (!hr || hr.status === 'operational') break;
+          downMinutes = (Date.now() - new Date(hist2[i].timestamp).getTime()) / 60000;
+        }
+        if (downMinutes < threshold) {
+          console.log(`  >> Down ${Math.round(downMinutes)}min (threshold: ${threshold}min) - waiting`);
+        } else {
+          console.log(`  >> Down ${Math.round(downMinutes)}min (threshold: ${threshold}min) - sending alert`);
+          await sendAlert(project, result);
+        }
+      } else {
+        console.log(`  >> Confirmed down (2 consecutive failures) - sending alert`);
+        await sendAlert(project, result);
+      }
     } else if (isDownNow && !wasDownBefore) {
       console.log(`  >> First failure - will alert on next consecutive failure`);
     }
@@ -466,21 +513,8 @@ function parseCSV(text) {
   fs.writeFileSync(path.join(outDir, 'client-reports.json'), JSON.stringify(clientReports, null, 2));
   console.log(`   Saved ${clientReports.length} client report(s)`);
 
-  const down = results.filter(r => r.status === 'down');
-  if (down.length && process.env.SLACK_WEBHOOK_URL) {
-    // Only send Slack alert for confirmed-down (2 consecutive failures)
-    const confirmedDown = down.filter(d => {
-      const prev = prevResults.find(r => r.id === d.id || r.name === d.name);
-      return prev && prev.status !== 'operational';
-    });
-    if (confirmedDown.length) {
-      await fetch(process.env.SLACK_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: `*Health Alert*\n${confirmedDown.map(s => `${s.name} is DOWN (confirmed - 2 consecutive failures)`).join('\n')}\n\nhttps://projecthealthmonitoring.netlify.app/` }),
-      }).catch(() => {});
-    }
-  }
+  const down = results.filter(r => r.status !== 'operational');
+  // Per-project alerts already handled above via sendAlert() with channel preference
 
   console.log(`\nDone. ${results.length} site(s) checked.`);
   if (down.length) process.exit(1);

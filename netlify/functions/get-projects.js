@@ -26,6 +26,8 @@ exports.handler = async () => {
       loginEmail:   r.fields['Login Email'] || '',
       loginPassword:r.fields['Login Password'] || '',
       group:        r.fields['Client'] || '',
+      alertThreshold: parseInt(r.fields['Alert Threshold (min)']) || 0,
+      alertChannel: (r.fields['Alert Channel'] || 'email').toLowerCase(),
     }));
     return {
       statusCode: 200,
