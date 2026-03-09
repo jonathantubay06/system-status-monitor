@@ -81,11 +81,11 @@ async function shopifyCheck(project) {
 
     const html = await res.text();
 
-    const hasHeader    = /<header|class="header|id="header/i.test(html);
-    const hasNav       = /<nav|class="nav|role="navigation/i.test(html);
+    const hasHeader    = /<header|class="[^"]*header|id="[^"]*header|id="MainContent/i.test(html);
+    const hasNav       = /<nav|class="[^"]*nav|role="navigation|menu-drawer|header-drawer|class="[^"]*menu|cart-drawer|id="MainContent/i.test(html);
     const hasProducts  = /product|collection|\.product-/i.test(html);
     const hasCart      = /cart|basket/i.test(html);
-    const hasFooter    = /<footer|class="footer/i.test(html);
+    const hasFooter    = /<footer|class="[^"]*footer|id="[^"]*footer/i.test(html);
 
     components.push({ name: 'Header', status: hasHeader ? 'operational' : 'degraded' });
     components.push({ name: 'Navigation', status: hasNav ? 'operational' : 'degraded' });
