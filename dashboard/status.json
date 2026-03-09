@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-09T05:12:43.554Z",
+  "updatedAt": "2026-03-09T06:11:54.261Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T05:12:04.587Z",
+      "checkedAt": "2026-03-09T06:11:12.798Z",
       "status": "operational",
-      "responseMs": 7316,
+      "responseMs": 7096,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T05:12:05.203Z",
+      "checkedAt": "2026-03-09T06:11:13.639Z",
       "status": "operational",
-      "responseMs": 616,
+      "responseMs": 840,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T05:12:25.570Z",
+      "checkedAt": "2026-03-09T06:11:32.931Z",
       "status": "operational",
-      "responseMs": 19129,
+      "responseMs": 18361,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T05:12:43.140Z",
+      "checkedAt": "2026-03-09T06:11:53.552Z",
       "status": "operational",
-      "responseMs": 17316,
+      "responseMs": 17377,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T05:12:43.530Z",
-      "status": "operational",
-      "responseMs": 390,
+      "checkedAt": "2026-03-09T06:11:54.238Z",
+      "status": "degraded",
+      "responseMs": 685,
       "httpStatus": 200,
       "components": [
         {
@@ -192,11 +192,11 @@
         },
         {
           "name": "Header",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "Navigation",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "Products",
@@ -208,7 +208,7 @@
         },
         {
           "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         }
       ]
     }
