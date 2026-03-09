@@ -32865,5 +32865,221 @@
         ]
       }
     ]
+  },
+  {
+    "timestamp": "2026-03-09T09:01:58.913Z",
+    "results": [
+      {
+        "airtableId": "recBJcopy2vZyLcHx",
+        "name": "Jordan Ranch Portal",
+        "type": "softr",
+        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "jordan-ranch-portal",
+        "checkPage": "/events",
+        "loginEmail": "",
+        "loginPassword": "",
+        "group": "",
+        "alertThreshold": 0,
+        "alertChannel": "email",
+        "checkedAt": "2026-03-09T09:01:16.878Z",
+        "status": "operational",
+        "responseMs": 8008,
+        "httpStatus": 200,
+        "pageTitle": "Events",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "10 record(s) found"
+          }
+        ]
+      },
+      {
+        "airtableId": "recUS1iqlfWojro2l",
+        "name": "Kingdomlandkids",
+        "type": "shopify",
+        "url": "https://kingdomlandkids.com/",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomlandkids",
+        "checkPage": "",
+        "loginEmail": "",
+        "loginPassword": "",
+        "group": "",
+        "alertThreshold": 0,
+        "alertChannel": "email",
+        "checkedAt": "2026-03-09T09:01:17.659Z",
+        "status": "operational",
+        "responseMs": 780,
+        "httpStatus": 200,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      },
+      {
+        "airtableId": "rec9nsO0vYvGzSYrI",
+        "name": "George Adams Insurance (GAI)",
+        "type": "softr",
+        "url": "https://gainsurance.softr.app/magic-authentication?magic-token=710a0d684d5a40c6a9c6e192a1b7f5cc",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "george-adams-insurance-gai",
+        "checkPage": "/trustee-bonds",
+        "loginEmail": "",
+        "loginPassword": "",
+        "group": "",
+        "alertThreshold": 0,
+        "alertChannel": "email",
+        "checkedAt": "2026-03-09T09:01:37.652Z",
+        "status": "operational",
+        "responseMs": 18770,
+        "httpStatus": 200,
+        "pageTitle": "Trustee Bonds",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "Content detected"
+          }
+        ]
+      },
+      {
+        "airtableId": "recPyNs4klp4TqijD",
+        "name": "Kingdomland Playwatch",
+        "type": "custom",
+        "url": "https://go.kingdomlandkids.com/login",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "kingdomland-playwatch",
+        "checkPage": "",
+        "loginEmail": "jonathantubay@ymail.com",
+        "loginPassword": "!J0nthan2025",
+        "group": "",
+        "alertThreshold": 0,
+        "alertChannel": "email",
+        "checkedAt": "2026-03-09T09:01:58.073Z",
+        "status": "operational",
+        "responseMs": 17317,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          }
+        ]
+      },
+      {
+        "airtableId": "recZmxIPvPMwHPcq8",
+        "name": "Tool Mart, Inc",
+        "type": "shopify",
+        "url": "https://www.toolmarthou.com/",
+        "alertEmail": "jonathantubay@ymail.com",
+        "id": "tool-mart-inc",
+        "checkPage": "",
+        "loginEmail": "",
+        "loginPassword": "",
+        "group": "",
+        "alertThreshold": 0,
+        "alertChannel": "email",
+        "checkedAt": "2026-03-09T09:01:58.883Z",
+        "status": "degraded",
+        "responseMs": 559,
+        "httpStatus": 200,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "degraded"
+          },
+          {
+            "name": "Navigation",
+            "status": "degraded"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "degraded"
+          }
+        ]
+      }
+    ]
   }
 ]
