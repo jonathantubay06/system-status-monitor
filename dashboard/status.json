@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-09T16:38:50.496Z",
+  "updatedAt": "2026-03-09T17:15:47.391Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T16:38:08.345Z",
+      "checkedAt": "2026-03-09T17:15:05.880Z",
       "status": "operational",
-      "responseMs": 7504,
+      "responseMs": 7882,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T16:38:09.122Z",
+      "checkedAt": "2026-03-09T17:15:06.420Z",
       "status": "operational",
-      "responseMs": 777,
+      "responseMs": 538,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T16:38:29.349Z",
+      "checkedAt": "2026-03-09T17:15:26.467Z",
       "status": "operational",
-      "responseMs": 18615,
+      "responseMs": 18845,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T16:38:49.660Z",
+      "checkedAt": "2026-03-09T17:15:46.959Z",
       "status": "operational",
-      "responseMs": 17314,
+      "responseMs": 17375,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-09T16:38:50.475Z",
-      "status": "degraded",
-      "responseMs": 695,
+      "checkedAt": "2026-03-09T17:15:47.366Z",
+      "status": "operational",
+      "responseMs": 407,
       "httpStatus": 200,
       "components": [
         {
@@ -208,7 +208,7 @@
         },
         {
           "name": "Footer",
-          "status": "degraded"
+          "status": "operational"
         }
       ]
     }
