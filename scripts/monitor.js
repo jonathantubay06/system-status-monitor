@@ -123,18 +123,20 @@ async function softrCheck(project, browser) {
     // Step 1: Visit magic link
     const response = await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-    // Smart wait: wait for Softr app shell to appear instead of fixed 8s
-    await page.waitForSelector('nav, header, [class*="header"], [class*="sf-"], [class*="softr"]', { timeout: 15000 })
+    // Wait for auth redirect: URL should leave the magic-authentication page
+    await page.waitForURL(url => !url.toString().includes('magic-authentication'), { timeout: 20000 })
       .catch(() => {});
-    // Brief extra wait for auth redirect to settle
-    await page.waitForTimeout(2000);
+    // Brief extra wait for app shell to fully render
+    await page.waitForTimeout(3000);
 
     const httpOk = response?.status() < 400;
     components.push({ name: 'Page loads', status: httpOk ? 'operational' : 'degraded' });
 
     // Check if magic link failed
     const loginBodyText = await page.locator('body').innerText().catch(() => '');
-    const magicLinkFailed = /magic link is no longer valid|link has expired|invalid link/i.test(loginBodyText);
+    const currentTitle = await page.title();
+    const magicLinkFailed = /magic link is no longer valid|link has expired|invalid link/i.test(loginBodyText)
+      || /sign.?in|log.?in/i.test(currentTitle);
     if (magicLinkFailed) {
       components.push({ name: 'Login', status: 'down', detail: 'Magic link expired or invalid' });
       components.push({ name: 'App content', status: 'down' });
