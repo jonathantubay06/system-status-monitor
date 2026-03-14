@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-14T09:26:26.091Z",
+  "updatedAt": "2026-03-14T09:55:00.830Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-14T09:25:46.266Z",
+      "checkedAt": "2026-03-14T09:54:21.040Z",
       "status": "operational",
-      "responseMs": 7180,
+      "responseMs": 6986,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-14T09:25:46.495Z",
+      "checkedAt": "2026-03-14T09:54:21.741Z",
       "status": "operational",
-      "responseMs": 228,
+      "responseMs": 701,
       "httpStatus": 200,
       "components": [
         {
@@ -101,7 +101,7 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-14T09:26:05.072Z",
+      "checkedAt": "2026-03-14T09:54:40.250Z",
       "status": "operational",
       "responseMs": 17747,
       "httpStatus": 200,
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-14T09:26:25.640Z",
+      "checkedAt": "2026-03-14T09:55:00.646Z",
       "status": "operational",
-      "responseMs": 17373,
+      "responseMs": 17397,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-14T09:26:26.066Z",
+      "checkedAt": "2026-03-14T09:55:00.804Z",
       "status": "operational",
-      "responseMs": 426,
+      "responseMs": 158,
       "httpStatus": 200,
       "components": [
         {
