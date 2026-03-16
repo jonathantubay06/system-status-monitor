@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-16T16:35:51.603Z",
+  "updatedAt": "2026-03-16T17:42:56.583Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T16:35:13.250Z",
+      "checkedAt": "2026-03-16T17:42:25.898Z",
       "status": "operational",
-      "responseMs": 7384,
+      "responseMs": 7704,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T16:35:14.165Z",
+      "checkedAt": "2026-03-16T17:42:26.409Z",
       "status": "operational",
-      "responseMs": 915,
+      "responseMs": 510,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T16:35:33.304Z",
+      "checkedAt": "2026-03-16T17:42:45.891Z",
       "status": "operational",
-      "responseMs": 18145,
+      "responseMs": 18192,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,27 +144,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T16:35:51.020Z",
-      "status": "operational",
-      "responseMs": 17411,
+      "checkedAt": "2026-03-16T17:42:55.892Z",
+      "status": "down",
+      "responseMs": 0,
+      "error": "Domain unreachable - server did not respond",
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Login",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
+          "status": "down"
         }
       ]
     },
@@ -181,9 +168,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T16:35:51.578Z",
+      "checkedAt": "2026-03-16T17:42:56.558Z",
       "status": "operational",
-      "responseMs": 558,
+      "responseMs": 666,
       "httpStatus": 200,
       "components": [
         {
