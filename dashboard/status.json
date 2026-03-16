@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-16T19:40:35.326Z",
+  "updatedAt": "2026-03-16T20:05:46.042Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T19:39:55.994Z",
+      "checkedAt": "2026-03-16T20:05:00.204Z",
       "status": "operational",
-      "responseMs": 7347,
+      "responseMs": 7570,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,14 +57,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T19:40:06.011Z",
-      "status": "down",
-      "responseMs": 10017,
-      "error": "fetch failed",
+      "checkedAt": "2026-03-16T20:05:00.713Z",
+      "status": "operational",
+      "responseMs": 508,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     },
@@ -81,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T19:40:24.851Z",
+      "checkedAt": "2026-03-16T20:05:20.236Z",
       "status": "operational",
-      "responseMs": 17963,
+      "responseMs": 18410,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -124,14 +144,27 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T19:40:34.851Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-03-16T20:05:45.556Z",
+      "status": "operational",
+      "responseMs": 17360,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
         }
       ]
     },
@@ -148,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-16T19:40:35.301Z",
+      "checkedAt": "2026-03-16T20:05:46.017Z",
       "status": "operational",
-      "responseMs": 449,
+      "responseMs": 461,
       "httpStatus": 200,
       "components": [
         {
