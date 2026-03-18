@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-18T20:56:00.447Z",
+  "updatedAt": "2026-03-18T21:26:23.510Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-18T20:55:22.005Z",
+      "checkedAt": "2026-03-18T21:25:42.627Z",
       "status": "operational",
-      "responseMs": 8583,
+      "responseMs": 7524,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-18T20:55:22.613Z",
+      "checkedAt": "2026-03-18T21:25:43.270Z",
       "status": "operational",
-      "responseMs": 608,
+      "responseMs": 642,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-18T20:55:42.641Z",
+      "checkedAt": "2026-03-18T21:26:02.459Z",
       "status": "operational",
-      "responseMs": 18755,
+      "responseMs": 18318,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-18T20:56:00.226Z",
+      "checkedAt": "2026-03-18T21:26:22.905Z",
       "status": "operational",
-      "responseMs": 17343,
+      "responseMs": 17340,
       "components": [
         {
           "name": "Page loads",
@@ -181,14 +181,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-18T20:56:00.421Z",
-      "status": "down",
-      "responseMs": 195,
-      "httpStatus": 503,
+      "checkedAt": "2026-03-18T21:26:23.486Z",
+      "status": "operational",
+      "responseMs": 581,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     }
