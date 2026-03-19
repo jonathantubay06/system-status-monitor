@@ -512,8 +512,20 @@ function parseCSV(text) {
   // Fetch and save client-reported issues from Google Sheet
   console.log('\nFetching client-reported issues from Google Sheet...');
   const clientReports = await fetchClientReports();
-  fs.writeFileSync(path.join(outDir, 'client-reports.json'), JSON.stringify(clientReports, null, 2));
-  console.log(`   Saved ${clientReports.length} client report(s)`);
+  const crPath = path.join(outDir, 'client-reports.json');
+  // Don't overwrite existing data with empty results (Google Sheet fetch may fail in CI)
+  if (clientReports.length > 0) {
+    fs.writeFileSync(crPath, JSON.stringify(clientReports, null, 2));
+    console.log(`   Saved ${clientReports.length} client report(s)`);
+  } else {
+    const existing = fs.existsSync(crPath) ? JSON.parse(fs.readFileSync(crPath, 'utf8')) : [];
+    if (existing.length > 0) {
+      console.log(`   Google Sheet returned 0 reports — keeping existing ${existing.length} report(s)`);
+    } else {
+      fs.writeFileSync(crPath, '[]');
+      console.log('   No client reports found');
+    }
+  }
 
   const down = results.filter(r => r.status !== 'operational');
   // Per-project alerts already handled above via sendAlert() with channel preference
