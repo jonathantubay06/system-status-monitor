@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-20T17:24:01.832Z",
+  "updatedAt": "2026-03-20T17:58:29.410Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T17:23:28.039Z",
+      "checkedAt": "2026-03-20T17:57:48.025Z",
       "status": "operational",
-      "responseMs": 6887,
+      "responseMs": 7562,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T17:23:32.664Z",
+      "checkedAt": "2026-03-20T17:57:48.687Z",
       "status": "operational",
-      "responseMs": 4623,
+      "responseMs": 662,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T17:23:51.152Z",
+      "checkedAt": "2026-03-20T17:58:08.358Z",
       "status": "operational",
-      "responseMs": 17701,
+      "responseMs": 18486,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,14 +144,27 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T17:24:01.152Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-03-20T17:58:28.794Z",
+      "status": "operational",
+      "responseMs": 17313,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
         }
       ]
     },
@@ -168,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T17:24:01.806Z",
+      "checkedAt": "2026-03-20T17:58:29.370Z",
       "status": "operational",
-      "responseMs": 654,
+      "responseMs": 576,
       "httpStatus": 200,
       "components": [
         {
