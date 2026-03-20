@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-20T06:07:23.231Z",
+  "updatedAt": "2026-03-20T06:31:03.442Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T06:06:45.316Z",
+      "checkedAt": "2026-03-20T06:30:21.631Z",
       "status": "operational",
-      "responseMs": 7749,
+      "responseMs": 8865,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,14 +57,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T06:06:45.500Z",
-      "status": "down",
-      "responseMs": 184,
-      "httpStatus": 503,
+      "checkedAt": "2026-03-20T06:30:22.347Z",
+      "status": "operational",
+      "responseMs": 714,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     },
@@ -81,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T06:07:05.001Z",
+      "checkedAt": "2026-03-20T06:30:42.083Z",
       "status": "operational",
-      "responseMs": 18259,
+      "responseMs": 18423,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -124,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T06:07:22.850Z",
+      "checkedAt": "2026-03-20T06:31:02.544Z",
       "status": "operational",
-      "responseMs": 17383,
+      "responseMs": 17382,
       "components": [
         {
           "name": "Page loads",
@@ -161,14 +181,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-20T06:07:23.206Z",
-      "status": "down",
-      "responseMs": 192,
-      "httpStatus": 503,
+      "checkedAt": "2026-03-20T06:31:03.418Z",
+      "status": "operational",
+      "responseMs": 873,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     }
