@@ -1533,7 +1533,7 @@ function uptime(id){
   var label=pct>=99.5?'Excellent':pct>=95?'Good':pct>=80?'Fair':'Poor';
   return{pct:pct.toFixed(1)+'%',label:label};
 }
-function resLabel(ms){return ms<5000?'Fast':ms<10000?'Normal':ms<20000?'Slow':'Very slow'}
+function resLabel(ms){return ms<10000?'Fast':ms<25000?'Normal':ms<45000?'Slow':'Very slow'}
 function sparkline(id){
   var hist=filteredHistory();
   if(!hist.length)return Array(48).fill('<div class="sb shimmer-bar"></div>').join('');
@@ -1544,8 +1544,17 @@ function sparkline(id){
     var r=(e.results||[]).find(function(r){return r.id===id});
     var s=confirmedStatus(id,i);
     var tip=fmtS(e.timestamp)+(r?': '+(friendly[s]||s)+' ('+r.responseMs+'ms)':'');
-    /* Operational = always green (CI response times are inflated by Playwright) */
+    /* Color by response time (CI-adjusted thresholds for Playwright overhead)
+       green (<25s) → lime (25-35s) → yellow (35-45s) → orange (45-60s) → red (>60s) */
     var rtColor='';
+    if(r&&s==='operational'&&r.responseMs){
+      var ms=r.responseMs;
+      if(ms<25000)rtColor='background:var(--green);';
+      else if(ms<35000)rtColor='background:#84cc16;';
+      else if(ms<45000)rtColor='background:var(--yellow);';
+      else if(ms<60000)rtColor='background:#f97316;';
+      else rtColor='background:var(--red);';
+    }
     return'<div class="sb '+(r?sc(s):'unk')+'" style="animation-delay:'+(idx*8)+'ms;'+rtColor+'" data-tip="'+tip+'"></div>';
   });
   while(bars.length<48)bars.unshift('<div class="sb unk"></div>');
