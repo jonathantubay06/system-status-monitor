@@ -505,7 +505,13 @@ function parseCSV(text) {
   const histFile = path.join(outDir, 'history.json');
   let history = [];
   if (fs.existsSync(histFile)) { try { history = JSON.parse(fs.readFileSync(histFile, 'utf8')); } catch {} }
-  history.push({ timestamp: new Date().toISOString(), results });
+  // Strip results to minimal fields for history (saves ~50-60% file size)
+  const minimalResults = results.map(r => ({
+    id: r.id, name: r.name, status: r.status, responseMs: r.responseMs,
+    ...(r.error ? { error: r.error } : {}),
+    components: r.components
+  }));
+  history.push({ timestamp: new Date().toISOString(), results: minimalResults });
   if (history.length > 672) history = history.slice(-672);
   fs.writeFileSync(histFile, JSON.stringify(history, null, 2));
 
