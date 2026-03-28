@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-28T15:54:37.594Z",
+  "updatedAt": "2026-03-28T16:22:14.864Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-28T15:52:18.123Z",
+      "checkedAt": "2026-03-28T16:21:34.118Z",
       "status": "operational",
-      "responseMs": 9417,
+      "responseMs": 7998,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,14 +57,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-28T15:52:18.657Z",
-      "status": "down",
-      "responseMs": 213,
-      "httpStatus": 503,
+      "checkedAt": "2026-03-28T16:21:35.089Z",
+      "status": "operational",
+      "responseMs": 971,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         }
       ]
     },
@@ -81,11 +101,11 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-28T15:54:16.026Z",
+      "checkedAt": "2026-03-28T16:21:54.402Z",
       "status": "operational",
-      "responseMs": 47769,
+      "responseMs": 18485,
       "httpStatus": 200,
-      "pageTitle": "Login",
+      "pageTitle": "Trustee Bonds",
       "components": [
         {
           "name": "Page loads",
@@ -124,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-28T15:54:36.977Z",
+      "checkedAt": "2026-03-28T16:22:14.675Z",
       "status": "operational",
-      "responseMs": 17434,
+      "responseMs": 17325,
       "components": [
         {
           "name": "Page loads",
@@ -161,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-28T15:54:37.575Z",
+      "checkedAt": "2026-03-28T16:22:14.844Z",
       "status": "operational",
-      "responseMs": 598,
+      "responseMs": 169,
       "httpStatus": 200,
       "components": [
         {
