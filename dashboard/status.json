@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-29T17:00:42.713Z",
+  "updatedAt": "2026-03-29T17:30:54.964Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T16:59:30.205Z",
+      "checkedAt": "2026-03-29T17:30:13.482Z",
       "status": "operational",
-      "responseMs": 8710,
+      "responseMs": 8233,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T16:59:30.712Z",
+      "checkedAt": "2026-03-29T17:30:14.471Z",
       "status": "operational",
-      "responseMs": 507,
+      "responseMs": 989,
       "httpStatus": 200,
       "components": [
         {
@@ -101,11 +101,11 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T17:00:21.667Z",
+      "checkedAt": "2026-03-29T17:30:33.881Z",
       "status": "operational",
-      "responseMs": 49375,
+      "responseMs": 18154,
       "httpStatus": 200,
-      "pageTitle": "Login",
+      "pageTitle": "Trustee Bonds",
       "components": [
         {
           "name": "Page loads",
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T17:00:42.134Z",
+      "checkedAt": "2026-03-29T17:30:54.783Z",
       "status": "operational",
-      "responseMs": 17342,
+      "responseMs": 17392,
       "components": [
         {
           "name": "Page loads",
@@ -181,34 +181,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T17:00:42.692Z",
-      "status": "operational",
-      "responseMs": 558,
-      "httpStatus": 200,
+      "checkedAt": "2026-03-29T17:30:54.948Z",
+      "status": "down",
+      "responseMs": 165,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         }
       ]
     }
