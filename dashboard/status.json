@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-29T10:23:24.914Z",
+  "updatedAt": "2026-03-29T11:00:08.455Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T10:22:14.113Z",
+      "checkedAt": "2026-03-29T10:57:49.677Z",
       "status": "operational",
-      "responseMs": 8104,
+      "responseMs": 8549,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T10:22:14.606Z",
+      "checkedAt": "2026-03-29T10:57:49.819Z",
       "status": "operational",
-      "responseMs": 493,
+      "responseMs": 142,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T10:23:04.089Z",
+      "checkedAt": "2026-03-29T10:59:47.607Z",
       "status": "operational",
-      "responseMs": 48266,
+      "responseMs": 47958,
       "httpStatus": 200,
       "pageTitle": "Login",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T10:23:24.484Z",
+      "checkedAt": "2026-03-29T11:00:08.090Z",
       "status": "operational",
-      "responseMs": 17347,
+      "responseMs": 17336,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-29T10:23:24.891Z",
+      "checkedAt": "2026-03-29T11:00:08.430Z",
       "status": "operational",
-      "responseMs": 407,
+      "responseMs": 339,
       "httpStatus": 200,
       "components": [
         {
