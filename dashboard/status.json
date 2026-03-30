@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-30T17:38:44.624Z",
+  "updatedAt": "2026-03-30T18:39:10.336Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T17:38:02.837Z",
+      "checkedAt": "2026-03-30T18:38:08.839Z",
       "status": "operational",
-      "responseMs": 7494,
+      "responseMs": 8388,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,34 +57,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T17:38:03.741Z",
-      "status": "operational",
-      "responseMs": 903,
-      "httpStatus": 200,
+      "checkedAt": "2026-03-30T18:38:09.013Z",
+      "status": "down",
+      "responseMs": 174,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         }
       ]
     },
@@ -101,9 +81,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T17:38:22.876Z",
+      "checkedAt": "2026-03-30T18:38:28.528Z",
       "status": "operational",
-      "responseMs": 17825,
+      "responseMs": 18332,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,27 +124,18 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T17:38:43.469Z",
-      "status": "operational",
-      "responseMs": 17387,
+      "checkedAt": "2026-03-30T18:39:09.288Z",
+      "status": "down",
+      "responseMs": 10776,
+      "error": "locator.click: Error: strict mode violation: locator('button[type=\"submit\"]') resolved to 2 elements:\n    1) <button type=\"submit\" form=\"login-form\" class=\"ant-btn css-1odpy5d ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-block BaseButton_baseButton__cuOl7 BaseButton_activeButton__Vefbn\">…</button> aka getByRole('button', { name: 'Log In' }).nth(1)\n    2) <button type=\"submit\" form=\"login-form\" class=\"ant-btn css-1odpy5d ant-btn-default ant-btn-color-default ant-btn-variant-outlined BaseButton_baseButton__cuOl7 BaseButton_activeButton__Vefbn\">…</button> aka locator('button').filter({ hasText: 'Log In' }).nth(3)\n\nCall log:\n  - waiting for locator('button[type=\"submit\"]')\n",
       "components": [
         {
           "name": "Page loads",
           "status": "operational"
         },
         {
-          "name": "Login",
-          "status": "operational",
-          "detail": null
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "No errors",
-          "status": "operational",
-          "detail": null
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -181,9 +152,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T17:38:44.601Z",
+      "checkedAt": "2026-03-30T18:39:10.314Z",
       "status": "operational",
-      "responseMs": 1132,
+      "responseMs": 1026,
       "httpStatus": 200,
       "components": [
         {
