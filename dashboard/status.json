@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-30T22:26:17.680Z",
+  "updatedAt": "2026-03-30T23:03:04.971Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T22:25:16.472Z",
+      "checkedAt": "2026-03-30T23:02:03.572Z",
       "status": "operational",
-      "responseMs": 7702,
+      "responseMs": 7854,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T22:25:17.112Z",
+      "checkedAt": "2026-03-30T23:02:04.279Z",
       "status": "operational",
-      "responseMs": 640,
+      "responseMs": 706,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T22:25:36.230Z",
+      "checkedAt": "2026-03-30T23:02:24.155Z",
       "status": "operational",
-      "responseMs": 18095,
+      "responseMs": 18618,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T22:26:16.963Z",
+      "checkedAt": "2026-03-30T23:03:04.589Z",
       "status": "down",
-      "responseMs": 10734,
+      "responseMs": 10536,
       "error": "locator.click: Error: strict mode violation: locator('button[type=\"submit\"]') resolved to 2 elements:\n    1) <button type=\"submit\" form=\"login-form\" class=\"ant-btn css-1odpy5d ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-block BaseButton_baseButton__cuOl7 BaseButton_activeButton__Vefbn\">…</button> aka getByRole('button', { name: 'Log In' }).nth(1)\n    2) <button type=\"submit\" form=\"login-form\" class=\"ant-btn css-1odpy5d ant-btn-default ant-btn-color-default ant-btn-variant-outlined BaseButton_baseButton__cuOl7 BaseButton_activeButton__Vefbn\">…</button> aka locator('button').filter({ hasText: 'Log In' }).nth(3)\n\nCall log:\n  - waiting for locator('button[type=\"submit\"]')\n",
       "components": [
         {
@@ -172,9 +172,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-03-30T22:26:17.651Z",
+      "checkedAt": "2026-03-30T23:03:04.948Z",
       "status": "operational",
-      "responseMs": 688,
+      "responseMs": 359,
       "httpStatus": 200,
       "components": [
         {
