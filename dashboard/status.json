@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-01T17:34:31.944Z",
+  "updatedAt": "2026-04-01T17:37:54.792Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T17:33:20.317Z",
+      "checkedAt": "2026-04-01T17:37:16.694Z",
       "status": "operational",
-      "responseMs": 7937,
+      "responseMs": 6732,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T17:33:21.121Z",
+      "checkedAt": "2026-04-01T17:37:17.187Z",
       "status": "operational",
-      "responseMs": 803,
+      "responseMs": 492,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T17:33:40.446Z",
+      "checkedAt": "2026-04-01T17:37:35.643Z",
       "status": "operational",
-      "responseMs": 18033,
+      "responseMs": 17688,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,18 +144,27 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T17:34:31.477Z",
-      "status": "down",
-      "responseMs": 14754,
-      "error": "locator.scrollIntoViewIfNeeded: Timeout 4995.649999999994ms exceeded.\nCall log:\n  - attempting scroll into view action\n    2 × waiting for element to be stable\n      - element is not visible\n    - retrying scroll into view action\n    - waiting 20ms\n    2 × waiting for element to be stable\n      - element is not visible\n    - retrying scroll into view action\n      - waiting 100ms\n    10 × waiting for element to be stable\n       - element is not visible\n     - retrying scroll into view action\n       - waiting 500ms\n",
+      "checkedAt": "2026-04-01T17:37:54.347Z",
+      "status": "operational",
+      "responseMs": 18143,
       "components": [
         {
           "name": "Page loads",
           "status": "operational"
         },
         {
-          "name": "Page loads",
-          "status": "down"
+          "name": "Login",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
         }
       ]
     },
@@ -172,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T17:34:31.922Z",
+      "checkedAt": "2026-04-01T17:37:54.768Z",
       "status": "operational",
-      "responseMs": 445,
+      "responseMs": 421,
       "httpStatus": 200,
       "components": [
         {
