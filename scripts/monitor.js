@@ -264,15 +264,9 @@ async function customCheck(project, browser) {
       await passInput.pressSequentially(password, { delay: 80 });
       await page.waitForTimeout(500);
 
-      // Find submit button - use the last "Log In" button (password form submit, not Google SSO)
-      const allLogInButtons = page.locator('button').filter({ hasText: /Log In/i });
-      const btnCount = await allLogInButtons.count().catch(() => 1);
-      const submitBtn = allLogInButtons.nth(btnCount - 1); // Get the last one
-
-      // Ensure button is scrolled into view and visible
-      await submitBtn.scrollIntoViewIfNeeded({ timeout: 5000 });
+      // Submit form by pressing Enter in the password field (more reliable than button click)
+      await passInput.press('Enter');
       await page.waitForTimeout(300);
-      await submitBtn.click({ force: true });
 
       await page.waitForTimeout(8000);
       const currentUrl = page.url();
