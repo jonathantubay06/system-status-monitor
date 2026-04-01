@@ -264,13 +264,10 @@ async function customCheck(project, browser) {
       await passInput.pressSequentially(password, { delay: 80 });
       await page.waitForTimeout(500);
 
-      // Try submit button - could be type="submit" or any button (new form may not have type="submit")
-      let submitBtn = page.locator('button[type="submit"]').first();
-      let submitCount = await submitBtn.count().catch(() => 0);
-      if (submitCount === 0) {
-        // Find button that contains "Log In" text
-        submitBtn = page.locator('button').filter({ hasText: /Log In/i }).first();
-      }
+      // Find submit button - use the last "Log In" button (password form submit, not Google SSO)
+      const allLogInButtons = page.locator('button').filter({ hasText: /Log In/i });
+      const btnCount = await allLogInButtons.count().catch(() => 1);
+      const submitBtn = allLogInButtons.nth(btnCount - 1); // Get the last one
       await submitBtn.click({ force: true });
 
       await page.waitForTimeout(8000);
