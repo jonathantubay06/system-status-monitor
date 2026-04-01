@@ -268,6 +268,10 @@ async function customCheck(project, browser) {
       const allLogInButtons = page.locator('button').filter({ hasText: /Log In/i });
       const btnCount = await allLogInButtons.count().catch(() => 1);
       const submitBtn = allLogInButtons.nth(btnCount - 1); // Get the last one
+
+      // Ensure button is scrolled into view and visible
+      await submitBtn.scrollIntoViewIfNeeded({ timeout: 5000 });
+      await page.waitForTimeout(300);
       await submitBtn.click({ force: true });
 
       await page.waitForTimeout(8000);
