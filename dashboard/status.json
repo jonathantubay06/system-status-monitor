@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-01T16:44:45.627Z",
+  "updatedAt": "2026-04-01T17:30:55.472Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T16:43:21.201Z",
+      "checkedAt": "2026-04-01T17:29:57.366Z",
       "status": "operational",
-      "responseMs": 8709,
+      "responseMs": 8658,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T16:43:21.890Z",
+      "checkedAt": "2026-04-01T17:29:58.225Z",
       "status": "operational",
-      "responseMs": 689,
+      "responseMs": 859,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T16:43:42.627Z",
+      "checkedAt": "2026-04-01T17:30:17.439Z",
       "status": "operational",
-      "responseMs": 19354,
+      "responseMs": 18310,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,19 +144,18 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T16:44:45.182Z",
+      "checkedAt": "2026-04-01T17:30:54.585Z",
       "status": "down",
-      "responseMs": 18244,
-      "error": "Login failed",
+      "responseMs": 9776,
+      "error": "locator.click: Element is not visible\nCall log:\n  - waiting for locator('button').filter({ hasText: /Log In/i }).nth(3)\n    - locator resolved to <button type=\"submit\" form=\"login-form\" class=\"ant-btn css-1odpy5d ant-btn-default ant-btn-color-default ant-btn-variant-outlined BaseButton_baseButton__cuOl7 BaseButton_activeButton__Vefbn\">…</button>\n  - attempting click action\n    - scrolling into view if needed\n",
       "components": [
         {
           "name": "Page loads",
           "status": "operational"
         },
         {
-          "name": "Login",
-          "status": "down",
-          "detail": "Still on login page after submit"
+          "name": "Page loads",
+          "status": "down"
         }
       ]
     },
@@ -173,9 +172,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-01T16:44:45.604Z",
+      "checkedAt": "2026-04-01T17:30:55.447Z",
       "status": "operational",
-      "responseMs": 421,
+      "responseMs": 862,
       "httpStatus": 200,
       "components": [
         {
