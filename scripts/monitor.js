@@ -247,7 +247,12 @@ async function customCheck(project, browser) {
       await page.waitForSelector('input', { timeout: 15000 }).catch(() => {});
       await page.waitForTimeout(1500);
 
-      const emailInput = page.locator('input[type="text"]').first();
+      // Try email input (type="email" or type="text")
+      let emailInput = page.locator('input[type="email"]').first();
+      let emailCount = await emailInput.count().catch(() => 0);
+      if (emailCount === 0) {
+        emailInput = page.locator('input[type="text"]').first();
+      }
       await emailInput.click({ force: true });
       await page.waitForTimeout(300);
       await emailInput.pressSequentially(email, { delay: 80 });
@@ -259,7 +264,14 @@ async function customCheck(project, browser) {
       await passInput.pressSequentially(password, { delay: 80 });
       await page.waitForTimeout(500);
 
-      await page.locator('button[type="submit"]').click({ force: true });
+      // Try submit button - could be type="submit" or any button (new form may not have type="submit")
+      let submitBtn = page.locator('button[type="submit"]').first();
+      let submitCount = await submitBtn.count().catch(() => 0);
+      if (submitCount === 0) {
+        // Find button that contains "Log In" text
+        submitBtn = page.locator('button').filter({ hasText: /Log In/i }).first();
+      }
+      await submitBtn.click({ force: true });
 
       await page.waitForTimeout(8000);
       const currentUrl = page.url();
