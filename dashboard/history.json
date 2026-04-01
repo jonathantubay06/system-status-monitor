@@ -1,221 +1,5 @@
 [
   {
-    "timestamp": "2026-03-09T11:02:28.055Z",
-    "results": [
-      {
-        "airtableId": "recBJcopy2vZyLcHx",
-        "name": "Jordan Ranch Portal",
-        "type": "softr",
-        "url": "https://jordanranch.softr.app/magic-authentication?magic-token=dc1b577615714dd2a7b8d7bfeb41d3f4",
-        "alertEmail": "jonathantubay@ymail.com",
-        "id": "jordan-ranch-portal",
-        "checkPage": "/events",
-        "loginEmail": "",
-        "loginPassword": "",
-        "group": "",
-        "alertThreshold": 0,
-        "alertChannel": "email",
-        "checkedAt": "2026-03-09T11:01:46.867Z",
-        "status": "operational",
-        "responseMs": 7815,
-        "httpStatus": 200,
-        "pageTitle": "Events",
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          },
-          {
-            "name": "Data loads",
-            "status": "operational",
-            "detail": "10 record(s) found"
-          }
-        ]
-      },
-      {
-        "airtableId": "recUS1iqlfWojro2l",
-        "name": "Kingdomlandkids",
-        "type": "shopify",
-        "url": "https://kingdomlandkids.com/",
-        "alertEmail": "jonathantubay@ymail.com",
-        "id": "kingdomlandkids",
-        "checkPage": "",
-        "loginEmail": "",
-        "loginPassword": "",
-        "group": "",
-        "alertThreshold": 0,
-        "alertChannel": "email",
-        "checkedAt": "2026-03-09T11:01:47.624Z",
-        "status": "operational",
-        "responseMs": 756,
-        "httpStatus": 200,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Header",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "Products",
-            "status": "operational"
-          },
-          {
-            "name": "Cart",
-            "status": "operational"
-          },
-          {
-            "name": "Footer",
-            "status": "operational"
-          }
-        ]
-      },
-      {
-        "airtableId": "rec9nsO0vYvGzSYrI",
-        "name": "George Adams Insurance (GAI)",
-        "type": "softr",
-        "url": "https://gainsurance.softr.app/magic-authentication?magic-token=710a0d684d5a40c6a9c6e192a1b7f5cc",
-        "alertEmail": "jonathantubay@ymail.com",
-        "id": "george-adams-insurance-gai",
-        "checkPage": "/trustee-bonds",
-        "loginEmail": "",
-        "loginPassword": "",
-        "group": "",
-        "alertThreshold": 0,
-        "alertChannel": "email",
-        "checkedAt": "2026-03-09T11:02:06.833Z",
-        "status": "operational",
-        "responseMs": 18329,
-        "httpStatus": 200,
-        "pageTitle": "Trustee Bonds",
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          },
-          {
-            "name": "Data loads",
-            "status": "operational",
-            "detail": "Content detected"
-          }
-        ]
-      },
-      {
-        "airtableId": "recPyNs4klp4TqijD",
-        "name": "Kingdomland Playwatch",
-        "type": "custom",
-        "url": "https://go.kingdomlandkids.com/login",
-        "alertEmail": "jonathantubay@ymail.com",
-        "id": "kingdomland-playwatch",
-        "checkPage": "",
-        "loginEmail": "jonathantubay@ymail.com",
-        "loginPassword": "!J0nthan2025",
-        "group": "",
-        "alertThreshold": 0,
-        "alertChannel": "email",
-        "checkedAt": "2026-03-09T11:02:27.446Z",
-        "status": "operational",
-        "responseMs": 17377,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational",
-            "detail": null
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          }
-        ]
-      },
-      {
-        "airtableId": "recZmxIPvPMwHPcq8",
-        "name": "Tool Mart, Inc",
-        "type": "shopify",
-        "url": "https://www.toolmarthou.com/",
-        "alertEmail": "jonathantubay@ymail.com",
-        "id": "tool-mart-inc",
-        "checkPage": "",
-        "loginEmail": "",
-        "loginPassword": "",
-        "group": "",
-        "alertThreshold": 0,
-        "alertChannel": "email",
-        "checkedAt": "2026-03-09T11:02:28.023Z",
-        "status": "operational",
-        "responseMs": 320,
-        "httpStatus": 200,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Header",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "Products",
-            "status": "operational"
-          },
-          {
-            "name": "Cart",
-            "status": "operational"
-          },
-          {
-            "name": "Footer",
-            "status": "operational"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "timestamp": "2026-03-09T11:48:54.781Z",
     "results": [
       {
@@ -132394,6 +132178,152 @@
         "name": "Tool Mart, Inc",
         "status": "operational",
         "responseMs": 862,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-04-01T17:34:31.964Z",
+    "results": [
+      {
+        "id": "jordan-ranch-portal",
+        "name": "Jordan Ranch Portal",
+        "status": "operational",
+        "responseMs": 7937,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "10 record(s) found"
+          }
+        ]
+      },
+      {
+        "id": "kingdomlandkids",
+        "name": "Kingdomlandkids",
+        "status": "operational",
+        "responseMs": 803,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          }
+        ]
+      },
+      {
+        "id": "george-adams-insurance-gai",
+        "name": "George Adams Insurance (GAI)",
+        "status": "operational",
+        "responseMs": 18033,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "Content detected"
+          }
+        ]
+      },
+      {
+        "id": "kingdomland-playwatch",
+        "name": "Kingdomland Playwatch",
+        "status": "down",
+        "responseMs": 14754,
+        "error": "locator.scrollIntoViewIfNeeded: Timeout 4995.649999999994ms exceeded.\nCall log:\n  - attempting scroll into view action\n    2 × waiting for element to be stable\n      - element is not visible\n    - retrying scroll into view action\n    - waiting 20ms\n    2 × waiting for element to be stable\n      - element is not visible\n    - retrying scroll into view action\n      - waiting 100ms\n    10 × waiting for element to be stable\n       - element is not visible\n     - retrying scroll into view action\n       - waiting 500ms\n",
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Page loads",
+            "status": "down"
+          }
+        ]
+      },
+      {
+        "id": "tool-mart-inc",
+        "name": "Tool Mart, Inc",
+        "status": "operational",
+        "responseMs": 445,
         "components": [
           {
             "name": "Page loads",
