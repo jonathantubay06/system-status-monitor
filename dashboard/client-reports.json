@@ -133,5 +133,14 @@
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-04-02",
+    "request": "Kim Gonzalez - Client",
+    "issue": "When Cortney creates events for Kim Gonzalez, they always default to showing \"Texas Throwers Camp\" as the client name— even when she creates the events under \"Genesis Team.\" These are two separate entities that happen to share the same facilitator (Kim Gonzalez), and the portal is not distinguishing between them correctly.",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney"
   }
 ]
