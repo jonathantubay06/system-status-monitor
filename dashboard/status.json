@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-08T10:43:12.483Z",
+  "updatedAt": "2026-04-08T11:39:23.833Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-08T10:42:32.288Z",
+      "checkedAt": "2026-04-08T11:38:44.159Z",
       "status": "operational",
-      "responseMs": 10701,
+      "responseMs": 7554,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-08T10:42:33.181Z",
+      "checkedAt": "2026-04-08T11:38:44.529Z",
       "status": "operational",
-      "responseMs": 893,
+      "responseMs": 370,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-08T10:42:53.100Z",
+      "checkedAt": "2026-04-08T11:39:03.256Z",
       "status": "operational",
-      "responseMs": 18605,
+      "responseMs": 17838,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-08T10:43:12.155Z",
+      "checkedAt": "2026-04-08T11:39:22.958Z",
       "status": "operational",
-      "responseMs": 18160,
+      "responseMs": 18333,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-08T10:43:12.457Z",
+      "checkedAt": "2026-04-08T11:39:23.810Z",
       "status": "operational",
-      "responseMs": 302,
+      "responseMs": 851,
       "httpStatus": 200,
       "components": [
         {
