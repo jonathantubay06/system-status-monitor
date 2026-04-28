@@ -178,5 +178,14 @@
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-04-28",
+    "request": "Export Meal Plan",
+    "issue": "Meal plan PDF export took over 15 minutes to be delivered via email. Root cause was a Zapier service outage (degraded performance) affecting background task execution. Zap \"NOTIF - Export Meal Planner\" showed as Delayed in Zapier dashboard.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
   }
 ]
