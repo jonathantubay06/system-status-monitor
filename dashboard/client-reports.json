@@ -169,5 +169,14 @@
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-04-28",
+    "request": "Lodge Porch",
+    "issue": "When creating events with Lodge Meeting Rm, Full Lodge, and Lodge Porch selected, Lodge Porch did not appear in the Meeting Rooms section. Affected events: Youth of First Brazilian Baptist Church and november test event for lodge bookings.",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue",
+    "raisedBy": "Cortney"
   }
 ]
