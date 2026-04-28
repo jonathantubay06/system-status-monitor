@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-28T18:59:50.243Z",
+  "updatedAt": "2026-04-28T20:15:44.176Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-28T18:59:10.598Z",
+      "checkedAt": "2026-04-28T20:15:05.194Z",
       "status": "operational",
-      "responseMs": 7899,
+      "responseMs": 9043,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-28T18:59:11.005Z",
+      "checkedAt": "2026-04-28T20:15:06.047Z",
       "status": "operational",
-      "responseMs": 407,
+      "responseMs": 853,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-28T18:59:30.803Z",
+      "checkedAt": "2026-04-28T20:15:25.347Z",
       "status": "operational",
-      "responseMs": 18815,
+      "responseMs": 18056,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-28T18:59:49.714Z",
-      "status": "operational",
-      "responseMs": 18107,
+      "checkedAt": "2026-04-28T20:15:43.624Z",
+      "status": "degraded",
+      "responseMs": 17779,
       "components": [
         {
           "name": "Page loads",
@@ -159,7 +159,7 @@
         },
         {
           "name": "Navigation",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "No errors",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-04-28T18:59:50.218Z",
+      "checkedAt": "2026-04-28T20:15:44.154Z",
       "status": "operational",
-      "responseMs": 504,
+      "responseMs": 530,
       "httpStatus": 200,
       "components": [
         {
