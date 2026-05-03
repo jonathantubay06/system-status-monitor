@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-03T20:43:00.897Z",
+  "updatedAt": "2026-05-03T21:26:50.163Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,11 +14,11 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-03T20:41:09.759Z",
-      "status": "down",
-      "responseMs": 48248,
+      "checkedAt": "2026-05-03T21:26:07.289Z",
+      "status": "operational",
+      "responseMs": 8315,
       "httpStatus": 200,
-      "pageTitle": "Sign in",
+      "pageTitle": "Events",
       "components": [
         {
           "name": "Page loads",
@@ -39,8 +39,8 @@
         },
         {
           "name": "Data loads",
-          "status": "down",
-          "detail": "No data detected"
+          "status": "operational",
+          "detail": "10 record(s) found"
         }
       ]
     },
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-03T20:41:10.501Z",
+      "checkedAt": "2026-05-03T21:26:08.087Z",
       "status": "operational",
-      "responseMs": 741,
+      "responseMs": 798,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-03T20:42:38.540Z",
+      "checkedAt": "2026-05-03T21:26:27.861Z",
       "status": "operational",
-      "responseMs": 18572,
+      "responseMs": 18568,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-03T20:43:00.139Z",
+      "checkedAt": "2026-05-03T21:26:49.372Z",
       "status": "degraded",
-      "responseMs": 17941,
+      "responseMs": 17754,
       "components": [
         {
           "name": "Page loads",
@@ -181,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-03T20:43:00.871Z",
+      "checkedAt": "2026-05-03T21:26:50.138Z",
       "status": "operational",
-      "responseMs": 732,
+      "responseMs": 765,
       "httpStatus": 200,
       "components": [
         {
