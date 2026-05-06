@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-05T23:40:01.351Z",
+  "updatedAt": "2026-05-06T01:16:40.209Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,18 +14,33 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-05T23:39:22.258Z",
-      "status": "down",
-      "responseMs": 105925,
-      "error": "page.title: Execution context was destroyed, most likely because of a navigation",
+      "checkedAt": "2026-05-06T01:16:00.164Z",
+      "status": "operational",
+      "responseMs": 8558,
+      "httpStatus": 200,
+      "pageTitle": "Events",
       "components": [
         {
           "name": "Page loads",
           "status": "operational"
         },
         {
-          "name": "Page loads",
-          "status": "down"
+          "name": "Login",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "10 record(s) found"
         }
       ]
     },
@@ -42,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-05T23:39:23.037Z",
+      "checkedAt": "2026-05-06T01:16:00.678Z",
       "status": "operational",
-      "responseMs": 779,
+      "responseMs": 514,
       "httpStatus": 200,
       "components": [
         {
@@ -86,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-05T23:39:42.232Z",
+      "checkedAt": "2026-05-06T01:16:20.545Z",
       "status": "operational",
-      "responseMs": 18009,
+      "responseMs": 18575,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -129,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-05T23:40:00.802Z",
+      "checkedAt": "2026-05-06T01:16:39.742Z",
       "status": "degraded",
-      "responseMs": 17747,
+      "responseMs": 17963,
       "components": [
         {
           "name": "Page loads",
@@ -166,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-05T23:40:01.328Z",
+      "checkedAt": "2026-05-06T01:16:40.188Z",
       "status": "operational",
-      "responseMs": 525,
+      "responseMs": 445,
       "httpStatus": 200,
       "components": [
         {
