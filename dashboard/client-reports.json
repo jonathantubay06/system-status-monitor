@@ -193,8 +193,8 @@
     "date": "2026-05-06",
     "request": "Facilitator Reminder Email not sending — Austin Laviola (Katy Bible Church)",
     "issue": "Facilitator reminder email failed to send to Austin Laviola. Root cause: email on the event was \"Austin.LaViola@katybible.org\" (mixed case) but the registered email in Users table is \"austin.laviola@katybible.org\" (lowercase). Case mismatch caused the automation to fail to find the user, resulting in no portal link being generated.",
-    "definition": "",
-    "subDefinition": "",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
     "raisedBy": "Cortney"
   }
 ]
