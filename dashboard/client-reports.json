@@ -196,5 +196,23 @@
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-05-08",
+    "request": "Meal plan",
+    "issue": "Meal plan location defaulting to \"Dining\" instead of \"Lodge\" for events held at the Lodge. The script converts the \"Hotel\" facility to \"Dining,\" which doesn't account for events that need a Lodge meal location.",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-04-30",
+    "request": "Lodge Porch",
+    "issue": "Deleting a meeting room reservation was not syncing with the Room Assignments on the event. Duplicate reservations were also not being handled correctly when deleting.",
+    "definition": "Maintenance",
+    "subDefinition": "New Feature",
+    "raisedBy": "Cortney"
   }
 ]
