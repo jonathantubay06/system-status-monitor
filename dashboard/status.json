@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-11T11:16:48.198Z",
+  "updatedAt": "2026-05-12T06:02:09.017Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-11T11:16:08.459Z",
+      "checkedAt": "2026-05-12T06:01:29.220Z",
       "status": "operational",
-      "responseMs": 8861,
+      "responseMs": 8634,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -57,9 +57,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-11T11:16:09.353Z",
+      "checkedAt": "2026-05-12T06:01:30.079Z",
       "status": "operational",
-      "responseMs": 893,
+      "responseMs": 858,
       "httpStatus": 200,
       "components": [
         {
@@ -101,9 +101,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-11T11:16:28.983Z",
+      "checkedAt": "2026-05-12T06:01:49.001Z",
       "status": "operational",
-      "responseMs": 18546,
+      "responseMs": 17969,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -144,9 +144,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-11T11:16:47.583Z",
-      "status": "degraded",
-      "responseMs": 17867,
+      "checkedAt": "2026-05-12T06:02:08.471Z",
+      "status": "operational",
+      "responseMs": 15759,
       "components": [
         {
           "name": "Page loads",
@@ -154,12 +154,11 @@
         },
         {
           "name": "Login",
-          "status": "operational",
-          "detail": null
+          "status": "operational"
         },
         {
           "name": "Navigation",
-          "status": "degraded"
+          "status": "operational"
         },
         {
           "name": "No errors",
@@ -181,9 +180,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-05-11T11:16:48.172Z",
+      "checkedAt": "2026-05-12T06:02:08.994Z",
       "status": "operational",
-      "responseMs": 589,
+      "responseMs": 523,
       "httpStatus": 200,
       "components": [
         {
