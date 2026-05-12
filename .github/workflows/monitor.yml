@@ -34,14 +34,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dashboard/status.json dashboard/history.json dashboard/client-reports.json dashboard/incident-notes.json dashboard/alert-log.json 2>/dev/null || true
+          # Stage dashboard files (skip missing ones silently)
+          for f in status.json history.json client-reports.json incident-notes.json alert-log.json; do
+            [ -f "dashboard/$f" ] && git add "dashboard/$f" || true
+          done
           git diff --staged --quiet || git commit -m "chore: health check [$(date -u '+%Y-%m-%d %H:%M UTC')] [skip ci]"
+          # Discard any non-dashboard unstaged changes (e.g. package-lock from npm install)
+          # so the rebase has a clean working tree.
+          git checkout -- . 2>/dev/null || true
           # Retry loop: if rebase conflicts on auto-generated dashboard
           # files, abort and retry with our version (latest check wins).
           for i in 1 2 3; do
             git pull --rebase origin main && break
             echo "Rebase conflict (attempt $i) — resolving with latest check data"
-            git rebase --abort
+            git rebase --abort 2>/dev/null || true
             # Force-checkout our version of dashboard files and re-commit
             git checkout HEAD -- dashboard/
             git add dashboard/
