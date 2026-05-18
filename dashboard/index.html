@@ -2318,6 +2318,20 @@ function previewReport(){
     '.stat-checks, .stat-speed { color:#C5D5F5 !important; }'+
     '.footer-brand { color:#C5D5F5 !important; }'+
     '.incident-header-bg { background:#334155 !important; }'+
+    /* Force banner & button to keep their brand colors in dark mode */
+    '.banner-bg { background:#4C6BCD !important; background-image:linear-gradient(135deg,#4C6BCD,#4d65ff) !important; }'+
+    '.view-online-btn { background:#4d65ff !important; color:#ffffff !important; }'+
+    /* Info card pastel backgrounds — slightly darker tints in dark mode for legibility */
+    '.info-availability { background:#064e3b !important; border-color:#16a34a !important; }'+
+    '.info-availability-text { color:#a7f3d0 !important; }'+
+    '.info-response { background:#1e3a8a !important; border-color:#4C6BCD !important; }'+
+    '.info-response-text { color:#c7d2fe !important; }'+
+    '.info-monitoring { background:#1e293b !important; border-color:#334155 !important; }'+
+    '.info-monitoring-text { color:#cbd5e1 !important; }'+
+    '.info-noissues { background:#064e3b !important; border-color:#16a34a !important; }'+
+    '.info-noissues-text { color:#a7f3d0 !important; }'+
+    '.info-incidents { background:#713f12 !important; border-color:#ca8a04 !important; }'+
+    '.info-incidents-text { color:#fde68a !important; }'+
   '}'+
   /* Outlook.com (web) dark mode hooks */
   '[data-ogsc] body, [data-ogsc] .body-bg { background:#0f172a !important; }'+
@@ -2328,7 +2342,9 @@ function previewReport(){
   '[data-ogsc] .text-dim { color:#94a3b8 !important; }'+
   '[data-ogsc] .brand-text, [data-ogsc] .signature-name, [data-ogsc] .stat-checks, [data-ogsc] .stat-speed, [data-ogsc] .footer-brand { color:#C5D5F5 !important; }'+
   '[data-ogsc] .border-clr { border-color:#334155 !important; }'+
-  '[data-ogsc] .sla-track, [data-ogsc] .incident-header-bg { background:#334155 !important; }';
+  '[data-ogsc] .sla-track, [data-ogsc] .incident-header-bg { background:#334155 !important; }'+
+  '[data-ogsc] .banner-bg, [data-ogsb] .banner-bg { background:#4C6BCD !important; background-image:linear-gradient(135deg,#4C6BCD,#4d65ff) !important; }'+
+  '[data-ogsc] .view-online-btn, [data-ogsb] .view-online-btn { background:#4d65ff !important; color:#ffffff !important; }';
 
   /* Build HTML — light base, dark override via <style> in <head> */
   var h='<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"/>'+
@@ -2347,8 +2363,8 @@ function previewReport(){
     '<td align="right"><span style="display:inline-block;background:'+darkBlue+';color:#ffffff;font-size:10px;font-weight:700;padding:4px 12px;border-radius:4px;text-transform:uppercase;letter-spacing:1.5px">Health Report</span></td>'+
     '</tr></table></td></tr>';
 
-  /* Banner — solid fallback (bgcolor) for Outlook desktop, gradient for modern clients */
-  h+='<tr><td bgcolor="'+blue+'" style="background:'+blue+';background:linear-gradient(135deg,'+blue+','+darkBlue+');padding:28px 40px;border-radius:12px 12px 0 0">'+
+  /* Banner — solid fallback (bgcolor + background-color) for Outlook desktop, gradient image for modern clients */
+  h+='<tr><td class="banner-bg" bgcolor="'+blue+'" style="background-color:'+blue+';background-image:linear-gradient(135deg,'+blue+','+darkBlue+');padding:28px 40px;border-radius:12px 12px 0 0">'+
     '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td>'+
     '<div style="font-size:24px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;margin-bottom:4px">'+escH(project.name)+typeBadge+'</div>'+
     '<div style="font-size:14px;color:#e0e7ff;margin-top:6px">'+maskUrl(project.url)+'</div>'+
@@ -2378,11 +2394,11 @@ function previewReport(){
   /* Info cards 2x2 — using bgcolor + solid colors that look fine in both light and dark mode */
   h+='<tr><td class="card-bg border-clr" bgcolor="'+cardBg+'" style="background:'+cardBg+';padding:0 40px 32px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
     '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>'+
-    '<td width="50%" style="padding:6px 6px 6px 0"><div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+green+';font-weight:600;margin-bottom:4px">&#x2705; Availability</div><div style="font-size:14px;color:#065f46;line-height:1.5">Your site was online <strong style="color:'+green+'">'+s.uptimePercent+'%</strong> of the time</div></div></td>'+
-    '<td width="50%" style="padding:6px 0 6px 6px"><div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+blue+';font-weight:600;margin-bottom:4px">&#x26A1; Response Time</div><div style="font-size:14px;color:#1e3a8a;line-height:1.5">Average speed: <strong style="color:'+blue+'">'+avgSec+'s</strong> ('+minSec+'s – '+maxSec+'s)</div></div></td>'+
+    '<td width="50%" style="padding:6px 6px 6px 0"><div class="info-availability" style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+green+';font-weight:600;margin-bottom:4px">&#x2705; Availability</div><div class="info-availability-text" style="font-size:14px;color:#065f46;line-height:1.5">Your site was online <strong style="color:'+green+'">'+s.uptimePercent+'%</strong> of the time</div></div></td>'+
+    '<td width="50%" style="padding:6px 0 6px 6px"><div class="info-response" style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+blue+';font-weight:600;margin-bottom:4px">&#x26A1; Response Time</div><div class="info-response-text" style="font-size:14px;color:#1e3a8a;line-height:1.5">Average speed: <strong style="color:'+blue+'">'+avgSec+'s</strong> ('+minSec+'s – '+maxSec+'s)</div></div></td>'+
     '</tr><tr>'+
-    '<td width="50%" style="padding:6px 6px 6px 0"><div style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:#475569;font-weight:600;margin-bottom:4px">&#x1F4CA; Monitoring</div><div style="font-size:14px;color:#1e293b;line-height:1.5"><strong style="color:#475569">'+s.totalChecks+'</strong> health checks completed</div></div></td>'+
-    '<td width="50%" style="padding:6px 0 6px 6px"><div style="background:'+(incidentCount===0?'#ecfdf5':'#fef9c3')+';border:1px solid '+(incidentCount===0?'#a7f3d0':'#fde68a')+';border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+(incidentCount===0?green:yellow)+';font-weight:600;margin-bottom:4px">'+(incidentCount===0?'&#x2705; No Issues':'&#x26A0; Incidents')+'</div><div style="font-size:14px;color:'+(incidentCount===0?'#065f46':'#713f12')+';line-height:1.5"><strong style="color:'+(incidentCount===0?green:yellow)+'">'+incidentCount+'</strong> incident'+(incidentCount!==1?'s':'')+' '+(incidentCount===0?'this period':'detected')+'</div><div style="font-size:11px;color:'+(incidentCount===0?'#10b981':'#a16207')+';margin-top:4px;font-style:italic">From automated health checks</div></div></td>'+
+    '<td width="50%" style="padding:6px 6px 6px 0"><div class="info-monitoring" style="background:#f1f5f9;border:1px solid #cbd5e1;border-radius:10px;padding:18px 16px"><div class="info-monitoring-text" style="font-size:13px;color:#475569;font-weight:600;margin-bottom:4px">&#x1F4CA; Monitoring</div><div class="info-monitoring-text" style="font-size:14px;color:#1e293b;line-height:1.5"><strong style="color:#475569">'+s.totalChecks+'</strong> health checks completed</div></div></td>'+
+    '<td width="50%" style="padding:6px 0 6px 6px"><div class="'+(incidentCount===0?'info-noissues':'info-incidents')+'" style="background:'+(incidentCount===0?'#ecfdf5':'#fef9c3')+';border:1px solid '+(incidentCount===0?'#a7f3d0':'#fde68a')+';border-radius:10px;padding:18px 16px"><div style="font-size:13px;color:'+(incidentCount===0?green:yellow)+';font-weight:600;margin-bottom:4px">'+(incidentCount===0?'&#x2705; No Issues':'&#x26A0; Incidents')+'</div><div class="'+(incidentCount===0?'info-noissues-text':'info-incidents-text')+'" style="font-size:14px;color:'+(incidentCount===0?'#065f46':'#713f12')+';line-height:1.5"><strong style="color:'+(incidentCount===0?green:yellow)+'">'+incidentCount+'</strong> incident'+(incidentCount!==1?'s':'')+' '+(incidentCount===0?'this period':'detected')+'</div><div class="'+(incidentCount===0?'info-noissues-text':'info-incidents-text')+'" style="font-size:11px;color:'+(incidentCount===0?'#10b981':'#a16207')+';margin-top:4px;font-style:italic">From automated health checks</div></div></td>'+
     '</tr></table></td></tr>';
 
   /* Monthly SLA */
@@ -2457,7 +2473,7 @@ function previewReport(){
 
   /* View Online */
   h+='<tr><td class="card-bg border-clr" bgcolor="'+cardBg+'" style="background:'+cardBg+';padding:16px 40px 0;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+';text-align:center">'+
-    '<a href="https://projecthealthmonitoring.netlify.app/report/'+projectId+'?from='+fromDate+'&to='+toDate+'" style="display:inline-block;background:'+darkBlue+';color:#ffffff;font-size:13px;font-weight:600;padding:10px 24px;border-radius:8px;text-decoration:none">View Report Online &#x2192;</a>'+
+    '<a class="view-online-btn" href="https://projecthealthmonitoring.netlify.app/report/'+projectId+'?from='+fromDate+'&to='+toDate+'" style="display:inline-block;background:'+darkBlue+';color:#ffffff;font-size:13px;font-weight:600;padding:10px 24px;border-radius:8px;text-decoration:none">View Report Online &#x2192;</a>'+
     '</td></tr>';
 
   /* Footer */
