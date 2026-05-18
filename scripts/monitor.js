@@ -426,50 +426,29 @@ function recordAlertSent(projectId) {
   fs.writeFileSync(logPath, JSON.stringify(log, null, 2));
 }
 
+// ─── AUTOMATED EMAIL ALERTS ARE DISABLED ─────────────────────────────────────
+// Per user policy: emails should ONLY be sent via the dashboard "Send Report"
+// button (manual action). The monitor workflow never sends emails.
+// Slack alerts are still allowed (free, no credit limits).
+// ─────────────────────────────────────────────────────────────────────────────
 async function sendAlert(project, result) {
-  const channel = project.alertChannel || 'email';
-  if (channel === 'none') return;
-  // Rate limit: skip if we just sent an alert for this project
-  if (isAlertRateLimited(project.id)) {
-    console.log(`  >> Alert suppressed (cooldown active, last alert < ${ALERT_COOLDOWN_HOURS}h ago)`);
-    return;
-  }
-  if ((channel === 'email' || channel === 'both') && process.env.SENDGRID_API_KEY && project.alertEmail) {
-    await sendEmailAlert(project, result);
-  }
+  const channel = project.alertChannel || 'none';
+  // Email path is permanently disabled — only Slack alerts fire automatically
   if ((channel === 'slack' || channel === 'both') && process.env.SLACK_WEBHOOK_URL) {
+    if (isAlertRateLimited(project.id)) {
+      console.log(`  >> Slack alert suppressed (cooldown active, last alert < ${ALERT_COOLDOWN_HOURS}h ago)`);
+      return;
+    }
     await sendSlackAlert(project, result);
+    recordAlertSent(project.id);
+  } else {
+    console.log(`  >> Auto-email disabled by policy; use dashboard "Send Report" button instead.`);
   }
-  recordAlertSent(project.id);
 }
 
-async function sendEmailAlert(project, result) {
-  // ─── Auto-email alerts are DISABLED ──────────────────────────────────────
-  // SendGrid credits were being burned by false-positive degraded alerts.
-  // Manual report emails (via the dashboard "Send Report" button) still work.
-  // To re-enable automated alerts, set ENABLE_AUTO_EMAIL_ALERTS=true in the
-  // workflow env, or remove this guard block.
-  if (process.env.ENABLE_AUTO_EMAIL_ALERTS !== 'true') {
-    console.log(`  >> Email alert skipped (auto-alerts disabled): ${project.name}`);
-    return;
-  }
-  // ─────────────────────────────────────────────────────────────────────────
-  if (!process.env.SENDGRID_API_KEY || !project.alertEmail) return;
-  const failedComponents = (result.components || []).filter(c => c.status !== 'operational');
-  const compText = failedComponents.length
-    ? `\nFailed components:\n${failedComponents.map(c => `  - ${c.name}: ${c.detail || c.status}`).join('\n')}`
-    : '';
-  await fetch('https://api.sendgrid.com/v3/mail/send', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      personalizations: [{ to: [{ email: project.alertEmail }] }],
-      from: { email: process.env.ALERT_FROM_EMAIL || 'monitor@noreply.com' },
-      subject: `${project.name} is ${result.status.toUpperCase()}`,
-      content: [{ type: 'text/plain', value: `${project.name} is ${result.status.toUpperCase()}\nURL: ${new URL(project.url).origin}\nResponse: ${result.responseMs}ms${compText}\n${result.error ? 'Error: '+result.error : ''}\nChecked: ${new Date().toUTCString()}\n\nNote: This alert was sent after ${MAX_RETRIES + 1} consecutive check attempts and confirmed the issue persists.` }],
-    }),
-  }).catch(e => console.error('Email alert failed:', e.message));
-}
+// sendEmailAlert function removed — automated email is not allowed.
+// Manual email sending lives in netlify/functions/send-report.js (triggered
+// only by the dashboard's Send Report button).
 
 // ── Fetch client-reported issues from Google Sheet ───────────────────────────
 async function fetchClientReports() {

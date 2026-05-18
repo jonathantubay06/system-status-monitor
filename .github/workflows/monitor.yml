@@ -25,9 +25,13 @@ jobs:
         env:
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
           AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          # Slack alerts are allowed (free, no credit limits)
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          ALERT_FROM_EMAIL: ${{ secrets.ALERT_FROM_EMAIL }}
+          # NOTE: Email API keys deliberately NOT passed to the workflow.
+          # Emails are sent ONLY via the dashboard's manual "Send Report" button,
+          # which runs as a Netlify function (uses its own RESEND_API_KEY env var).
+          # Defense-in-depth: even if code accidentally calls a send function,
+          # there's no API key available to authenticate the request.
         run: node scripts/monitor.js
         continue-on-error: true
       - name: Commit results
