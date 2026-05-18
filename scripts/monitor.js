@@ -444,6 +444,16 @@ async function sendAlert(project, result) {
 }
 
 async function sendEmailAlert(project, result) {
+  // ─── Auto-email alerts are DISABLED ──────────────────────────────────────
+  // SendGrid credits were being burned by false-positive degraded alerts.
+  // Manual report emails (via the dashboard "Send Report" button) still work.
+  // To re-enable automated alerts, set ENABLE_AUTO_EMAIL_ALERTS=true in the
+  // workflow env, or remove this guard block.
+  if (process.env.ENABLE_AUTO_EMAIL_ALERTS !== 'true') {
+    console.log(`  >> Email alert skipped (auto-alerts disabled): ${project.name}`);
+    return;
+  }
+  // ─────────────────────────────────────────────────────────────────────────
   if (!process.env.SENDGRID_API_KEY || !project.alertEmail) return;
   const failedComponents = (result.components || []).filter(c => c.status !== 'operational');
   const compText = failedComponents.length
