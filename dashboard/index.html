@@ -1346,7 +1346,10 @@ footer a:hover { color: var(--text-bright); }
     <div class="report-preview-header">
       <button class="btn" onclick="closePreview()">&#x2190; Back</button>
       <span style="font-size:0.82rem;font-weight:600;color:var(--text)">Report Preview</span>
-      <button class="btn primary" id="reportSendBtn" onclick="sendReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F4E8; Send</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="reportCopyBtn" onclick="copyReportForEmail()" title="Copy report as rich HTML — paste into Gmail/Outlook (no SendGrid credits used)">&#x1F4CB; Copy for Email</button>
+        <button class="btn primary" id="reportSendBtn" onclick="sendReport()" style="background:#4C6BCD;border-color:#4C6BCD">&#x1F4E8; Send</button>
+      </div>
     </div>
     <iframe id="reportPreviewFrame" style="width:100%;flex:1;border:none;border-radius:8px;background:#0d1117"></iframe>
   </div>
@@ -2424,10 +2427,46 @@ function previewReport(){
     '</tr></table></td></tr>';
 
   h+='</table></td></tr></table></body></html>';
+  window._lastReportHtml=h; // Store for "Copy for Email" button
   document.querySelector('.report-modal').style.display='none';
   var pane=document.getElementById('reportPreviewPane');
   pane.style.display='flex';
   document.getElementById('reportPreviewFrame').srcdoc=h;
+}
+
+/* Copy the generated report HTML to clipboard for manual paste into Gmail/Outlook */
+async function copyReportForEmail(){
+  var html=window._lastReportHtml;
+  if(!html){showToast('Generate a preview first',true);return}
+  var btn=document.getElementById('reportCopyBtn');
+  if(btn){btn.disabled=true;btn.textContent='Copying…'}
+  try{
+    if(navigator.clipboard&&window.ClipboardItem){
+      /* Modern path: copy as rich HTML so Gmail/Outlook preserve formatting */
+      var htmlBlob=new Blob([html],{type:'text/html'});
+      var tmp=document.createElement('div');tmp.innerHTML=html;
+      var plainText=(tmp.textContent||tmp.innerText||'').replace(/\n{3,}/g,'\n\n').trim();
+      var textBlob=new Blob([plainText],{type:'text/plain'});
+      await navigator.clipboard.write([new ClipboardItem({'text/html':htmlBlob,'text/plain':textBlob})]);
+    }else{
+      /* Fallback: use execCommand with a contenteditable div */
+      var div=document.createElement('div');
+      div.contentEditable=true;
+      div.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';
+      div.innerHTML=html;
+      document.body.appendChild(div);
+      var range=document.createRange();range.selectNodeContents(div);
+      var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+      var ok=document.execCommand('copy');
+      sel.removeAllRanges();document.body.removeChild(div);
+      if(!ok)throw new Error('execCommand copy failed');
+    }
+    showToast('Copied! Paste into Gmail/Outlook (Ctrl+V)');
+  }catch(e){
+    showToast('Copy failed: '+e.message,true);
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='&#x1F4CB; Copy for Email'}
+  }
 }
 
 function closePreview(){
