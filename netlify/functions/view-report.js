@@ -104,6 +104,9 @@ function renderReport({ project, uptimePct, totalChecks, avgMs, minMs, maxMs, in
   }).join('') : '';
 
   const dashUrl = `https://projecthealthmonitoring.netlify.app/status/${projectId}`;
+  // Mask the URL to hide auth tokens (e.g. Softr magic-token) — show hostname only
+  let safeUrl = '';
+  try { safeUrl = new URL(project.url).hostname; } catch (e) { safeUrl = ''; }
 
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Health Report: ${project.name}</title>
@@ -143,13 +146,47 @@ body{background:#09090b;color:#d4d4d8;font-family:'Inter',-apple-system,sans-ser
 .comps{padding-bottom:1.5rem}
 .footer{background:#1e293b;border:1px solid #334155;border-top:none;border-radius:0 0 12px 12px;padding:1.25rem;text-align:center}
 .footer p{font-size:0.72rem;color:#94a3b8}.footer a{color:#60a5fa;text-decoration:none}
-@media(max-width:480px){.stats{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.stat-val{font-size:2.2rem}}
+.copy-fab{position:fixed;top:1rem;right:1rem;background:#4C6BCD;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-family:inherit;font-size:0.82rem;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(76,107,205,0.4);z-index:100;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.copy-fab:hover{background:#4d65ff;transform:translateY(-1px);box-shadow:0 6px 16px rgba(76,107,205,0.5)}
+.copy-fab:disabled{opacity:0.6;cursor:wait}
+.copy-fab.copied{background:#22c55e;box-shadow:0 4px 12px rgba(34,197,94,0.4)}
+@media(max-width:480px){.stats{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.stat-val{font-size:2.2rem}.copy-fab{top:0.5rem;right:0.5rem;font-size:0.75rem;padding:8px 12px}}
 </style></head><body>
+<button class="copy-fab" id="copyFab" onclick="copyReport()">&#x1F4CB; Copy for Email</button>
+<script>
+async function copyReport(){
+  var btn=document.getElementById('copyFab');
+  var origHtml=btn.innerHTML;
+  btn.disabled=true;btn.textContent='Copying…';
+  try{
+    var content=document.querySelector('.wrap');
+    var html='<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="background:#09090b;color:#d4d4d8;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px">'+content.outerHTML+'</body></html>';
+    /* Inline the stylesheet rules so they survive paste into Gmail/Outlook */
+    var styleEl=document.querySelector('style');
+    if(styleEl){html=html.replace('</head>','<style>'+styleEl.textContent+'</style></head>')}
+    if(navigator.clipboard&&window.ClipboardItem){
+      var htmlBlob=new Blob([html],{type:'text/html'});
+      var plain=(content.innerText||'').replace(/\\n{3,}/g,'\\n\\n').trim();
+      var textBlob=new Blob([plain],{type:'text/plain'});
+      await navigator.clipboard.write([new ClipboardItem({'text/html':htmlBlob,'text/plain':textBlob})]);
+    }else{
+      var range=document.createRange();range.selectNodeContents(content);
+      var sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+      document.execCommand('copy');sel.removeAllRanges();
+    }
+    btn.classList.add('copied');btn.innerHTML='&#x2705; Copied!';
+    setTimeout(function(){btn.classList.remove('copied');btn.innerHTML=origHtml;btn.disabled=false},2000);
+  }catch(e){
+    btn.innerHTML='&#x274C; Copy failed';
+    setTimeout(function(){btn.innerHTML=origHtml;btn.disabled=false},2000);
+  }
+}
+</script>
 <div class="wrap">
   <div class="header"><div class="brand"><span>&#x25CF;</span> SentryXP</div><div class="badge">Health Report</div></div>
   <div class="banner">
     <h1>${esc(project.name)}</h1>
-    <div class="url">${esc(project.url || '')}</div>
+    <div class="url">${esc(safeUrl)}</div>
     <div class="date">&#x1F4C5; ${dateLabel}</div>
   </div>
   <div class="card">
