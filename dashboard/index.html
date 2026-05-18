@@ -2249,7 +2249,9 @@ async function sendReport(){
         stats:computed.stats,
         components:computed.components,
         incidents:computed.incidents,
-        clientReports:allClientReports.filter(function(r){if(r.projectId!==projectId)return false;var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')})
+        clientReports:allClientReports.filter(function(r){if(r.projectId!==projectId)return false;var d=new Date(r.date+'T00:00:00');return d>=new Date(fromDate+'T00:00:00')&&d<=new Date(toDate+'T23:59:59')}),
+        /* Pre-built HTML from previewReport() so the email matches what's shown in preview */
+        htmlContent:window._lastReportHtml||''
       })
     });
     var data=await res.json();

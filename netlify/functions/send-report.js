@@ -1,5 +1,6 @@
 // netlify/functions/send-report.js
-// Generates a styled HTML health report email and sends via SendGrid
+// Generates a styled HTML health report email and sends via Resend (preferred) or SendGrid (fallback)
+const RESEND_URL = 'https://api.resend.com/emails';
 const SENDGRID_URL = 'https://api.sendgrid.com/v3/mail/send';
 
 const ch = () => ({
@@ -19,46 +20,78 @@ exports.handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body || '{}');
-    const { recipientEmail, ccEmails, greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports } = body;
+    const { recipientEmail, ccEmails, greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports, htmlContent } = body;
 
     if (!recipientEmail || !projectName) {
       return { statusCode: 400, headers: ch(), body: JSON.stringify({ error: 'recipientEmail and projectName required' }) };
     }
 
-    const html = generateReportHtml({ greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
+    /* Prefer pre-built HTML from dashboard (matches preview exactly).
+       Falls back to local generator if not provided (backwards compat). */
+    const html = htmlContent && htmlContent.length > 100
+      ? htmlContent
+      : generateReportHtml({ greeting, bodyMessage, projectId, projectName, projectType, projectUrl, dateRange, stats, components, incidents, clientReports });
     const subject = `Health Report: ${projectName} — ${dateRange.from} to ${dateRange.to}`;
 
-    /* Support multiple recipients (string or array) */
-    const toList = Array.isArray(recipientEmail)
-      ? recipientEmail.map(e => ({ email: e.trim() }))
-      : [{ email: recipientEmail.trim() }];
+    /* Normalize recipients to arrays of email strings */
+    const toEmails = Array.isArray(recipientEmail)
+      ? recipientEmail.map(e => e.trim()).filter(Boolean)
+      : [recipientEmail.trim()];
+    const ccList = (ccEmails && ccEmails.length) ? ccEmails.map(e => e.trim()).filter(Boolean) : [];
 
-    /* Build personalizations with optional CC */
-    const personalization = { to: toList };
-    if (ccEmails && ccEmails.length) {
-      personalization.cc = ccEmails.map(e => ({ email: e.trim() }));
-    }
+    /* Choose provider: Resend (preferred), falls back to SendGrid */
+    const provider = process.env.RESEND_API_KEY ? 'resend' : 'sendgrid';
 
-    const sgRes = await fetch(SENDGRID_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        personalizations: [personalization],
-        from: { email: process.env.ALERT_FROM_EMAIL, name: 'SentryXP Status Monitor' },
+    if (provider === 'resend') {
+      /* ─── Resend ─── */
+      const fromEmail = process.env.RESEND_FROM_EMAIL || process.env.ALERT_FROM_EMAIL;
+      if (!fromEmail) throw new Error('RESEND_FROM_EMAIL (or ALERT_FROM_EMAIL) not set in env');
+      const payload = {
+        from: `SentryXP Status Monitor <${fromEmail}>`,
+        to: toEmails,
         subject,
-        content: [{ type: 'text/html', value: html }],
-      }),
-    });
+        html,
+      };
+      if (ccList.length) payload.cc = ccList;
 
-    if (!sgRes.ok) {
-      const errText = await sgRes.text();
-      throw new Error(`SendGrid error: ${sgRes.status} ${errText}`);
+      const res = await fetch(RESEND_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Resend error: ${res.status} ${errText}`);
+      }
+      const data = await res.json().catch(() => ({}));
+      return { statusCode: 200, headers: ch(), body: JSON.stringify({ success: true, provider: 'resend', id: data.id }) };
+    } else {
+      /* ─── SendGrid (fallback) ─── */
+      const personalization = { to: toEmails.map(e => ({ email: e })) };
+      if (ccList.length) personalization.cc = ccList.map(e => ({ email: e }));
+
+      const sgRes = await fetch(SENDGRID_URL, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          personalizations: [personalization],
+          from: { email: process.env.ALERT_FROM_EMAIL, name: 'SentryXP Status Monitor' },
+          subject,
+          content: [{ type: 'text/html', value: html }],
+        }),
+      });
+      if (!sgRes.ok) {
+        const errText = await sgRes.text();
+        throw new Error(`SendGrid error: ${sgRes.status} ${errText}`);
+      }
+      return { statusCode: 200, headers: ch(), body: JSON.stringify({ success: true, provider: 'sendgrid' }) };
     }
-
-    return { statusCode: 200, headers: ch(), body: JSON.stringify({ success: true }) };
   } catch (e) {
     return { statusCode: 500, headers: ch(), body: JSON.stringify({ error: e.message }) };
   }
