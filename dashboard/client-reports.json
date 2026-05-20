@@ -223,5 +223,14 @@
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-05-19",
+    "request": "Wrong Client Name on Event (Kim Gonzalez)",
+    "issue": "Women's Encounter May 2026 showing \"Texas Throwers Camp\" instead of \"PowerHouse Church\" as the client, despite being entered correctly at event creation.",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue",
+    "raisedBy": "Cortney"
   }
 ]
