@@ -232,5 +232,14 @@
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-05-21",
+    "request": "rooms (Missing Room 211 for Full Hotel Selection)",
+    "issue": "Ladies of Restoration Woodforest May 2027 was created with Full Hotel selected but room 211 was not included. Cortney confirmed she only selected Full Hotel + meeting rooms at creation with no manual edits afterward",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney"
   }
 ]
