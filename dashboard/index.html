@@ -2120,13 +2120,16 @@ function openReportModal(projectId){
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
   document.getElementById('reportSendBtn').disabled=false;
-  /* Default date range: 7 days ago to today (local timezone) */
+  /* Default date range: previous completed week (Sunday → Saturday).
+     e.g. if today is Mon May 25, defaults to Sun May 17 → Sat May 23. */
   var today=new Date();
-  var toStr=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
-  var weekAgo=new Date(today);weekAgo.setDate(weekAgo.getDate()-7);
-  var fromStr=weekAgo.getFullYear()+'-'+String(weekAgo.getMonth()+1).padStart(2,'0')+'-'+String(weekAgo.getDate()).padStart(2,'0');
-  document.getElementById('reportTo').value=toStr;
-  document.getElementById('reportFrom').value=fromStr;
+  var fmt=function(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  /* Days back to the most recent past Saturday (Sun→1, Mon→2, ..., Sat→7) */
+  var daysToLastSat=((today.getDay()+1)%7)||7;
+  var lastSaturday=new Date(today);lastSaturday.setDate(lastSaturday.getDate()-daysToLastSat);
+  var lastSunday=new Date(lastSaturday);lastSunday.setDate(lastSunday.getDate()-6);
+  document.getElementById('reportFrom').value=fmt(lastSunday);
+  document.getElementById('reportTo').value=fmt(lastSaturday);
   /* Show form, hide preview */
   document.querySelector('.report-modal').style.display='';
   document.getElementById('reportPreviewPane').style.display='none';
