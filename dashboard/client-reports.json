@@ -268,5 +268,14 @@
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-03",
+    "request": "meal plan generation (Meal Plan not showing)",
+    "issue": "Meal plan generated successfully but not displaying in portal. Regeneration attempt says \"already exists.\" Add Meal button not working.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
   }
 ]
