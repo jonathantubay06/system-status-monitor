@@ -277,5 +277,41 @@
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-04",
+    "request": "Portal errors - Request limit exceeded",
+    "issue": "\"Request limit exceeded\" error appearing intermittently while loading the portal. Able to continue working but error keeps coming up.",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-04",
+    "request": "Room assignments delay - Full Hotel",
+    "issue": "Created Men's Encounter PHC with Full Hotel — rooms took over 5 minutes to appear in portal. Cortney flagged this as a workflow issue.",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-04",
+    "request": "Filtering for month",
+    "issue": "Unable to filter Events list by month — clicking July errors out.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-04",
+    "request": "Duplicate event created",
+    "issue": "Error during event creation for \"Latino Women's Encounter PHC\" kept the form open. Submitted again — created two duplicate events. Cortney deleted one herself.",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney"
   }
 ]
