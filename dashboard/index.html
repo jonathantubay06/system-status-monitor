@@ -2108,14 +2108,34 @@ function togglePw(id,btn){var i=document.getElementById(id);if(i.type==='passwor
 /* ── Report Feature ── */
 var defaultReportMessage="Here's your website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.";
 
+/* Remember last-used recipients per project (localStorage) */
+function loadLastRecipients(projectId){
+  try{var raw=localStorage.getItem('lastRecipients:'+projectId);return raw?JSON.parse(raw):null}catch(e){return null}
+}
+function saveLastRecipients(projectId,data){
+  try{localStorage.setItem('lastRecipients:'+projectId,JSON.stringify(data))}catch(e){}
+}
+/* Extract first name from email like "cortney.smith@..." or "first.last+suffix@..." → "Cortney" */
+function firstNameFromEmail(email){
+  if(!email)return'';
+  var local=email.split('@')[0].split('+')[0];
+  var first=local.split(/[._-]/)[0]||'';
+  return first.charAt(0).toUpperCase()+first.slice(1).toLowerCase();
+}
+
 function openReportModal(projectId){
   var project=allResults.find(function(r){return r.id===projectId});
   if(!project)return;
   document.getElementById('reportProjectId').value=projectId;
   document.getElementById('reportModalSub').textContent=project.name;
-  document.getElementById('reportEmail').value=project.alertEmail||'';
-  document.getElementById('reportCC').value='';
-  document.getElementById('reportGreeting').value='Hi,';
+  /* Restore last-used recipients (falls back to project's default alert email) */
+  var saved=loadLastRecipients(projectId);
+  document.getElementById('reportEmail').value=(saved&&saved.to)||project.alertEmail||'';
+  document.getElementById('reportCC').value=(saved&&saved.cc)||'';
+  /* Auto-greeting from first recipient's name */
+  var firstRecipient=((saved&&saved.to)||project.alertEmail||'').split(',')[0].trim();
+  var firstName=firstNameFromEmail(firstRecipient);
+  document.getElementById('reportGreeting').value=firstName?'Hi '+firstName+',':'Hi,';
   document.getElementById('reportMessage').value=defaultReportMessage;
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
@@ -2259,6 +2279,8 @@ async function sendReport(){
     });
     var data=await res.json();
     if(!res.ok)throw new Error(data.error||'Failed to send');
+    /* Remember recipients for next time we open this project's report */
+    saveLastRecipients(projectId,{to:toEmails.join(', '),cc:ccEmails.join(', ')});
     closeReportModal();
     showToast('Report sent to '+toEmails.join(', '));
   }catch(e){
@@ -2466,13 +2488,32 @@ function previewReport(){
         (r.issue&&r.request?escH(r.issue)+' ':'')+
         (r.subDefinition?'&mdash; '+escH(r.subDefinition):'')+'</td></tr>';
     });
+    /* Build definitions legend — only show terms actually used in this report's data */
+    var allDefs={
+      'Bug':'Confirmed code defect',
+      'Edge Case':'Works, but needs UX improvement',
+      'Not A System Issue':'Browser or user behavior, not a bug',
+      'Softr Issue (Global)':'Platform-level outage from Softr',
+      'Airtable Issue':'Backend data issue from Airtable'
+    };
+    var seenDefs={};
+    crs.forEach(function(r){if(r.subDefinition&&allDefs[r.subDefinition])seenDefs[r.subDefinition]=true});
+    var defKeys=Object.keys(allDefs).filter(function(k){return seenDefs[k]});
+    var defsLegendHtml='';
+    if(defKeys.length){
+      defsLegendHtml='<tr><td colspan="3" class="text-dim" style="padding:14px 12px 6px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+'">Definitions</td></tr>';
+      defKeys.forEach(function(k){
+        defsLegendHtml+='<tr><td colspan="3" class="text-dim" style="padding:2px 12px;font-size:12px;color:'+textDim+';line-height:1.5"><strong class="text-main" style="color:'+textMain+';font-weight:600">'+k+'</strong> &mdash; '+allDefs[k]+'</td></tr>';
+      });
+      defsLegendHtml+='<tr><td colspan="3" style="padding-bottom:8px"></td></tr>';
+    }
     h+='<tr><td class="card-bg border-clr" bgcolor="'+cardBg+'" style="background:'+cardBg+';padding:32px 40px 12px;border-left:1px solid '+borderClr+';border-right:1px solid '+borderClr+'">'+
       '<table cellpadding="0" cellspacing="0" border="0" width="100%">'+
       '<tr><td class="text-dim" style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:'+textDim+';padding-bottom:12px">&#x1F4CB; Client-Reported Incidents ('+crs.length+')</td></tr>'+
       '<tr><td class="text-dim" style="font-size:11px;color:'+textDim+';padding-bottom:10px;font-style:italic">Reported directly by client users</td></tr>'+
       '<tr><td><table cellpadding="0" cellspacing="0" border="0" width="100%" class="border-clr" style="border:1px solid '+borderClr+';border-radius:8px;overflow:hidden">'+
       '<tr class="incident-header-bg" bgcolor="'+borderClr+'" style="background:'+borderClr+'"><th class="text-dim" style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Date</th><th class="text-dim" style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Issue</th><th class="text-dim" style="padding:8px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:'+textDim+';text-align:left">Type</th></tr>'+
-      crRows+'</table></td></tr></table></td></tr>';
+      crRows+defsLegendHtml+'</table></td></tr></table></td></tr>';
   }
 
   /* Sender signature */

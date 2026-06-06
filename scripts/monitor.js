@@ -62,6 +62,47 @@ async function withRetry(fn, label, retries = MAX_RETRIES) {
   return lastResult;
 }
 
+// ── SSL certificate expiry check ──────────────────────────────────────────────
+// Returns { daysUntilExpiry: number, validTo: ISO string, expired: bool, error: string }
+// Used as a component on every project's health check.
+async function checkSslExpiry(url) {
+  return new Promise((resolve) => {
+    try {
+      const tls = require('tls');
+      const u = new URL(url);
+      if (u.protocol !== 'https:') { resolve({ skipped: true, reason: 'non-https URL' }); return; }
+      const socket = tls.connect({
+        host: u.hostname,
+        port: u.port || 443,
+        servername: u.hostname,
+        timeout: 8000,
+        rejectUnauthorized: false, // We just want to read the cert, not enforce trust
+      }, () => {
+        const cert = socket.getPeerCertificate();
+        socket.end();
+        if (!cert || !cert.valid_to) { resolve({ error: 'no cert returned' }); return; }
+        const validTo = new Date(cert.valid_to);
+        const daysUntilExpiry = Math.floor((validTo.getTime() - Date.now()) / 86400000);
+        resolve({ daysUntilExpiry, validTo: validTo.toISOString(), expired: daysUntilExpiry < 0 });
+      });
+      socket.on('error', (e) => resolve({ error: e.message }));
+      socket.on('timeout', () => { socket.destroy(); resolve({ error: 'TLS timeout' }); });
+    } catch (e) { resolve({ error: e.message }); }
+  });
+}
+
+function sslComponentFromCheck(ssl) {
+  if (!ssl || ssl.skipped) return null;
+  // Don't fail the overall check just because cert read failed (TLS quirks); log as operational
+  if (ssl.error) return { name: 'SSL certificate', status: 'operational', detail: 'Could not read cert: ' + ssl.error };
+  if (ssl.expired) return { name: 'SSL certificate', status: 'down', detail: 'EXPIRED ' + Math.abs(ssl.daysUntilExpiry) + ' day(s) ago' };
+  // <=7 days = urgent (most CAs auto-renew well before this); <=14 = warn; >14 = OK
+  // (Let's Encrypt auto-renews around day 30, so we don't flag at 30.)
+  if (ssl.daysUntilExpiry <= 7) return { name: 'SSL certificate', status: 'down', detail: 'Expires in ' + ssl.daysUntilExpiry + ' day(s) — RENEW NOW' };
+  if (ssl.daysUntilExpiry <= 14) return { name: 'SSL certificate', status: 'degraded', detail: 'Expires in ' + ssl.daysUntilExpiry + ' day(s)' };
+  return { name: 'SSL certificate', status: 'operational', detail: ssl.daysUntilExpiry + ' day(s) until renewal' };
+}
+
 // ── Shopify deep check ────────────────────────────────────────────────────────
 async function shopifyCheck(project) {
   const start = Date.now();
@@ -566,6 +607,16 @@ function parseCSV(text) {
     const result = needsRetry
       ? await withRetry(checkFn, project.name)
       : await checkFn();
+
+    // Add SSL certificate expiry as a component (one check for all project types)
+    const sslInfo = await checkSslExpiry(project.url);
+    const sslComponent = sslComponentFromCheck(sslInfo);
+    if (sslComponent && result.components) {
+      result.components.push(sslComponent);
+      // Re-derive overall status if SSL is worse than current status
+      if (sslComponent.status === 'down') result.status = 'down';
+      else if (sslComponent.status === 'degraded' && result.status === 'operational') result.status = 'degraded';
+    }
 
     console.log(`${result.status.toUpperCase()} (${result.responseMs}ms)`);
     if (result.error) console.log(`  ! ${result.error}`);
