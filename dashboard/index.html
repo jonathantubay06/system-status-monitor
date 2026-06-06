@@ -201,11 +201,13 @@ header {
 .section-header .section-title { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 
 /* ── Client Group Headers ── */
+/* Match the .grid container's centering so labels align with the cards below */
 .client-group-header {
+  max-width: 1200px; margin: 1.5rem auto 0.6rem; padding: 0.5rem 2rem 0.6rem;
   font-size: 0.78rem; font-weight: 600; color: var(--text-dim);
   text-transform: uppercase; letter-spacing: 0.06em;
-  padding: 0.5rem 0; margin-top: 1rem;
   display: flex; align-items: center; gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
 }
 .client-group-header:first-child { margin-top: 0; }
 .client-group-header::before {
