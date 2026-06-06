@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-06T16:45:27.783Z",
+  "updatedAt": "2026-06-06T17:49:21.966Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:44:45.672Z",
+      "checkedAt": "2026-06-06T17:48:38.117Z",
       "status": "operational",
-      "responseMs": 8262,
+      "responseMs": 7293,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:44:46.533Z",
+      "checkedAt": "2026-06-06T17:48:39.245Z",
       "status": "operational",
-      "responseMs": 822,
+      "responseMs": 1050,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:45:06.173Z",
+      "checkedAt": "2026-06-06T17:48:57.867Z",
       "status": "operational",
-      "responseMs": 18248,
+      "responseMs": 17668,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:45:27.006Z",
+      "checkedAt": "2026-06-06T17:49:20.426Z",
       "status": "operational",
-      "responseMs": 17489,
+      "responseMs": 18779,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:45:27.530Z",
+      "checkedAt": "2026-06-06T17:49:21.111Z",
       "status": "operational",
-      "responseMs": 497,
+      "responseMs": 666,
       "httpStatus": 200,
       "components": [
         {
@@ -246,12 +246,12 @@
       "checkPage": "",
       "loginEmail": "",
       "loginPassword": "",
-      "group": "AnomalyX",
+      "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-06T16:45:27.758Z",
+      "checkedAt": "2026-06-06T17:49:21.940Z",
       "status": "operational",
-      "responseMs": 177,
+      "responseMs": 634,
       "httpStatus": 200,
       "components": [
         {
