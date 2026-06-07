@@ -509,6 +509,9 @@ async function fetchClientReports() {
     const subDefCol = headers.findIndex(h => /issue sub definition/i.test(h));
     const raisedCol = headers.findIndex(h => /raised by/i.test(h));
     const requestCol = headers.findIndex(h => /^request$/i.test(h));
+    /* Notes / Resolution column — accepts several naming variations so user
+       can pick whichever fits their workflow */
+    const notesCol = headers.findIndex(h => /^(resolution|resolution notes|notes|action taken|action|status notes|resolution\/notes)$/i.test(h));
     if (dateCol < 0 || issueCol < 0) { console.log('  ! Could not find required columns'); return []; }
     const reports = [];
     for (let i = 1; i < rows.length; i++) {
@@ -525,6 +528,7 @@ async function fetchClientReports() {
         definition: defCol >= 0 ? (r[defCol] || '').trim() : '',
         subDefinition: subDefCol >= 0 ? (r[subDefCol] || '').trim() : '',
         raisedBy: raisedCol >= 0 ? (r[raisedCol] || '').trim() : '',
+        notes: notesCol >= 0 ? (r[notesCol] || '').trim() : '',
       });
     }
     return reports;

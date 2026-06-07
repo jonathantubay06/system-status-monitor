@@ -686,6 +686,11 @@ header {
 .cr-sub {
   font-size: 0.7rem; color: var(--text-dim); margin-top: 0.1rem; font-style: italic;
 }
+.cr-notes {
+  font-size: 0.74rem; color: #22c55e; margin-top: 0.35rem;
+  background: rgba(34,197,94,0.08); border-left: 2px solid #22c55e;
+  padding: 0.4rem 0.6rem; border-radius: 4px; line-height: 1.4;
+}
 .cr-defs {
   margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border);
 }
@@ -2483,12 +2488,13 @@ function previewReport(){
     var crRows='';var orange='#f97316';
     crs.forEach(function(r){var defColor=(r.definition||'').toLowerCase()==='service request'?'#3b82f6':orange;
       var dl=new Date(r.date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      var notesRow=r.notes?'<tr><td class="border-clr" style="border-bottom:1px solid '+borderClr+'"></td><td colspan="2" class="border-clr" style="padding:6px 12px 10px;border-bottom:1px solid '+borderClr+'"><div style="font-size:12px;color:#16a34a;background:rgba(34,197,94,0.08);border-left:2px solid #16a34a;padding:6px 10px;border-radius:4px;line-height:1.5"><strong>&#x2713; Resolution:</strong> '+escH(r.notes)+'</div></td></tr>':'';
       crRows+='<tr><td class="text-dim border-clr" style="padding:8px 12px;font-size:13px;color:'+textDim+';border-bottom:1px solid '+borderClr+';white-space:nowrap">'+dl+'</td>'+
         '<td class="text-main border-clr" style="padding:8px 12px;font-size:13px;color:'+textMain+';font-weight:600;border-bottom:1px solid '+borderClr+'">'+escH(r.request||r.issue)+'</td>'+
         '<td class="border-clr" style="padding:8px 12px;border-bottom:1px solid '+borderClr+'"><span style="display:inline-block;font-size:11px;font-weight:600;color:'+defColor+';background:'+defColor+'15;border:1px solid '+defColor+'33;padding:2px 8px;border-radius:4px">'+escH(r.definition)+'</span></td></tr>'+
         '<tr><td class="border-clr" style="border-bottom:1px solid '+borderClr+'"></td><td colspan="2" class="text-dim border-clr" style="padding:0 12px 8px;font-size:12px;color:'+textDim+';border-bottom:1px solid '+borderClr+';font-style:italic">'+
         (r.issue&&r.request?escH(r.issue)+' ':'')+
-        (r.subDefinition?'&mdash; '+escH(r.subDefinition):'')+'</td></tr>';
+        (r.subDefinition?'&mdash; '+escH(r.subDefinition):'')+'</td></tr>'+notesRow;
     });
     /* Build definitions legend — only show terms actually used in this report's data */
     var allDefs={
@@ -2776,6 +2782,7 @@ function renderCrModal(){
           (r.issue&&r.request?' &mdash; '+esc(r.issue):'')+
         '</div>'+
         (r.subDefinition?'<div class="cr-sub">'+esc(r.subDefinition)+'</div>':'')+
+        (r.notes?'<div class="cr-notes">&#x2713; '+esc(r.notes)+'</div>':'')+
       '</div></div>';
   }).join('');
 
