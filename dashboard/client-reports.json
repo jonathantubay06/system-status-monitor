@@ -6,7 +6,8 @@
     "issue": "Cortney cant copy paste. But, Sentry tried multiple times and it is working",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": ""
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -15,7 +16,8 @@
     "issue": "This isn't a system issue. The suggestions Cortney sees when typing come from her own browser remembering what she's typed before — not from our system.\nSince the last Immersion Outfitters event was back in October 2024, her browser probably just forgot it. She can type the name manually and it will work fine.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": ""
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -24,7 +26,8 @@
     "issue": "Gets an error when loading a page or loading the Edit Event window",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "no issue."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -33,7 +36,8 @@
     "issue": "Client wants the download participant function for the facilitator",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "enabled the functionality on the facilitator's view"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -42,7 +46,8 @@
     "issue": "",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "no issue. tested and working"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -51,7 +56,8 @@
     "issue": "investigated and experienced intermittently loading.",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Coordinated with Softr and they have a issue with their airtable integration. \nSoftr Support confirmed it is global issue"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -60,7 +66,8 @@
     "issue": "User cannot upload excel file in participants.\nWas able to replicate",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "- Coordinated to softr support and are investigating\n- looks like caching issue. I was able to upload via incognito"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -69,7 +76,8 @@
     "issue": "- Request to send a mass email to all facilitators of upcoming events",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Send mass email through n8n"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -78,7 +86,8 @@
     "issue": "",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "- Adjust the number of total rows displayed (50)"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -87,7 +96,8 @@
     "issue": "multiple errors in the portal",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue, Bug",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Airtable, the service that stores all our data behind the scenes was having a widespread outage"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -96,7 +106,8 @@
     "issue": "Portal not loading at all",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue, Bug",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Softr had connectivity issue with Airtable itself"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -105,7 +116,8 @@
     "issue": "Facilitator not able to see the event",
     "definition": "Maintenance",
     "subDefinition": "Bug",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "fixed by adding the event identifier on user in airtable"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -114,7 +126,8 @@
     "issue": "Replace a document",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Service request only"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -123,7 +136,8 @@
     "issue": "File upload not working properly",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Jonathan tested the file on a test event, where it uploaded successfully, and suggested Cortney try again.\nCortney tried uploading via an incognito window; the upload eventually succeeded, but the participants did not appear immediately.\nJonathan explained that this delay is normal—the system needs time to process and add rows after upload—and confirmed there’s no way to speed it up.\nUltimately, the participants did show up, and the issue appears to be related to processing delays or specific events rather than a system-wide failure"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -132,7 +146,8 @@
     "issue": "Update 2 Documents",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Update 2 documents in airtable"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -141,7 +156,8 @@
     "issue": "When Cortney creates events for Kim Gonzalez, they always default to showing \"Texas Throwers Camp\" as the client name— even when she creates the events under \"Genesis Team.\" These are two separate entities that happen to share the same facilitator (Kim Gonzalez), and the portal is not distinguishing between them correctly.",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Root cause identified: the facilitator automation was pulling Kim's primary client (Texas Throwers Camp) and overwriting the client field on any event she was assigned to. Fixed April 2026 — automation no longer writes to the client field."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -150,7 +166,8 @@
     "issue": "Cortney accidentally triggered a bulk delete of all participants from the \"Staff of Austin Ridge Bible Church\" event (November 2025) and is requesting a data recovery.",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "User error — bulk participant deletion on a past event (Nov 2025). Recovery options to check: (1) Airtable snapshot/revision history at the base level, (2) DEV Participants backup table, (3) original import file if still available. Restoration not guaranteed."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -159,7 +176,8 @@
     "issue": "Client requests adding \"Sign the Emergency Response Plan and upload the signed file\" text in 4 locations on the portal (Notice, Upload Files section, below Upload Files, below Documents), visible on both admin and facilitator sides.",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Portal content update request — 4 text additions across Notice, Upload Files, and Documents sections. Needs to appear on both admin and facilitator views."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -168,7 +186,8 @@
     "issue": "Client asking how to create/enter an outdoor event in the system that doesn't use any on-site room (e.g., lake, field).",
     "definition": "Service Request",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "UX/workflow question — system may not currently support \"no room\" or outdoor-only events. Check if a virtual/placeholder room option exists or if a feature request is needed."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -177,7 +196,8 @@
     "issue": "When creating events with Lodge Meeting Rm, Full Lodge, and Lodge Porch selected, Lodge Porch did not appear in the Meeting Rooms section. Affected events: Youth of First Brazilian Baptist Church and november test event for lodge bookings.",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Two root causes: (1) Lodge Porch and Full Lodge were missing from the Room Name Lookup table — script only processes rooms listed there with Usage = \"Meeting Room\". (2) Lodge Porch was also missing as a valid option in the Room Assignments select field on the Events table. Both added and fixed April 2026."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -186,7 +206,8 @@
     "issue": "Meal plan PDF export took over 15 minutes to be delivered via email. Root cause was a Zapier service outage (degraded performance) affecting background task execution. Zap \"NOTIF - Export Meal Planner\" showed as Delayed in Zapier dashboard.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Not a portal issue. Zapier experienced service delays and timeouts starting April 28, 2026 at 4:11 PM UTC. Investigation still ongoing as of April 29. No action required on our end."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -195,7 +216,8 @@
     "issue": "Facilitator reminder email failed to send to Austin Laviola. Root cause: email on the event was \"Austin.LaViola@katybible.org\" (mixed case) but the registered email in Users table is \"austin.laviola@katybible.org\" (lowercase). Case mismatch caused the automation to fail to find the user, resulting in no portal link being generated.",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Email case sensitivity issue. The \"Update New Portal Facilitator Magic Link in Events\" automation does an exact match on email — capitalization differences will cause it to fail silently. Fixed by correcting the email on the event to match the Users table exactly."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -204,7 +226,8 @@
     "issue": "Meal plan location defaulting to \"Dining\" instead of \"Lodge\" for events held at the Lodge. The script converts the \"Hotel\" facility to \"Dining,\" which doesn't account for events that need a Lodge meal location.",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Meal plan location defaults to Dining when facility is set to Hotel. Location can be manually updated per meal. Proposed fix: add a Meal Location field on the event to give coordinators more control. Pending client approval."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -213,7 +236,8 @@
     "issue": "Deleting a meeting room reservation was not syncing with the Room Assignments on the event. Duplicate reservations were also not being handled correctly when deleting.",
     "definition": "Maintenance",
     "subDefinition": "New Feature",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Built a reverse sync — deleting a reservation now automatically updates Room Assignments. Duplicate reservations are handled: deleting one keeps the room assignment until the last reservation is removed. Removing a room from Room Assignments clears all its reservations."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -222,7 +246,8 @@
     "issue": "Facilitator clicked the magic link but was redirected to the sign-in page instead of being auto-logged in.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Tested the magic link and it works correctly. Likely a one-time browser issue on the facilitator's end. No changes needed."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -231,7 +256,8 @@
     "issue": "Women's Encounter May 2026 showing \"Texas Throwers Camp\" instead of \"PowerHouse Church\" as the client, despite being entered correctly at event creation.",
     "definition": "Maintenance",
     "subDefinition": "Airtable Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Old background process was pulling the client name from Kim's profile and overwriting the one entered on the form. Kim facilitates for multiple clients so her saved profile name was outdated. Turned off that step to prevent it from happening again."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -240,7 +266,8 @@
     "issue": "Ladies of Restoration Woodforest May 2027 was created with Full Hotel selected but room 211 was not included. Cortney confirmed she only selected Full Hotel + meeting rooms at creation with no manual edits afterward",
     "definition": "Maintenance",
     "subDefinition": "Edge Case",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Cortney confirmed she only selected Full Hotel at creation. Tested same steps on our end and it worked — intermittent issue. Manually added room 211 in Airtable which triggered the automation chain and correctly restored Full Hotel on the event. Root cause still under investigation"
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -249,7 +276,8 @@
     "issue": "If Lodge is selected, round tables should not be an option in meeting room setup. Feature was not built — Round Tables appeared for all room types including Lodge.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Not a system issue — feature was not previously built. Round Tables was not being filtered by room type. Feature now built: Round Tables hidden from the dropdown when Full Lodge, Lodge Meeting Rm, or Lodge Porch is selected. Added warning + save block for any existing reservations with Round Tables on a Lodge room."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -258,7 +286,8 @@
     "issue": "Event created with facilitator first name only. Concern that adding last name later may break something in the system.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Not a system issue. Checked the event — magic link already generated and portal access already set up for Jane (makoolchoice@yahoo.com). Name field is display only; automations trigger on email changes, not name. Safe to update anytime."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -267,7 +296,8 @@
     "issue": "Portal lagging, not loading, intermittently not working all day. Confirmed not her internet.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Monitoring shows portal fully up, all health checks passing. Response times consistent with baseline. Possible brief Softr hiccup on their end. Softr status page shows all systems operational. No action needed."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -276,7 +306,8 @@
     "issue": "Meal plan generated successfully but not displaying in portal. Regeneration attempt says \"already exists.\" Add Meal button not working.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Root cause confirmed by Softr support — comma in event name \"HCC June 5-7, 2026\" was breaking Softr's conditional filter on the Meal Plan block. Fixed by removing comma → \"HCC June 5-7 2026\". Softr confirmed characters ! @ # $ % & * ) ( , ' cause issues in conditional filtering fields."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -285,7 +316,8 @@
     "issue": "\"Request limit exceeded\" error appearing intermittently while loading the portal. Able to continue working but error keeps coming up.",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Airtable on Business plan (unlimited monthly calls) — issue is per-second rate limit (5 req/sec via OAuth). Event Details page has 10+ data blocks firing simultaneously. Also found \"New Hotel Room Assignment - Sync Hotel Rooms Table\" automation running 3,795 times this month — was triggering for Availability records unnecessarily. Fixed by adding conditional logic: If Type is Event. This reduces unnecessary API calls going forward. Platform limitation — nothing further can be done without migration."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -294,7 +326,8 @@
     "issue": "Created Men's Encounter PHC with Full Hotel — rooms took over 5 minutes to appear in portal. Cortney flagged this as a workflow issue.",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Rooms confirmed present after delay. Related to API rate limiting — 22 room records created simultaneously causing sync delay. Platform limitation."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -303,7 +336,8 @@
     "issue": "Unable to filter Events list by month — clicking July errors out.",
     "definition": "Maintenance",
     "subDefinition": "Not A System Issue",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Tested and July filter working correctly — all July events showing as expected. Temporary platform hiccup that self-resolved. Same root cause as other errors reported today (API rate limiting)."
   },
   {
     "projectId": "jordan-ranch-portal",
@@ -312,6 +346,7 @@
     "issue": "Error during event creation for \"Latino Women's Encounter PHC\" kept the form open. Submitted again — created two duplicate events. Cortney deleted one herself.",
     "definition": "Maintenance",
     "subDefinition": "Softr Issue (Global)",
-    "raisedBy": "Cortney"
+    "raisedBy": "Cortney",
+    "notes": "Related to API rate limiting errors from the same day. Portal errored mid-save, form stayed open, user resubmitted creating a duplicate. Cortney self-resolved by deleting duplicate. Advised to refresh before resubmitting."
   }
 ]
