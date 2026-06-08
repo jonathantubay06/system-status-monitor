@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>System Status</title>
+<title>Service Health Status — SentryXP</title>
+<meta name="description" content="Real-time monitoring of monitored sites and services."/>
+<meta property="og:title" content="Service Health Status — SentryXP"/>
+<meta property="og:description" content="Real-time monitoring of platforms and services."/>
+<meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -1635,6 +1639,19 @@ async function loadStatus(){
     if(!sRes.ok)throw new Error('status.json not found');
     var status=await sRes.json();
     allResults=status.results||[];
+
+    /* Update tab title based on context — defensive so it's never blank/undefined */
+    try {
+      if (publicViewId) {
+        var proj = allResults.find(function(r){return r.id===publicViewId});
+        document.title = (proj ? proj.name + ' — ' : '') + 'Service Health Status';
+      } else {
+        var down = allResults.filter(function(r){return r.status==='down'}).length;
+        var deg  = allResults.filter(function(r){return r.status==='degraded'}).length;
+        var prefix = down ? '⚠ ' + down + ' down — ' : (deg ? '⚠ ' + deg + ' degraded — ' : '');
+        document.title = prefix + 'Service Health Status — SentryXP';
+      }
+    } catch(e) {}
 
     /* ── Empty state: waiting for first check ── */
     if(!allResults.length){
