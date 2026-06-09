@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-09T00:16:04.340Z",
+  "updatedAt": "2026-06-09T04:36:30.907Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:15:24.681Z",
+      "checkedAt": "2026-06-09T04:35:47.768Z",
       "status": "operational",
-      "responseMs": 8621,
+      "responseMs": 7824,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:15:25.031Z",
+      "checkedAt": "2026-06-09T04:35:48.727Z",
       "status": "operational",
-      "responseMs": 332,
+      "responseMs": 820,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:15:44.341Z",
+      "checkedAt": "2026-06-09T04:36:08.000Z",
       "status": "operational",
-      "responseMs": 17962,
+      "responseMs": 17914,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:16:03.060Z",
+      "checkedAt": "2026-06-09T04:36:28.871Z",
       "status": "operational",
-      "responseMs": 18377,
+      "responseMs": 16999,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:16:03.675Z",
+      "checkedAt": "2026-06-09T04:36:29.426Z",
       "status": "operational",
-      "responseMs": 602,
+      "responseMs": 544,
       "httpStatus": 200,
       "components": [
         {
@@ -232,7 +232,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "58 day(s) until renewal"
+          "detail": "57 day(s) until renewal"
         }
       ]
     },
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-09T00:16:04.313Z",
+      "checkedAt": "2026-06-09T04:36:30.873Z",
       "status": "operational",
-      "responseMs": 469,
+      "responseMs": 1432,
       "httpStatus": 200,
       "components": [
         {
