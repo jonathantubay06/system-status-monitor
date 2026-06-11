@@ -348,5 +348,25 @@
     "subDefinition": "Softr Issue (Global)",
     "raisedBy": "Cortney",
     "notes": "Related to API rate limiting errors from the same day. Portal errored mid-save, form stayed open, user resubmitted creating a duplicate. Cortney self-resolved by deleting duplicate. Advised to refresh before resubmitting."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-07",
+    "request": "Errors/Failure to Load/Delays",
+    "issue": "\"Request limit exceeded\" + \"Record details can no longer be found\" errors on portal load, inset windows, and updating.",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney",
+    "notes": "Two fixes applied: (1) Added conditional logic to \"New Hotel Room Assignment\" automation — was firing 3,795x/month for non-Event records unnecessarily; (2) Switched Softr→Airtable connection from OAuth to Personal Access Token — rate limit increased from 5 to 50 req/sec. Portal loading confirmed significantly faster after switch."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-11",
+    "request": "Facilitator link",
+    "issue": "Magic link not generating for facilitator Ps. Alex Lara — portal link blank on event.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Email capitalization mismatch between Users table and Facilitator email field on the event prevented the automation from finding the user record and generating the magic link. Corrected the email match — link now live on his profile."
   }
 ]
