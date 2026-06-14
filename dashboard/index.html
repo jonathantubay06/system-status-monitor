@@ -2130,7 +2130,7 @@ document.getElementById('logModal').addEventListener('click',function(e){if(e.ta
 function togglePw(id,btn){var i=document.getElementById(id);if(i.type==='password'){i.type='text';btn.classList.add('active')}else{i.type='password';btn.classList.remove('active')}i.focus()}
 
 /* ── Report Feature ── */
-var defaultReportMessage="Here's your website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.";
+var defaultReportMessage="Here's the website health report for the selected period. Everything is being monitored to ensure your site stays fast, secure, and available for your customers.\n\nIf you have any questions about this report, feel free to reach out — we're happy to help.";
 
 /* Remember last-used recipients per project (localStorage) */
 function loadLastRecipients(projectId){
@@ -2159,7 +2159,7 @@ function openReportModal(projectId){
   /* Auto-greeting from first recipient's name */
   var firstRecipient=((saved&&saved.to)||project.alertEmail||'').split(',')[0].trim();
   var firstName=firstNameFromEmail(firstRecipient);
-  document.getElementById('reportGreeting').value=firstName?'Hi '+firstName+',':'Hi,';
+  document.getElementById('reportGreeting').value=firstName?'Hi '+firstName+',':'Hi Team,';
   document.getElementById('reportMessage').value=defaultReportMessage;
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
