@@ -388,5 +388,15 @@
     "subDefinition": "Platform Limitation",
     "raisedBy": "Cortney",
     "notes": "Root cause: comma in the Event field of the Participant List Import record. When participants were uploaded, the Event field was written as \"HCC June 15-17, 2026 - recJPoDKu9j...\" (with comma). The microservice copied this into each participant's Event text field. Softr's conditional filter uses this field and the comma caused a mismatch with the actual Event Identifier \"HCC June 15-17 2026 - recJPoDKu9j...\" (no comma). Same root cause as the June 5-7 meal plan issue. Data was never deleted — all 18 participants were always properly linked. Fixed by updating all 18 participant Event text fields to remove the comma. Cortney reminded not to use commas or special characters in event names when uploading."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-16",
+    "request": "participants (Men of Disciples Christian Fellowship — Facilitator Unable to Add Participants)",
+    "issue": "Facilitator reporting participants not appearing in portal after entering them one at a time",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Investigated — no import records or participant records found in Airtable, confirming nothing had reached the system. Tested \"Add Participant\" feature using a facilitator account — confirmed working as expected. Root cause: new entries have a short delay before appearing while the automation links the record to the event. Keith was likely refreshing immediately after each submission, before the link completed, and assumed it failed."
   }
 ]
