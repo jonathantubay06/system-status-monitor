@@ -398,5 +398,15 @@
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney",
     "notes": "Investigated — no import records or participant records found in Airtable, confirming nothing had reached the system. Tested \"Add Participant\" feature using a facilitator account — confirmed working as expected. Root cause: new entries have a short delay before appearing while the automation links the record to the event. Keith was likely refreshing immediately after each submission, before the link completed, and assumed it failed."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-18",
+    "request": "Documents (Jordan Ranch — Legacy Lodge Details File Update)",
+    "issue": "Outdated Legacy Lodge Details document needs to be replaced with the 2026 version in the Documents section",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Downloaded Legacy Lodge Details 2026.pdf from the email attachment and replaced the existing file in the Documents section of the Jordan Ranch portal."
   }
 ]
