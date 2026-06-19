@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-19T02:12:21.807Z",
+  "updatedAt": "2026-06-19T07:25:14.918Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:11:39.372Z",
+      "checkedAt": "2026-06-19T07:24:39.006Z",
       "status": "operational",
-      "responseMs": 7723,
+      "responseMs": 7327,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,34 +62,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:11:40.345Z",
-      "status": "operational",
-      "responseMs": 839,
-      "httpStatus": 200,
+      "checkedAt": "2026-06-19T07:24:39.181Z",
+      "status": "down",
+      "responseMs": 103,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
@@ -111,9 +91,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:11:59.419Z",
+      "checkedAt": "2026-06-19T07:24:58.665Z",
       "status": "operational",
-      "responseMs": 17854,
+      "responseMs": 18169,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +139,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:12:20.516Z",
+      "checkedAt": "2026-06-19T07:25:14.412Z",
       "status": "operational",
-      "responseMs": 17334,
+      "responseMs": 15042,
       "components": [
         {
           "name": "Page loads",
@@ -200,34 +180,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:12:20.811Z",
-      "status": "operational",
-      "responseMs": 283,
-      "httpStatus": 200,
+      "checkedAt": "2026-06-19T07:25:14.541Z",
+      "status": "down",
+      "responseMs": 116,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
@@ -249,34 +209,14 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-19T02:12:21.783Z",
-      "status": "operational",
-      "responseMs": 954,
-      "httpStatus": 200,
+      "checkedAt": "2026-06-19T07:25:14.888Z",
+      "status": "down",
+      "responseMs": 331,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
