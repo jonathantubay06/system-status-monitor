@@ -1132,13 +1132,18 @@ footer a:hover { color: var(--text-bright); }
 .bulk-cb { margin-right: 0.55rem; cursor: pointer; }
 
 /* ── Card actions menu ── */
-.card-actions-wrap { display: inline-block; }
+.card-actions-wrap { display: inline-block; position: relative; }
 .actions-toggle { font-weight: 600; }
+/* Card itself needs positioning + z-index so its menu can rise above sibling cards.
+   The card uses backdrop-filter which creates its own stacking context, so we need
+   the card-level z-index to make the menu visible above the next card. */
+.card { position: relative; z-index: 1; }
+.card.card-actions-open { z-index: 100; }
 .card-actions-menu {
   position: absolute; right: 0; top: 100%; margin-top: 0.35rem;
   background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35); padding: 0.3rem; min-width: 170px;
-  z-index: 50; display: flex; flex-direction: column; gap: 1px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45); padding: 0.3rem; min-width: 180px;
+  z-index: 200; display: flex; flex-direction: column; gap: 1px;
   animation: slideUp 0.15s ease-out;
 }
 .card-actions-menu.hidden { display: none; }
@@ -1147,6 +1152,7 @@ footer a:hover { color: var(--text-bright); }
   background: none; border: none; color: var(--text); text-align: left;
   font-family: inherit; font-size: 0.8rem; padding: 0.5rem 0.7rem; border-radius: 5px;
   cursor: pointer; text-decoration: none; transition: background 0.12s;
+  white-space: nowrap;
 }
 .card-actions-menu button:hover,
 .card-actions-menu a:hover { background: var(--surface2); color: var(--text-bright); }
@@ -2129,13 +2135,18 @@ function toggleKbdHelp(){
 /* ── Card actions menu ── */
 function closeCardActions(){
   document.querySelectorAll('.card-actions-menu').forEach(function(m){m.classList.add('hidden')});
+  document.querySelectorAll('.card.card-actions-open').forEach(function(c){c.classList.remove('card-actions-open')});
 }
 function toggleCardActions(btn){
   var menu=btn.nextElementSibling;
   if(!menu)return;
   var wasHidden=menu.classList.contains('hidden');
+  var card=btn.closest('.card');
   closeCardActions();
-  if(wasHidden)menu.classList.remove('hidden');
+  if(wasHidden){
+    menu.classList.remove('hidden');
+    if(card)card.classList.add('card-actions-open');
+  }
 }
 /* Click-away dismiss */
 document.addEventListener('click',function(e){
