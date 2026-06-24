@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T11:29:30.494Z",
+  "updatedAt": "2026-06-24T13:35:00.411Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:28:11.150Z",
+      "checkedAt": "2026-06-24T13:34:22.617Z",
       "status": "operational",
-      "responseMs": 9403,
+      "responseMs": 7920,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,19 +62,39 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:28:29.719Z",
-      "status": "down",
-      "responseMs": 10496,
-      "error": "fetch failed",
+      "checkedAt": "2026-06-24T13:34:23.480Z",
+      "status": "operational",
+      "responseMs": 795,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "Could not read cert: TLS timeout"
+          "detail": "72 day(s) until renewal"
         }
       ]
     },
@@ -91,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:28:50.153Z",
+      "checkedAt": "2026-06-24T13:34:43.124Z",
       "status": "operational",
-      "responseMs": 18519,
+      "responseMs": 18330,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -139,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:29:11.252Z",
+      "checkedAt": "2026-06-24T13:34:59.164Z",
       "status": "operational",
-      "responseMs": 17294,
+      "responseMs": 15068,
       "components": [
         {
           "name": "Page loads",
@@ -180,19 +200,39 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:29:11.964Z",
-      "status": "down",
-      "responseMs": 459,
-      "error": "fetch failed",
+      "checkedAt": "2026-06-24T13:34:59.748Z",
+      "status": "operational",
+      "responseMs": 573,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "undefined day(s) until renewal"
+          "detail": "42 day(s) until renewal"
         }
       ]
     },
@@ -209,19 +249,39 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T11:29:30.470Z",
-      "status": "down",
-      "responseMs": 10493,
-      "error": "fetch failed",
+      "checkedAt": "2026-06-24T13:35:00.385Z",
+      "status": "operational",
+      "responseMs": 438,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "Could not read cert: TLS timeout"
+          "detail": "53 day(s) until renewal"
         }
       ]
     }
