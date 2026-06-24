@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T01:30:04.641Z",
+  "updatedAt": "2026-06-24T05:37:20.607Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:29:24.880Z",
+      "checkedAt": "2026-06-24T05:36:35.765Z",
       "status": "operational",
-      "responseMs": 8215,
+      "responseMs": 8373,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:29:26.139Z",
+      "checkedAt": "2026-06-24T05:36:36.569Z",
       "status": "operational",
-      "responseMs": 1202,
+      "responseMs": 722,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:29:45.941Z",
+      "checkedAt": "2026-06-24T05:36:56.540Z",
       "status": "operational",
-      "responseMs": 18240,
+      "responseMs": 18382,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:30:03.210Z",
+      "checkedAt": "2026-06-24T05:37:18.835Z",
       "status": "operational",
-      "responseMs": 16642,
+      "responseMs": 18528,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:30:03.966Z",
+      "checkedAt": "2026-06-24T05:37:19.435Z",
       "status": "operational",
-      "responseMs": 723,
+      "responseMs": 573,
       "httpStatus": 200,
       "components": [
         {
@@ -249,14 +249,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-24T01:30:04.605Z",
-      "status": "down",
-      "responseMs": 589,
-      "httpStatus": 503,
+      "checkedAt": "2026-06-24T05:37:20.581Z",
+      "status": "operational",
+      "responseMs": 892,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
