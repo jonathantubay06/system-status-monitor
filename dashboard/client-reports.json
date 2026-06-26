@@ -408,5 +408,15 @@
     "subDefinition": "Not A System Issue",
     "raisedBy": "Cortney",
     "notes": "Downloaded Legacy Lodge Details 2026.pdf from the email attachment and replaced the existing file in the Documents section of the Jordan Ranch portal."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-06-26",
+    "request": "Jeremiah Combs — Facilitator unable to see Youth of GEN180 Camp 2",
+    "issue": "Facilitator can only see one of two assigned events — Youth of GEN180 Camp 2 missing from Jeremiah Combs' portal view",
+    "definition": "Maintenance",
+    "subDefinition": "Bug",
+    "raisedBy": "Cortney",
+    "notes": "Root cause: Zapier race condition — two zap runs fired 87 seconds apart for the same facilitator. Run 1 (Camp 2, 11:19pm) wrote Camp 2 to Jeremiah's Events via Step 13. Run 2 (Youth of GEN180, started 11:13pm) went through the create-user path with a delay step, then Step 9 woke up at 11:21pm and overwrote Events with only Youth of GEN180, removing Camp 2. Zapier's Update Record step does SET not APPEND on linked fields. Manually restored Camp 2 by directly linking in Airtable. Long-term fix in progress: Code by Zapier step to fetch current Events, merge, and update via Airtable API."
   }
 ]
