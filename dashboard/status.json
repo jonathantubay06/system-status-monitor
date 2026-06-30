@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-30T11:38:51.472Z",
+  "updatedAt": "2026-06-30T13:29:23.193Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:10.556Z",
+      "checkedAt": "2026-06-30T13:28:42.187Z",
       "status": "operational",
-      "responseMs": 9712,
+      "responseMs": 8160,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,19 +62,39 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:10.937Z",
-      "status": "down",
-      "responseMs": 273,
-      "httpStatus": 503,
+      "checkedAt": "2026-06-30T13:28:43.125Z",
+      "status": "operational",
+      "responseMs": 845,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "67 day(s) until renewal"
+          "detail": "66 day(s) until renewal"
         }
       ]
     },
@@ -91,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:31.000Z",
+      "checkedAt": "2026-06-30T13:29:03.996Z",
       "status": "operational",
-      "responseMs": 18667,
+      "responseMs": 18766,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -139,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:50.079Z",
+      "checkedAt": "2026-06-30T13:29:21.780Z",
       "status": "operational",
-      "responseMs": 18250,
+      "responseMs": 17454,
       "components": [
         {
           "name": "Page loads",
@@ -180,14 +200,34 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:50.435Z",
-      "status": "down",
-      "responseMs": 312,
-      "httpStatus": 503,
+      "checkedAt": "2026-06-30T13:29:22.543Z",
+      "status": "operational",
+      "responseMs": 752,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
@@ -209,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-06-30T11:38:51.446Z",
+      "checkedAt": "2026-06-30T13:29:23.168Z",
       "status": "operational",
-      "responseMs": 934,
+      "responseMs": 604,
       "httpStatus": 200,
       "components": [
         {
