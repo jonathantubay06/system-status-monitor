@@ -2,6 +2,7 @@
 const BASE_ID   = process.env.AIRTABLE_BASE_ID;
 const API_TOKEN = process.env.AIRTABLE_TOKEN;
 const BASE_URL  = `https://api.airtable.com/v0/${BASE_ID}/Projects`;
+const { logAudit } = require('./_audit');
 
 const ch = () => ({ 'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Authorization,Content-Type' });
 
@@ -15,7 +16,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { airtableId } = JSON.parse(event.body||'{}');
+    const { airtableId, name } = JSON.parse(event.body||'{}');
     if (!airtableId) return { statusCode:400, headers:ch(), body:JSON.stringify({ error:'airtableId required' }) };
 
     const res = await fetch(`${BASE_URL}/${airtableId}`, {
@@ -24,6 +25,7 @@ exports.handler = async (event) => {
     });
     const text = await res.text();
     if (!res.ok) throw new Error(`Airtable DELETE failed: ${res.status} ${text}`);
+    await logAudit('delete_project', { name: name || airtableId });
     return { statusCode:200, headers:ch(), body:JSON.stringify({ success:true }) };
   } catch(e) {
     return { statusCode:500, headers:ch(), body:JSON.stringify({ error:e.message }) };

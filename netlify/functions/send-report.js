@@ -2,6 +2,7 @@
 // Generates a styled HTML health report email and sends via Resend (preferred) or SendGrid (fallback)
 const RESEND_URL = 'https://api.resend.com/emails';
 const SENDGRID_URL = 'https://api.sendgrid.com/v3/mail/send';
+const { logAudit } = require('./_audit');
 
 const ch = () => ({
   'Content-Type': 'application/json',
@@ -68,6 +69,7 @@ exports.handler = async (event) => {
         throw new Error(`Resend error: ${res.status} ${errText}`);
       }
       const data = await res.json().catch(() => ({}));
+      await logAudit('send_report', { project: projectName, to: toEmails.join(', '), provider: 'resend' });
       return { statusCode: 200, headers: ch(), body: JSON.stringify({ success: true, provider: 'resend', id: data.id }) };
     } else {
       /* ─── SendGrid (fallback) ─── */
@@ -91,6 +93,7 @@ exports.handler = async (event) => {
         const errText = await sgRes.text();
         throw new Error(`SendGrid error: ${sgRes.status} ${errText}`);
       }
+      await logAudit('send_report', { project: projectName, to: toEmails.join(', '), provider: 'sendgrid' });
       return { statusCode: 200, headers: ch(), body: JSON.stringify({ success: true, provider: 'sendgrid' }) };
     }
   } catch (e) {

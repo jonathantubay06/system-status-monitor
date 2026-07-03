@@ -2,6 +2,7 @@
 const BASE_ID   = process.env.AIRTABLE_BASE_ID;
 const API_TOKEN = process.env.AIRTABLE_TOKEN;
 const BASE_URL  = `https://api.airtable.com/v0/${BASE_ID}/Projects`;
+const { logAudit } = require('./_audit');
 
 const ch = () => ({ 'Content-Type':'application/json','Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Authorization,Content-Type' });
 
@@ -47,7 +48,10 @@ exports.handler = async (event) => {
         body: JSON.stringify({ records:[{ fields }] }),
       });
       const text = await res.text();
-      if (res.ok) return { statusCode:200, headers:ch(), body:JSON.stringify({ success:true }) };
+      if (res.ok) {
+        await logAudit('add_project', { name, type, url });
+        return { statusCode:200, headers:ch(), body:JSON.stringify({ success:true }) };
+      }
       lastErr = `Airtable POST failed: ${res.status} ${text}`;
       // If unknown field name, remove it from fields and retry
       // Airtable returns escaped quotes: "Unknown field name: \"Client\""
