@@ -16,6 +16,11 @@
   status = 200
 
 [[redirects]]
+  from = "/group/:name"
+  to = "/?group=:name"
+  status = 200
+
+[[redirects]]
   from = "/report/*"
   to = "/.netlify/functions/view-report/:splat"
   status = 200
