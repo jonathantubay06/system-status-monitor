@@ -91,6 +91,30 @@ async function checkSslExpiry(url) {
   });
 }
 
+// ── Failure screenshot capture ────────────────────────────────────────────────
+// Captures a compressed screenshot when a project is down/degraded, so incidents
+// can be visually debugged later (e.g. "the login page changed" style bugs).
+// One file per project (overwritten each time) to keep the repo small.
+async function captureFailureScreenshot(url, projectId, browser) {
+  if (!browser) return null;
+  let context;
+  try {
+    context = await browser.newContext({ viewport: { width: 1000, height: 700 } });
+    const page = await context.newPage();
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 }).catch(() => {});
+    await page.waitForTimeout(1500);
+    const dir = path.join(__dirname, '..', 'dashboard', 'screenshots');
+    fs.mkdirSync(dir, { recursive: true });
+    const filename = `${projectId}.jpg`;
+    await page.screenshot({ path: path.join(dir, filename), type: 'jpeg', quality: 45 });
+    await context.close();
+    return `screenshots/${filename}`;
+  } catch (e) {
+    if (context) await context.close().catch(() => {});
+    return null;
+  }
+}
+
 function sslComponentFromCheck(ssl) {
   if (!ssl || ssl.skipped) return null;
   // Don't fail the overall check just because cert read failed (TLS quirks); log as operational
@@ -512,6 +536,9 @@ async function fetchClientReports() {
     /* Notes / Resolution column — accepts several naming variations so user
        can pick whichever fits their workflow */
     const notesCol = headers.findIndex(h => /^(resolution|resolution notes|notes|action taken|action|status notes|resolution\/notes)$/i.test(h));
+    /* Full client-facing response email — shown as an expandable detail in
+       reports, separate from the shorter internal Notes summary above */
+    const fixEmailCol = headers.findIndex(h => /^sentry fix email$/i.test(h));
     if (dateCol < 0 || issueCol < 0) { console.log('  ! Could not find required columns'); return []; }
     const reports = [];
     for (let i = 1; i < rows.length; i++) {
@@ -529,6 +556,7 @@ async function fetchClientReports() {
         subDefinition: subDefCol >= 0 ? (r[subDefCol] || '').trim() : '',
         raisedBy: raisedCol >= 0 ? (r[raisedCol] || '').trim() : '',
         notes: notesCol >= 0 ? (r[notesCol] || '').trim() : '',
+        fixEmail: fixEmailCol >= 0 ? (r[fixEmailCol] || '').trim() : '',
       });
     }
     return reports;
@@ -664,6 +692,12 @@ function parseCSV(text) {
       console.log(`  >> First failure - will alert on next consecutive failure`);
     }
 
+    // Capture a screenshot when down/degraded, for visual debugging in the incident timeline
+    if (isDownNow) {
+      const shot = await captureFailureScreenshot(project.url, project.id, browser);
+      if (shot) { result.screenshot = shot; console.log(`  >> Screenshot saved: ${shot}`); }
+    }
+
     results.push({ ...project, checkedAt: new Date().toISOString(), ...result });
   }
 
@@ -679,6 +713,7 @@ function parseCSV(text) {
   const minimalResults = results.map(r => ({
     id: r.id, name: r.name, status: r.status, responseMs: r.responseMs,
     ...(r.error ? { error: r.error } : {}),
+    ...(r.screenshot ? { screenshot: r.screenshot } : {}),
     components: r.components
   }));
   history.push({ timestamp: new Date().toISOString(), results: minimalResults });
