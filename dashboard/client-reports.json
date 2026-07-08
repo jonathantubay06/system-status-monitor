@@ -460,5 +460,16 @@
     "raisedBy": "Cortney",
     "notes": "Root cause: Zapier race condition — two zap runs fired 87 seconds apart for the same facilitator. Run 1 (Camp 2, 11:19pm) wrote Camp 2 to Jeremiah's Events via Step 13. Run 2 (Youth of GEN180, started 11:13pm) went through the create-user path with a delay step, then Step 9 woke up at 11:21pm and overwrote Events with only Youth of GEN180, removing Camp 2. Zapier's Update Record step does SET not APPEND on linked fields. Manually restored Camp 2 by directly linking in Airtable. Long-term fix in progress: Code by Zapier step to fetch current Events, merge, and update via Airtable API.",
     "fixEmail": "Hi Cortney, Thank you for flagging this! We've looked into Jeremiah's access and found the root cause. When his portal account was first set up, two automated processes ran within seconds of each other — one for each of his events. The second process inadvertently overwrote the first, leaving only Youth of GEN180 linked to his account and removing Camp 2. We've already restored his access — Jeremiah should now be able to see both Youth of GEN180 and Youth of GEN180 Camp 2 when he logs in. We're also implementing a permanent fix to prevent this from happening to facilitators with multiple events in the future. It will take a bit of time to complete, but we'll keep you posted. Best, Jonathan"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-07",
+    "request": "Participant List update (Participant Section — Admin Only Upload)",
+    "issue": "",
+    "definition": "",
+    "subDefinition": "",
+    "raisedBy": "",
+    "notes": "",
+    "fixEmail": ""
   }
 ]
