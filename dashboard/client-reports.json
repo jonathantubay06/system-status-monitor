@@ -465,11 +465,11 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-07-07",
     "request": "Participant List update (Participant Section — Admin Only Upload)",
-    "issue": "",
-    "definition": "",
-    "subDefinition": "",
-    "raisedBy": "",
-    "notes": "",
-    "fixEmail": ""
+    "issue": "Remove participant list upload from facilitator view; add facilitator instructions; update participant list template",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Investigation confirmed the Upload Participant List block was already Admin-only (Visibility = Admin group only in Softr). No change needed to the upload block. Added a Rich Text instructions block above the participant table (Facilitator-only visibility) directing facilitators to add participants manually or download the template from the Documents section and send via Comments. Updated participant list template uploaded to Airtable Downloadable Documents. \"Download\" button renamed to \"Download Current List\" for clarity.",
+    "fixEmail": "Hi Cortney, quick update — the Upload Participant List feature has always been Admin-only so no change was needed there. We've added instructions for facilitators above the participant section and uploaded your updated template to the Documents section. Let us know if you need any adjustments!"
   }
 ]
