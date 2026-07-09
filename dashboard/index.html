@@ -1922,15 +1922,35 @@ function showToast(msg,isErr){var t=document.getElementById('toast');t.textConte
 
 /* Shared base URL for dashboard assets (JSON data + screenshots).
    Localhost reads files directly; production reads via raw.githubusercontent
-   since Netlify doesn't rebuild on [skip ci] health-check commits. */
+   since Netlify doesn't rebuild on [skip ci] health-check commits.
+   raw.githubusercontent.com rate-limits anonymous traffic (HTTP 429) more
+   aggressively than expected — jsDelivr's GitHub CDN mirror is the fallback. */
 function assetBase(){return location.hostname==='localhost'?'':'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard/'}
+function assetBaseFallback(){return'https://cdn.jsdelivr.net/gh/jonathantubay06/system-status-monitor@main/dashboard/'}
+
+/* Fetch a dashboard asset (JSON/image) with automatic fallback to jsDelivr
+   if the primary raw.githubusercontent.com request fails or is rate-limited. */
+async function fetchAsset(path){
+  var primary=assetBase();
+  var url=(primary||'')+path+(path.indexOf('?')===-1?'?t=':'&t=')+Date.now();
+  try{
+    var res=await fetch(url);
+    if(res.ok)return res;
+    throw new Error('HTTP '+res.status);
+  }catch(e){
+    if(!primary)throw e; // localhost has no fallback path — surface the error
+    var fbRes=await fetch(assetBaseFallback()+path);
+    if(!fbRes.ok)throw new Error('Both primary and fallback failed for '+path);
+    return fbRes;
+  }
+}
 
 async function loadStatus(){
   try{
     var base=assetBase();
 
     /* ── Phase 1: fetch status.json and render cards immediately ── */
-    var sRes=await fetch(base+'/status.json?t='+Date.now());
+    var sRes=await fetchAsset('/status.json');
     if(!sRes.ok)throw new Error('status.json not found');
     var status=await sRes.json();
     allResults=status.results||[];
@@ -1981,9 +2001,9 @@ async function loadStatus(){
 
     /* ── Phase 2: fetch history + supplementary data, then enrich cards ── */
     var[hRes,crRes,notesRes]=await Promise.all([
-      fetch(base+'/history.json?t='+Date.now()).catch(function(){return{ok:false}}),
-      fetch(base+'/client-reports.json?t='+Date.now()).catch(function(){return{ok:false}}),
-      fetch(base+'/incident-notes.json?t='+Date.now()).catch(function(){return{ok:false}}),
+      fetchAsset('/history.json').catch(function(){return{ok:false}}),
+      fetchAsset('/client-reports.json').catch(function(){return{ok:false}}),
+      fetchAsset('/incident-notes.json').catch(function(){return{ok:false}}),
     ]);
     allHistory=hRes.ok?await hRes.json():[];
     allClientReports=crRes&&crRes.ok?await crRes.json():[];
@@ -3608,7 +3628,11 @@ function closeAuditLog(){document.getElementById('auditModal').classList.add('hi
 
 function openScreenshot(relPath,projectName){
   document.getElementById('screenshotTitle').textContent='Failure Screenshot: '+projectName;
-  document.getElementById('screenshotImg').src=assetBase()+relPath+'?t='+Date.now();
+  var img=document.getElementById('screenshotImg');
+  var fallbackUrl=assetBaseFallback()+relPath;
+  /* If the primary raw.githubusercontent URL fails (e.g. rate-limited), retry once via jsDelivr */
+  img.onerror=function(){img.onerror=null;img.src=fallbackUrl};
+  img.src=assetBase()+relPath+'?t='+Date.now();
   document.getElementById('screenshotModal').classList.remove('hidden');
 }
 function closeScreenshot(){document.getElementById('screenshotModal').classList.add('hidden')}

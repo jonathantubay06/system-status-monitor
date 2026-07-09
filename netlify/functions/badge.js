@@ -1,4 +1,17 @@
 const GITHUB_RAW = 'https://raw.githubusercontent.com/jonathantubay06/system-status-monitor/main/dashboard';
+const JSDELIVR_FALLBACK = 'https://cdn.jsdelivr.net/gh/jonathantubay06/system-status-monitor@main/dashboard';
+
+// raw.githubusercontent.com rate-limits anonymous traffic (HTTP 429) more
+// aggressively than expected. Fall back to jsDelivr's GitHub CDN mirror.
+async function fetchWithFallback(path) {
+  try {
+    const res = await fetch(GITHUB_RAW + path + '?t=' + Date.now());
+    if (res.ok) return res;
+    throw new Error('HTTP ' + res.status);
+  } catch (e) {
+    return fetch(JSDELIVR_FALLBACK + path);
+  }
+}
 
 function generateBadgeSvg(label, value, color) {
   const labelWidth = Math.max(label.length * 6.5 + 12, 40);
@@ -48,8 +61,8 @@ exports.handler = async (event) => {
 
   try {
     const [statusRes, histRes] = await Promise.all([
-      fetch(GITHUB_RAW + '/status.json?t=' + Date.now()),
-      fetch(GITHUB_RAW + '/history.json?t=' + Date.now()),
+      fetchWithFallback('/status.json'),
+      fetchWithFallback('/history.json'),
     ]);
 
     const statusData = await statusRes.json();

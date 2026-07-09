@@ -25,7 +25,7 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return; // never intercept POST (admin actions)
 
   const url = new URL(req.url);
-  const isJsonData = url.hostname === 'raw.githubusercontent.com' && url.pathname.endsWith('.json');
+  const isJsonData = (url.hostname === 'raw.githubusercontent.com' || url.hostname === 'cdn.jsdelivr.net') && url.pathname.endsWith('.json');
   const isAppShell = url.origin === self.location.origin && (url.pathname === '/' || url.pathname.endsWith('.html') || url.pathname.endsWith('.json') || url.pathname.endsWith('.svg'));
 
   if (!isJsonData && !isAppShell) return; // let everything else (functions, images) hit the network normally

@@ -19,10 +19,23 @@ exports.handler = async (event) => {
     const repo = process.env.GITHUB_REPO || 'jonathantubay06/system-status-monitor';
     const branch = 'main';
     const rawBase = `https://raw.githubusercontent.com/${repo}/${branch}/dashboard`;
+    const fallbackBase = `https://cdn.jsdelivr.net/gh/${repo}@${branch}/dashboard`;
+
+    // raw.githubusercontent.com rate-limits anonymous traffic (HTTP 429) more
+    // aggressively than expected. Fall back to jsDelivr's GitHub CDN mirror.
+    const fetchWithFallback = async (path) => {
+      try {
+        const res = await fetch(`${rawBase}${path}?t=${Date.now()}`);
+        if (res.ok) return res;
+        throw new Error(`HTTP ${res.status}`);
+      } catch (e) {
+        return fetch(`${fallbackBase}${path}`);
+      }
+    };
 
     const [statusRes, historyRes] = await Promise.all([
-      fetch(`${rawBase}/status.json`),
-      fetch(`${rawBase}/history.json`),
+      fetchWithFallback('/status.json'),
+      fetchWithFallback('/history.json'),
     ]);
 
     if (!statusRes.ok) return { statusCode: 500, headers: ch(), body: errorPage('Could not load status data') };
