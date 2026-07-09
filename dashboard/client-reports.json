@@ -471,5 +471,16 @@
     "raisedBy": "Cortney",
     "notes": "Investigation confirmed the Upload Participant List block was already Admin-only (Visibility = Admin group only in Softr). No change needed to the upload block. Added a Rich Text instructions block above the participant table (Facilitator-only visibility) directing facilitators to add participants manually or download the template from the Documents section and send via Comments. Updated participant list template uploaded to Airtable Downloadable Documents. \"Download\" button renamed to \"Download Current List\" for clarity.",
     "fixEmail": "Hi Cortney, quick update — the Upload Participant List feature has always been Admin-only so no change was needed there. We've added instructions for facilitators above the participant section and uploaded your updated template to the Documents section. Let us know if you need any adjustments!"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-09",
+    "request": "Portal Errors (Cortney — Can't Search or Add Events)",
+    "issue": "Uable to search for or add events; Add Event form threw a date-format error",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue",
+    "raisedBy": "Cortney",
+    "notes": "Cross-referenced the report time against Airtable's own status page — found a confirmed global Airtable outage (19:17–20:59 UTC, July 8) covering the exact window of the report. Both errors were downstream symptoms of Airtable being temporarily unreachable, not a JRD or Softr-specific bug. No fix needed on our end; verified search and Add Event working normally afterward.",
+    "fixEmail": "Hi Cortney, Sorry about that! Good news — this wasn't a problem with your account or how you entered anything. Our system that stores all the event info had a brief outage on their end yesterday, right around the time you emailed us, and it was back up a couple hours later. That's why the search wasn't working and why you saw that odd error when trying to add an event. We just tested it ourselves and everything is working normally again. Can you try searching and adding an event again when you get a chance? Just let us know if anything still looks wrong. Thanks for letting us know right away! Jonathan"
   }
 ]
