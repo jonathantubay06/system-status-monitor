@@ -1,7 +1,7 @@
 // Minimal service worker — app-shell cache + "network first, fallback to
 // cache" for the dashboard's JSON data, so the last-known status still shows
 // up if the device goes offline.
-const CACHE_NAME = 'sentryxp-status-v1';
+const CACHE_NAME = 'sentryxp-status-v2';
 const APP_SHELL = ['/', '/index.html', '/manifest.json', '/favicon.svg'];
 
 self.addEventListener('install', (event) => {

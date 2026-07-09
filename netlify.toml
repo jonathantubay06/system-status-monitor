@@ -1,7 +1,10 @@
 [build]
   publish = "dashboard"
   functions = "netlify/functions"
-  ignore = "git log -1 --pretty=%B | grep -q '\\[skip ci\\]'"
+  # Check only the commit SUBJECT line (%s), not the full body (%B) — a commit
+  # explaining "the [skip ci] mechanism" in its body would otherwise match this
+  # substring check and get silently skipped, even though it has real changes.
+  ignore = "git log -1 --pretty=%s | grep -q '\\[skip ci\\]'"
 
 [build.environment]
   NODE_VERSION = "20"
