@@ -482,5 +482,16 @@
     "raisedBy": "Cortney",
     "notes": "Cross-referenced the report time against Airtable's own status page — found a confirmed global Airtable outage (19:17–20:59 UTC, July 8) covering the exact window of the report. Both errors were downstream symptoms of Airtable being temporarily unreachable, not a JRD or Softr-specific bug. No fix needed on our end; verified search and Add Event working normally afterward.",
     "fixEmail": "Hi Cortney, Sorry about that! Good news — this wasn't a problem with your account or how you entered anything. Our system that stores all the event info had a brief outage on their end yesterday, right around the time you emailed us, and it was back up a couple hours later. That's why the search wasn't working and why you saw that odd error when trying to add an event. We just tested it ourselves and everything is working normally again. Can you try searching and adding an event again when you get a chance? Just let us know if anything still looks wrong. Thanks for letting us know right away! Jonathan"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-10",
+    "request": "Participant list not uploading",
+    "issue": "Participant list would not upload",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Confirmed via Airtable that the Excel→CSV conversion succeeded every time, but zero participants were ever created. Root cause: the uploaded lists used \"Legacy Lodge\" in the Building column, which isn't a valid option on the Participants table's Building field (only Hotel/Lodge/Off-Site/Cabin are defined) — Airtable rejects the invalid value, and since the automation that calls jdr-service never checks for a failed response, the whole batch silently produced nothing. Fix confirmed live on a test event: changing Building to \"Lodge\" resolved it fully. Secondary, non-blocking issue also found: entering two phone numbers in one cell causes that specific person's phone number to be silently dropped, though the rest of their record still saves correctly.",
+    "fixEmail": "Hi Cortney, Hope you are well. We found what was causing your list to not upload. Two things going forward when filling out the participant list: 1. Building column — please use the dropdown in that column and pick either Hotel or Lodge. Our system doesn't have \"Legacy Lodge\" as an option, so a typed-in value there that is not from the option was what stopped the whole list from going through. 2. Phone Number column — please enter just one phone number per person, in this format: (713) 301-9734. A couple rows had two numbers written in the same box, and when that happens, that person's phone number doesn't get saved. If someone gives you two numbers, just pick their main one. Thanks for your patience while we tracked this down — let us know if you run into anything else!"
   }
 ]
