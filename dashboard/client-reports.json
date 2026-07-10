@@ -493,5 +493,16 @@
     "raisedBy": "Cortney",
     "notes": "Confirmed via Airtable that the Excel→CSV conversion succeeded every time, but zero participants were ever created. Root cause: the uploaded lists used \"Legacy Lodge\" in the Building column, which isn't a valid option on the Participants table's Building field (only Hotel/Lodge/Off-Site/Cabin are defined) — Airtable rejects the invalid value, and since the automation that calls jdr-service never checks for a failed response, the whole batch silently produced nothing. Fix confirmed live on a test event: changing Building to \"Lodge\" resolved it fully. Secondary, non-blocking issue also found: entering two phone numbers in one cell causes that specific person's phone number to be silently dropped, though the rest of their record still saves correctly.",
     "fixEmail": "Hi Cortney, Hope you are well. We found what was causing your list to not upload. Two things going forward when filling out the participant list: 1. Building column — please use the dropdown in that column and pick either Hotel or Lodge. Our system doesn't have \"Legacy Lodge\" as an option, so a typed-in value there that is not from the option was what stopped the whole list from going through. 2. Phone Number column — please enter just one phone number per person, in this format: (713) 301-9734. A couple rows had two numbers written in the same box, and when that happens, that person's phone number doesn't get saved. If someone gives you two numbers, just pick their main one. Thanks for your patience while we tracked this down — let us know if you run into anything else!"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-11",
+    "request": "Past Search Events (Add Month Filter to Past Events (Cortney — Past Events Search))",
+    "issue": "Past Events search page is missing a month filter",
+    "definition": "Maintenance",
+    "subDefinition": "New Feature",
+    "raisedBy": "Cortney",
+    "notes": "First time this has been requested. Not yet started — would involve adding a Month filter dropdown to the Past Events tab, matching the one already on Upcoming Events. Pending scoping/prioritization.",
+    "fixEmail": ""
   }
 ]
