@@ -504,5 +504,16 @@
     "raisedBy": "Cortney",
     "notes": "Built and published July 13, 2026 — added a \"Month\" dropdown filter to the Past Events list in Softr, mirroring the existing Upcoming Events filter. Tested in Preview (April, October) before publishing.",
     "fixEmail": "Reply sent confirming the filter is live"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-13",
+    "request": "Departure Time (Change default Departure Time to 12:00 PM)",
+    "issue": "Default Departure Time was set to 9:00 AM for Hotel-facility events (Lodge events already defaulted to 12:00 PM)",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Traced to Airtable automation \"Populate Departure time based on Facility.\" Updated the Hotel branch's Departure Time and Check-Out Time from 9:00 AM to 12:00 PM on July 13, 2026. Applies to new events going forward only — existing events keep their current Departure Time unless updated individually.",
+    "fixEmail": "Reply sent confirming the change and clarifying it doesn't retroactively update existing events"
   }
 ]
