@@ -498,11 +498,11 @@
     "projectId": "jordan-ranch-portal",
     "date": "2026-07-11",
     "request": "Past Search Events (Add Month Filter to Past Events (Cortney — Past Events Search))",
-    "issue": "Past Events search page is missing a month filter",
+    "issue": "No month filter existed on Past Events tab (Upcoming Events already had one)",
     "definition": "Maintenance",
     "subDefinition": "New Feature",
     "raisedBy": "Cortney",
-    "notes": "First time this has been requested. Not yet started — would involve adding a Month filter dropdown to the Past Events tab, matching the one already on Upcoming Events. Pending scoping/prioritization.",
-    "fixEmail": ""
+    "notes": "Built and published July 13, 2026 — added a \"Month\" dropdown filter to the Past Events list in Softr, mirroring the existing Upcoming Events filter. Tested in Preview (April, October) before publishing.",
+    "fixEmail": "Reply sent confirming the filter is live"
   }
 ]
