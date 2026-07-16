@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-16T00:08:33.542Z",
+  "updatedAt": "2026-07-16T03:33:35.933Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:07:55.295Z",
+      "checkedAt": "2026-07-16T03:32:57.523Z",
       "status": "operational",
-      "responseMs": 8113,
+      "responseMs": 7351,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:07:56.472Z",
+      "checkedAt": "2026-07-16T03:32:58.414Z",
       "status": "operational",
-      "responseMs": 1147,
+      "responseMs": 811,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:08:16.518Z",
+      "checkedAt": "2026-07-16T03:33:17.295Z",
       "status": "operational",
-      "responseMs": 18386,
+      "responseMs": 17725,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:08:31.966Z",
+      "checkedAt": "2026-07-16T03:33:34.559Z",
       "status": "operational",
-      "responseMs": 15038,
+      "responseMs": 16179,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:08:32.750Z",
+      "checkedAt": "2026-07-16T03:33:35.344Z",
       "status": "operational",
-      "responseMs": 769,
+      "responseMs": 773,
       "httpStatus": 200,
       "components": [
         {
@@ -232,7 +232,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "81 day(s) until renewal"
+          "detail": "80 day(s) until renewal"
         }
       ]
     },
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-16T00:08:33.514Z",
+      "checkedAt": "2026-07-16T03:33:35.910Z",
       "status": "operational",
-      "responseMs": 744,
+      "responseMs": 546,
       "httpStatus": 200,
       "components": [
         {
