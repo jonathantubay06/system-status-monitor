@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-17T22:05:18.996Z",
+  "updatedAt": "2026-07-17T23:06:19.907Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:04:42.055Z",
+      "checkedAt": "2026-07-17T23:05:36.003Z",
       "status": "operational",
-      "responseMs": 7687,
+      "responseMs": 8180,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,41 +62,22 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:04:43.008Z",
-      "status": "operational",
-      "responseMs": 881,
-      "httpStatus": 200,
+      "checkedAt": "2026-07-17T23:05:38.053Z",
+      "status": "down",
+      "responseMs": 258,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "49 day(s) until renewal"
         }
-      ]
+      ],
+      "screenshot": "screenshots/kingdomlandkids.jpg"
     },
     {
       "airtableId": "rec9nsO0vYvGzSYrI",
@@ -111,9 +92,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:05:02.820Z",
+      "checkedAt": "2026-07-17T23:05:57.432Z",
       "status": "operational",
-      "responseMs": 18423,
+      "responseMs": 18004,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +140,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:05:17.432Z",
+      "checkedAt": "2026-07-17T23:06:16.000Z",
       "status": "operational",
-      "responseMs": 13783,
+      "responseMs": 17504,
       "components": [
         {
           "name": "Page loads",
@@ -200,41 +181,22 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:05:18.047Z",
-      "status": "operational",
-      "responseMs": 593,
-      "httpStatus": 200,
+      "checkedAt": "2026-07-17T23:06:17.877Z",
+      "status": "down",
+      "responseMs": 204,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "79 day(s) until renewal"
         }
-      ]
+      ],
+      "screenshot": "screenshots/tool-mart-inc.jpg"
     },
     {
       "airtableId": "rec2MN3De2lduBeCe",
@@ -249,41 +211,22 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-17T22:05:18.972Z",
-      "status": "operational",
-      "responseMs": 863,
-      "httpStatus": 200,
+      "checkedAt": "2026-07-17T23:06:19.887Z",
+      "status": "down",
+      "responseMs": 141,
+      "httpStatus": 503,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "88 day(s) until renewal"
         }
-      ]
+      ],
+      "screenshot": "screenshots/anomalyx.jpg"
     }
   ]
 }
