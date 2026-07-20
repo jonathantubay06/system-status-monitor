@@ -515,5 +515,16 @@
     "raisedBy": "Cortney",
     "notes": "Traced to Airtable automation \"Populate Departure time based on Facility.\" Updated the Hotel branch's Departure Time and Check-Out Time from 9:00 AM to 12:00 PM on July 13, 2026. Applies to new events going forward only — existing events keep their current Departure Time unless updated individually.",
     "fixEmail": "Reply sent confirming the change and clarifying it doesn't retroactively update existing events"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-20",
+    "request": "Portal Not Working (Cortney — 504 Gateway Time-Out)",
+    "issue": "Portal showing 504 Gateway Time-Out — not loading for any users",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney",
+    "notes": "Confirmed with Softr support (Narek) that this is an active platform-wide outage on Softr's end. Not related to any changes made on our side. Softr team was actively working on a fix. Jojo also experienced the same error independently.",
+    "fixEmail": "Sent initial acknowledgment (\"We're checking\"), followed up confirming it's a Softr outage and that their team is working on a fix. Will notify when portal is restored."
   }
 ]
