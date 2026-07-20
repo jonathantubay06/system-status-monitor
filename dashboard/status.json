@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T15:01:06.519Z",
+  "updatedAt": "2026-07-20T16:26:03.283Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,7 +14,7 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:00:38.895Z",
+      "checkedAt": "2026-07-20T16:25:03.379Z",
       "status": "down",
       "responseMs": 0,
       "error": "Domain unreachable - server did not respond",
@@ -38,9 +38,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:00:39.767Z",
+      "checkedAt": "2026-07-20T16:25:04.224Z",
       "status": "operational",
-      "responseMs": 742,
+      "responseMs": 711,
       "httpStatus": 200,
       "components": [
         {
@@ -87,14 +87,38 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:00:49.768Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-07-20T16:25:42.726Z",
+      "status": "operational",
+      "responseMs": 37322,
+      "httpStatus": 200,
+      "pageTitle": "Login",
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "Content detected"
+        },
+        {
+          "name": "SSL certificate",
+          "status": "operational",
+          "detail": "22 day(s) until renewal"
         }
       ]
     },
@@ -111,9 +135,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:01:05.412Z",
+      "checkedAt": "2026-07-20T16:26:01.443Z",
       "status": "operational",
-      "responseMs": 14621,
+      "responseMs": 17248,
       "components": [
         {
           "name": "Page loads",
@@ -152,9 +176,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:01:05.924Z",
+      "checkedAt": "2026-07-20T16:26:02.514Z",
       "status": "operational",
-      "responseMs": 496,
+      "responseMs": 1056,
       "httpStatus": 200,
       "components": [
         {
@@ -201,9 +225,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-20T15:01:06.493Z",
+      "checkedAt": "2026-07-20T16:26:03.257Z",
       "status": "operational",
-      "responseMs": 544,
+      "responseMs": 724,
       "httpStatus": 200,
       "components": [
         {
