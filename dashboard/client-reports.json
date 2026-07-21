@@ -526,5 +526,16 @@
     "raisedBy": "Cortney",
     "notes": "Confirmed with Softr support (Narek) that this is an active platform-wide outage on Softr's end. Not related to any changes made on our side. Softr team was actively working on a fix. Jojo also experienced the same error independently.",
     "fixEmail": "Sent initial acknowledgment (\"We're checking\"), followed up confirming it's a Softr outage and that their team is working on a fix. Sent final confirmation email once portal was restored."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-21",
+    "request": "User Access (Remove Michael's Admin Access)",
+    "issue": "Remove Michael@jordanranch.org's admin access and stop portal notifications to him",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Clarified with Cortney whether to fully remove the user or downgrade to facilitator-only access. She confirmed full removal. Removed Michael@jordanranch.org entirely from the Users list in Softr (revokes admin rights and portal notifications).",
+    "fixEmail": "The user has been completely removed."
   }
 ]
