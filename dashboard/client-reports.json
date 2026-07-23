@@ -537,5 +537,38 @@
     "raisedBy": "Cortney",
     "notes": "Clarified with Cortney whether to fully remove the user or downgrade to facilitator-only access. She confirmed full removal. Removed Michael@jordanranch.org entirely from the Users list in Softr (revokes admin rights and portal notifications).",
     "fixEmail": "The user has been completely removed."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-23",
+    "request": "Departure Time — Cortney (Check-Out Time Regression)",
+    "issue": "Check-Out Time incorrectly showing 12:00 PM instead of 9:00 AM on multiple events",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue",
+    "raisedBy": "Cortney",
+    "notes": "Traced to the \"Populate Departure time based on Facility\" automation — the Hotel branch's action was updating both Departure Time and Check-Out Time together since the July 13 default-time change, when only Departure Time should have changed. Corrected the automation (Check-Out Time back to 9:00 AM, Departure Time stays 12:00 PM) and bulk-reverted Check-Out Time on all 182 affected Hotel-facility events. Verified 0 records remain with the wrong value.",
+    "fixEmail": "Reply sent acknowledging the mistake, confirming Departure Time stays at 12:00 PM and Check-Out Time was reverted to 9:00 AM on all affected events."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-23",
+    "request": "Meal Plan — Cortney (Hide from Facilitator View)",
+    "issue": "Remove Meal Plan table from facilitator view; keep visible for admin",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Found two separate Meal Plan blocks in Softr, already scoped by user group — one for Admin (with Add Meal button) and one for Facilitator (view/edit only). Hid the Facilitator-scoped block only; Admin block untouched. Reversible by un-hiding later — nothing deleted.",
+    "fixEmail": "Reply sent confirming the meal plan table was removed from the facilitator view and remains visible on the admin side."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-23",
+    "request": "Event Creation — Cortney (Room Booking Gap + Facilitator Link Delay, Kingsland Baptist)",
+    "issue": "Rooms Booked not showing Full Hotel as booked; facilitator portal link slow to generate",
+    "definition": "Maintenance",
+    "subDefinition": "Edge Case",
+    "raisedBy": "Cortney",
+    "notes": "Traced Rooms Booked gap to the same room-assignment race condition seen before — one hotel room (208) hadn't finished being created when the compression automation ran. Manually triggered the missing room, correcting Room Assignments to show Full Hotel. Investigated the facilitator link delay separately — not a distinct bug; the facilitator account and magic link generated within about a minute of event creation, but the overall automation chain (creating all individual room bookings) took roughly 13 minutes for this large booking (22 hotel rooms + Lodge + meeting rooms), which is likely what felt slow.",
+    "fixEmail": "Reply sent confirming the Rooms Booked issue was corrected to show Full Hotel, and explaining the facilitator link delay was due to processing time on a large booking, not a stuck link."
   }
 ]
