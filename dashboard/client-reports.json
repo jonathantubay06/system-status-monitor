@@ -570,5 +570,16 @@
     "raisedBy": "Cortney",
     "notes": "Traced Rooms Booked gap to the same room-assignment race condition seen before — one hotel room (208) hadn't finished being created when the compression automation ran. Manually triggered the missing room, correcting Room Assignments to show Full Hotel. Investigated the facilitator link delay separately — not a distinct bug; the facilitator account and magic link generated within about a minute of event creation, but the overall automation chain (creating all individual room bookings) took roughly 13 minutes for this large booking (22 hotel rooms + Lodge + meeting rooms), which is likely what felt slow.",
     "fixEmail": "Reply sent confirming the Rooms Booked issue was corrected to show Full Hotel, and explaining the facilitator link delay was due to processing time on a large booking, not a stuck link."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-21",
+    "request": "Linen bundle fields — expand to Hotel + Lodge (Cortney)",
+    "issue": "Linen bundle fields only appeared for Lodge-facility events; Cortney needed them available for Hotel events as well.",
+    "definition": "Maintenance",
+    "subDefinition": "New Feature",
+    "raisedBy": "Cortney",
+    "notes": "Found the fields were controlled by custom JS (not a native Softr setting) — three separate copies across two Softr pages, each restricted to Lodge only. Widened all three regex conditions to match Hotel or Lodge, saved, and published. Verified live on production.",
+    "fixEmail": "Reply sent confirming linen bundle fields now show for both Hotel and Lodge events."
   }
 ]
