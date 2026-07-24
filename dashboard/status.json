@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-24T04:30:23.675Z",
+  "updatedAt": "2026-07-24T07:05:44.241Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:29:45.929Z",
+      "checkedAt": "2026-07-24T07:05:04.853Z",
       "status": "operational",
-      "responseMs": 8284,
+      "responseMs": 7629,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:29:46.656Z",
+      "checkedAt": "2026-07-24T07:05:05.438Z",
       "status": "operational",
-      "responseMs": 695,
+      "responseMs": 528,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:30:06.777Z",
+      "checkedAt": "2026-07-24T07:05:24.267Z",
       "status": "operational",
-      "responseMs": 18449,
+      "responseMs": 17696,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:30:21.296Z",
+      "checkedAt": "2026-07-24T07:05:43.277Z",
       "status": "operational",
-      "responseMs": 14023,
+      "responseMs": 15116,
       "components": [
         {
           "name": "Page loads",
@@ -200,22 +200,41 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:30:23.049Z",
-      "status": "down",
-      "responseMs": 106,
-      "httpStatus": 429,
+      "checkedAt": "2026-07-24T07:05:43.532Z",
+      "status": "operational",
+      "responseMs": 239,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "72 day(s) until renewal"
         }
-      ],
-      "screenshot": "screenshots/tool-mart-inc.jpg"
+      ]
     },
     {
       "airtableId": "rec2MN3De2lduBeCe",
@@ -230,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-24T04:30:23.634Z",
+      "checkedAt": "2026-07-24T07:05:44.216Z",
       "status": "operational",
-      "responseMs": 566,
+      "responseMs": 665,
       "httpStatus": 200,
       "components": [
         {
