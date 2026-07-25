@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T12:42:20.052Z",
+  "updatedAt": "2026-07-25T14:18:06.652Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:41:40.910Z",
+      "checkedAt": "2026-07-25T14:16:19.474Z",
       "status": "operational",
-      "responseMs": 8164,
+      "responseMs": 8325,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:41:41.758Z",
+      "checkedAt": "2026-07-25T14:16:20.078Z",
       "status": "operational",
-      "responseMs": 775,
+      "responseMs": 474,
       "httpStatus": 200,
       "components": [
         {
@@ -94,7 +94,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "42 day(s) until renewal"
+          "detail": "41 day(s) until renewal"
         }
       ]
     },
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:42:01.110Z",
+      "checkedAt": "2026-07-25T14:17:47.467Z",
       "status": "operational",
-      "responseMs": 18033,
+      "responseMs": 18200,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:42:18.398Z",
+      "checkedAt": "2026-07-25T14:18:04.955Z",
       "status": "operational",
-      "responseMs": 16884,
+      "responseMs": 17077,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:42:19.193Z",
+      "checkedAt": "2026-07-25T14:18:05.459Z",
       "status": "operational",
-      "responseMs": 767,
+      "responseMs": 457,
       "httpStatus": 200,
       "components": [
         {
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T12:42:20.028Z",
+      "checkedAt": "2026-07-25T14:18:06.625Z",
       "status": "operational",
-      "responseMs": 783,
+      "responseMs": 900,
       "httpStatus": 200,
       "components": [
         {
