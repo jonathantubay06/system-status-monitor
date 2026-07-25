@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-25T19:53:19.686Z",
+  "updatedAt": "2026-07-25T20:39:48.453Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:52:37.801Z",
+      "checkedAt": "2026-07-25T20:39:07.954Z",
       "status": "operational",
-      "responseMs": 7763,
+      "responseMs": 7592,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:52:38.484Z",
+      "checkedAt": "2026-07-25T20:39:08.473Z",
       "status": "operational",
-      "responseMs": 569,
+      "responseMs": 439,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:52:57.766Z",
+      "checkedAt": "2026-07-25T20:39:27.443Z",
       "status": "operational",
-      "responseMs": 17965,
+      "responseMs": 17724,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:53:16.687Z",
+      "checkedAt": "2026-07-25T20:39:46.955Z",
       "status": "operational",
-      "responseMs": 17736,
+      "responseMs": 15655,
       "components": [
         {
           "name": "Page loads",
@@ -200,39 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:53:18.575Z",
-      "status": "down",
-      "responseMs": 195,
-      "httpStatus": 503,
-      "components": [
-        {
-          "name": "Page loads",
-          "status": "degraded"
-        },
-        {
-          "name": "SSL certificate",
-          "status": "operational",
-          "detail": "71 day(s) until renewal"
-        }
-      ],
-      "screenshot": "screenshots/tool-mart-inc.jpg"
-    },
-    {
-      "airtableId": "rec2MN3De2lduBeCe",
-      "name": "AnomalyX",
-      "type": "shopify",
-      "url": "https://anomalyx.fit/",
-      "alertEmail": "",
-      "id": "anomalyx",
-      "checkPage": "",
-      "loginEmail": "",
-      "loginPassword": "",
-      "group": "",
-      "alertThreshold": 0,
-      "alertChannel": "email",
-      "checkedAt": "2026-07-25T19:53:19.662Z",
+      "checkedAt": "2026-07-25T20:39:47.507Z",
       "status": "operational",
-      "responseMs": 1018,
+      "responseMs": 536,
       "httpStatus": 200,
       "components": [
         {
@@ -262,7 +232,56 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "81 day(s) until renewal"
+          "detail": "71 day(s) until renewal"
+        }
+      ]
+    },
+    {
+      "airtableId": "rec2MN3De2lduBeCe",
+      "name": "AnomalyX",
+      "type": "shopify",
+      "url": "https://anomalyx.fit/",
+      "alertEmail": "",
+      "id": "anomalyx",
+      "checkPage": "",
+      "loginEmail": "",
+      "loginPassword": "",
+      "group": "",
+      "alertThreshold": 0,
+      "alertChannel": "email",
+      "checkedAt": "2026-07-25T20:39:48.426Z",
+      "status": "operational",
+      "responseMs": 892,
+      "httpStatus": 200,
+      "components": [
+        {
+          "name": "Page loads",
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
+        },
+        {
+          "name": "SSL certificate",
+          "status": "operational",
+          "detail": "80 day(s) until renewal"
         }
       ]
     }
