@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-27T19:52:41.323Z",
+  "updatedAt": "2026-07-27T21:02:27.347Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:04.879Z",
-      "status": "operational",
-      "responseMs": 7963,
+      "checkedAt": "2026-07-27T21:00:43.603Z",
+      "status": "degraded",
+      "responseMs": 7749,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -44,10 +44,11 @@
         },
         {
           "name": "SSL certificate",
-          "status": "operational",
-          "detail": "15 day(s) until renewal"
+          "status": "degraded",
+          "detail": "Expires in 14 day(s)"
         }
-      ]
+      ],
+      "screenshot": "screenshots/jordan-ranch-portal.jpg"
     },
     {
       "airtableId": "recUS1iqlfWojro2l",
@@ -62,9 +63,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:05.758Z",
+      "checkedAt": "2026-07-27T21:00:44.248Z",
       "status": "operational",
-      "responseMs": 696,
+      "responseMs": 602,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +112,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:25.146Z",
-      "status": "operational",
-      "responseMs": 17970,
+      "checkedAt": "2026-07-27T21:02:10.478Z",
+      "status": "degraded",
+      "responseMs": 18373,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -141,10 +142,11 @@
         },
         {
           "name": "SSL certificate",
-          "status": "operational",
-          "detail": "15 day(s) until renewal"
+          "status": "degraded",
+          "detail": "Expires in 14 day(s)"
         }
-      ]
+      ],
+      "screenshot": "screenshots/george-adams-insurance-gai.jpg"
     },
     {
       "airtableId": "recPyNs4klp4TqijD",
@@ -159,9 +161,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:39.965Z",
+      "checkedAt": "2026-07-27T21:02:25.511Z",
       "status": "operational",
-      "responseMs": 14167,
+      "responseMs": 14598,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +202,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:40.578Z",
+      "checkedAt": "2026-07-27T21:02:26.195Z",
       "status": "operational",
-      "responseMs": 585,
+      "responseMs": 670,
       "httpStatus": 200,
       "components": [
         {
@@ -249,9 +251,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-27T19:52:41.304Z",
+      "checkedAt": "2026-07-27T21:02:27.322Z",
       "status": "operational",
-      "responseMs": 668,
+      "responseMs": 803,
       "httpStatus": 200,
       "components": [
         {
@@ -281,7 +283,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "79 day(s) until renewal"
+          "detail": "78 day(s) until renewal"
         }
       ]
     }
