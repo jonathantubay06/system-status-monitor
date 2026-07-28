@@ -1,159 +1,5 @@
 [
   {
-    "timestamp": "2026-06-02T02:04:07.583Z",
-    "results": [
-      {
-        "id": "jordan-ranch-portal",
-        "name": "Jordan Ranch Portal",
-        "status": "operational",
-        "responseMs": 7708,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          },
-          {
-            "name": "Data loads",
-            "status": "operational",
-            "detail": "10 record(s) found"
-          }
-        ]
-      },
-      {
-        "id": "kingdomlandkids",
-        "name": "Kingdomlandkids",
-        "status": "operational",
-        "responseMs": 550,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Header",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "Products",
-            "status": "operational"
-          },
-          {
-            "name": "Cart",
-            "status": "operational"
-          },
-          {
-            "name": "Footer",
-            "status": "operational"
-          }
-        ]
-      },
-      {
-        "id": "george-adams-insurance-gai",
-        "name": "George Adams Insurance (GAI)",
-        "status": "operational",
-        "responseMs": 17890,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          },
-          {
-            "name": "Data loads",
-            "status": "operational",
-            "detail": "Content detected"
-          }
-        ]
-      },
-      {
-        "id": "kingdomland-playwatch",
-        "name": "Kingdomland Playwatch",
-        "status": "operational",
-        "responseMs": 16654,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Login",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "No errors",
-            "status": "operational",
-            "detail": null
-          }
-        ]
-      },
-      {
-        "id": "tool-mart-inc",
-        "name": "Tool Mart, Inc",
-        "status": "operational",
-        "responseMs": 619,
-        "components": [
-          {
-            "name": "Page loads",
-            "status": "operational"
-          },
-          {
-            "name": "Header",
-            "status": "operational"
-          },
-          {
-            "name": "Navigation",
-            "status": "operational"
-          },
-          {
-            "name": "Products",
-            "status": "operational"
-          },
-          {
-            "name": "Cart",
-            "status": "operational"
-          },
-          {
-            "name": "Footer",
-            "status": "operational"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "timestamp": "2026-06-02T06:55:20.370Z",
     "results": [
       {
@@ -142289,6 +142135,222 @@
         "name": "AnomalyX",
         "status": "operational",
         "responseMs": 875,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          },
+          {
+            "name": "SSL certificate",
+            "status": "operational",
+            "detail": "78 day(s) until renewal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "timestamp": "2026-07-28T20:05:52.870Z",
+    "results": [
+      {
+        "id": "jordan-ranch-portal",
+        "name": "Jordan Ranch Portal",
+        "status": "operational",
+        "responseMs": 6927,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "10 record(s) found"
+          },
+          {
+            "name": "SSL certificate",
+            "status": "degraded",
+            "detail": "Expires in 14 day(s)"
+          }
+        ]
+      },
+      {
+        "id": "kingdomlandkids",
+        "name": "Kingdomlandkids",
+        "status": "operational",
+        "responseMs": 670,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          },
+          {
+            "name": "SSL certificate",
+            "status": "operational",
+            "detail": "38 day(s) until renewal"
+          }
+        ]
+      },
+      {
+        "id": "george-adams-insurance-gai",
+        "name": "George Adams Insurance (GAI)",
+        "status": "operational",
+        "responseMs": 17707,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "Data loads",
+            "status": "operational",
+            "detail": "Content detected"
+          },
+          {
+            "name": "SSL certificate",
+            "status": "degraded",
+            "detail": "Expires in 14 day(s)"
+          }
+        ]
+      },
+      {
+        "id": "kingdomland-playwatch",
+        "name": "Kingdomland Playwatch",
+        "status": "operational",
+        "responseMs": 14865,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Login",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "No errors",
+            "status": "operational",
+            "detail": null
+          },
+          {
+            "name": "SSL certificate",
+            "status": "operational",
+            "detail": "219 day(s) until renewal"
+          }
+        ]
+      },
+      {
+        "id": "tool-mart-inc",
+        "name": "Tool Mart, Inc",
+        "status": "operational",
+        "responseMs": 483,
+        "components": [
+          {
+            "name": "Page loads",
+            "status": "operational"
+          },
+          {
+            "name": "Header",
+            "status": "operational"
+          },
+          {
+            "name": "Navigation",
+            "status": "operational"
+          },
+          {
+            "name": "Products",
+            "status": "operational"
+          },
+          {
+            "name": "Cart",
+            "status": "operational"
+          },
+          {
+            "name": "Footer",
+            "status": "operational"
+          },
+          {
+            "name": "SSL certificate",
+            "status": "operational",
+            "detail": "68 day(s) until renewal"
+          }
+        ]
+      },
+      {
+        "id": "anomalyx",
+        "name": "AnomalyX",
+        "status": "operational",
+        "responseMs": 396,
         "components": [
           {
             "name": "Page loads",
