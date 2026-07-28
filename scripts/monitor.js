@@ -640,14 +640,17 @@ function parseCSV(text) {
       ? await withRetry(checkFn, project.name)
       : await checkFn();
 
-    // Add SSL certificate expiry as a component (one check for all project types)
+    // Add SSL certificate expiry as a component (one check for all project types).
+    // This is an early-warning signal, not a live-traffic check: a cert that's
+    // "expiring in 7-14 days" isn't broken for real users yet, so it must NOT
+    // affect the project's overall status/uptime/SLA or show up as a client-
+    // facing incident in reports. Only an ACTUALLY EXPIRED cert is a real outage
+    // (browsers block access at that point), so only that escalates overall status.
     const sslInfo = await checkSslExpiry(project.url);
     const sslComponent = sslComponentFromCheck(sslInfo);
     if (sslComponent && result.components) {
       result.components.push(sslComponent);
-      // Re-derive overall status if SSL is worse than current status
-      if (sslComponent.status === 'down') result.status = 'down';
-      else if (sslComponent.status === 'degraded' && result.status === 'operational') result.status = 'degraded';
+      if (sslInfo.expired) result.status = 'down';
     }
 
     console.log(`${result.status.toUpperCase()} (${result.responseMs}ms)`);
