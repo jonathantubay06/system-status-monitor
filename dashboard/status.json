@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-28T11:09:10.448Z",
+  "updatedAt": "2026-07-28T13:02:07.128Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:08:26.015Z",
+      "checkedAt": "2026-07-28T13:01:29.788Z",
       "status": "operational",
-      "responseMs": 8059,
+      "responseMs": 7645,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -47,8 +47,7 @@
           "status": "degraded",
           "detail": "Expires in 14 day(s)"
         }
-      ],
-      "screenshot": "screenshots/jordan-ranch-portal.jpg"
+      ]
     },
     {
       "airtableId": "recUS1iqlfWojro2l",
@@ -63,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:08:26.583Z",
+      "checkedAt": "2026-07-28T13:01:30.554Z",
       "status": "operational",
-      "responseMs": 524,
+      "responseMs": 670,
       "httpStatus": 200,
       "components": [
         {
@@ -95,7 +94,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "39 day(s) until renewal"
+          "detail": "38 day(s) until renewal"
         }
       ]
     },
@@ -112,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:08:50.095Z",
+      "checkedAt": "2026-07-28T13:01:49.806Z",
       "status": "operational",
-      "responseMs": 18452,
+      "responseMs": 18024,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -145,8 +144,7 @@
           "status": "degraded",
           "detail": "Expires in 14 day(s)"
         }
-      ],
-      "screenshot": "screenshots/george-adams-insurance-gai.jpg"
+      ]
     },
     {
       "airtableId": "recPyNs4klp4TqijD",
@@ -161,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:09:09.106Z",
+      "checkedAt": "2026-07-28T13:02:04.994Z",
       "status": "operational",
-      "responseMs": 15081,
+      "responseMs": 14402,
       "components": [
         {
           "name": "Page loads",
@@ -202,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:09:09.791Z",
+      "checkedAt": "2026-07-28T13:02:05.784Z",
       "status": "operational",
-      "responseMs": 672,
+      "responseMs": 775,
       "httpStatus": 200,
       "components": [
         {
@@ -251,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-07-28T11:09:10.422Z",
+      "checkedAt": "2026-07-28T13:02:07.101Z",
       "status": "operational",
-      "responseMs": 605,
+      "responseMs": 1039,
       "httpStatus": 200,
       "components": [
         {
