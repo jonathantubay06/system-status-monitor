@@ -581,5 +581,16 @@
     "raisedBy": "Cortney",
     "notes": "Found the fields were controlled by custom JS (not a native Softr setting) — three separate copies across two Softr pages, each restricted to Lodge only. Widened all three regex conditions to match Hotel or Lodge, saved, and published. Verified live on production.",
     "fixEmail": "Reply sent confirming linen bundle fields now show for both Hotel and Lodge events."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-07-29",
+    "request": "Ladies of McGee Chapel — Participant List Import Failure",
+    "issue": "Participant list upload silently failed (0 participants created, no visible error) due to a malformed template — repeated header rows and extra sections mid-sheet.",
+    "definition": "Maintenance",
+    "subDefinition": "Bug",
+    "raisedBy": "Sentry",
+    "notes": "Traced to Participant List Import record for this event. File had wrong/incomplete header row plus two duplicated header rows and stray \"Day Pass\"/\"Speakers\" section dividers, which tripped an UNKNOWN_FIELD_NAME rejection and killed the whole batch. Rebuilt the file on the correct official template (76 participants: 66 roster + 6 Day Pass + 4 Speakers), re-uploaded, and confirmed all 76 records created correctly in Airtable. Also built a locked-header blank template to prevent recurrence, added to Downloadable Documents.",
+    "fixEmail": "Reply sent confirming the fix, explaining the cause, and noting the header row on the template is now locked to prevent it happening again."
   }
 ]
