@@ -2731,7 +2731,12 @@ function computeProjectStats(projectId,fromDate,toDate){
       if(c.status==='operational')compMap[c.name].operational++;
     });
   });
-  var components=Object.keys(compMap).map(function(name){
+  /* SSL certificate is an admin-facing early-warning signal (renews-soon,
+     not actually broken) — it stays visible on the live dashboard card, but
+     is excluded here since this function feeds the client-facing email
+     report and PDF, where a red "33%" looks like a real problem when it's
+     really just "cert renews in N days, nothing is actually down". */
+  var components=Object.keys(compMap).filter(function(name){return name!=='SSL certificate'}).map(function(name){
     var c=compMap[name];
     return{name:name,operationalPercent:((c.operational/c.total)*100).toFixed(1)};
   });
