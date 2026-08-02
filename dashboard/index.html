@@ -2638,14 +2638,6 @@ function loadLastRecipients(projectId){
 function saveLastRecipients(projectId,data){
   try{localStorage.setItem('lastRecipients:'+projectId,JSON.stringify(data))}catch(e){}
 }
-/* Extract first name from email like "cortney.smith@..." or "first.last+suffix@..." → "Cortney" */
-function firstNameFromEmail(email){
-  if(!email)return'';
-  var local=email.split('@')[0].split('+')[0];
-  var first=local.split(/[._-]/)[0]||'';
-  return first.charAt(0).toUpperCase()+first.slice(1).toLowerCase();
-}
-
 function openReportModal(projectId){
   var project=allResults.find(function(r){return r.id===projectId});
   if(!project)return;
@@ -2655,10 +2647,7 @@ function openReportModal(projectId){
   var saved=loadLastRecipients(projectId);
   document.getElementById('reportEmail').value=(saved&&saved.to)||project.alertEmail||'';
   document.getElementById('reportCC').value=(saved&&saved.cc)||'';
-  /* Auto-greeting from first recipient's name */
-  var firstRecipient=((saved&&saved.to)||project.alertEmail||'').split(',')[0].trim();
-  var firstName=firstNameFromEmail(firstRecipient);
-  document.getElementById('reportGreeting').value=firstName?'Hi '+firstName+',':'Hi Team,';
+  document.getElementById('reportGreeting').value='Hi Team,';
   document.getElementById('reportMessage').value=defaultReportMessage;
   document.getElementById('reportError').textContent='';
   document.getElementById('reportSending').classList.remove('show');
