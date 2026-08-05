@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-05T09:16:23.470Z",
+  "updatedAt": "2026-08-05T11:30:32.928Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,14 +14,38 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:15:52.580Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-08-05T11:29:54.763Z",
+      "status": "operational",
+      "responseMs": 7907,
+      "httpStatus": 200,
+      "pageTitle": "Events",
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "10 record(s) found"
+        },
+        {
+          "name": "SSL certificate",
+          "status": "down",
+          "detail": "Expires in 6 day(s) — RENEW NOW"
         }
       ]
     },
@@ -38,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:15:53.306Z",
+      "checkedAt": "2026-08-05T11:29:55.467Z",
       "status": "operational",
-      "responseMs": 637,
+      "responseMs": 530,
       "httpStatus": 200,
       "components": [
         {
@@ -87,14 +111,38 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:16:03.308Z",
-      "status": "down",
-      "responseMs": 0,
-      "error": "Domain unreachable - server did not respond",
+      "checkedAt": "2026-08-05T11:30:15.253Z",
+      "status": "operational",
+      "responseMs": 18203,
+      "httpStatus": 200,
+      "pageTitle": "Trustee Bonds",
       "components": [
         {
           "name": "Page loads",
-          "status": "down"
+          "status": "operational"
+        },
+        {
+          "name": "Login",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "No errors",
+          "status": "operational",
+          "detail": null
+        },
+        {
+          "name": "Data loads",
+          "status": "operational",
+          "detail": "Content detected"
+        },
+        {
+          "name": "SSL certificate",
+          "status": "down",
+          "detail": "Expires in 6 day(s) — RENEW NOW"
         }
       ]
     },
@@ -111,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:16:21.948Z",
+      "checkedAt": "2026-08-05T11:30:31.374Z",
       "status": "operational",
-      "responseMs": 17947,
+      "responseMs": 14896,
       "components": [
         {
           "name": "Page loads",
@@ -152,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:16:22.683Z",
+      "checkedAt": "2026-08-05T11:30:31.844Z",
       "status": "operational",
-      "responseMs": 706,
+      "responseMs": 440,
       "httpStatus": 200,
       "components": [
         {
@@ -201,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-05T09:16:23.450Z",
+      "checkedAt": "2026-08-05T11:30:32.913Z",
       "status": "operational",
-      "responseMs": 714,
+      "responseMs": 1028,
       "httpStatus": 200,
       "components": [
         {
