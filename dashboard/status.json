@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-07T20:38:32.650Z",
+  "updatedAt": "2026-08-07T21:21:59.297Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:37:46.759Z",
+      "checkedAt": "2026-08-07T21:21:18.793Z",
       "status": "operational",
-      "responseMs": 8410,
+      "responseMs": 9256,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -45,7 +45,7 @@
         {
           "name": "SSL certificate",
           "status": "down",
-          "detail": "Expires in 4 day(s) — RENEW NOW"
+          "detail": "Expires in 3 day(s) — RENEW NOW"
         }
       ]
     },
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:37:47.293Z",
+      "checkedAt": "2026-08-07T21:21:19.456Z",
       "status": "operational",
-      "responseMs": 508,
+      "responseMs": 555,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:38:07.198Z",
+      "checkedAt": "2026-08-07T21:21:38.760Z",
       "status": "operational",
-      "responseMs": 18324,
+      "responseMs": 17990,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -142,7 +142,7 @@
         {
           "name": "SSL certificate",
           "status": "down",
-          "detail": "Expires in 4 day(s) — RENEW NOW"
+          "detail": "Expires in 3 day(s) — RENEW NOW"
         }
       ]
     },
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:38:31.254Z",
+      "checkedAt": "2026-08-07T21:21:58.246Z",
       "status": "operational",
-      "responseMs": 19646,
+      "responseMs": 15281,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:38:31.933Z",
+      "checkedAt": "2026-08-07T21:21:58.775Z",
       "status": "operational",
-      "responseMs": 665,
+      "responseMs": 487,
       "httpStatus": 200,
       "components": [
         {
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-07T20:38:32.623Z",
+      "checkedAt": "2026-08-07T21:21:59.277Z",
       "status": "operational",
-      "responseMs": 673,
+      "responseMs": 427,
       "httpStatus": 200,
       "components": [
         {
