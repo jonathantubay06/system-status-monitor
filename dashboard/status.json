@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-11T02:59:26.694Z",
+  "updatedAt": "2026-08-11T04:17:36.186Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:58:43.458Z",
+      "checkedAt": "2026-08-11T04:16:56.497Z",
       "status": "operational",
-      "responseMs": 7570,
+      "responseMs": 7450,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:58:44.141Z",
+      "checkedAt": "2026-08-11T04:16:57.025Z",
       "status": "operational",
-      "responseMs": 598,
+      "responseMs": 476,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:59:02.975Z",
+      "checkedAt": "2026-08-11T04:17:15.830Z",
       "status": "operational",
-      "responseMs": 17770,
+      "responseMs": 17742,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:59:24.203Z",
+      "checkedAt": "2026-08-11T04:17:34.506Z",
       "status": "operational",
-      "responseMs": 17173,
+      "responseMs": 18183,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:59:25.277Z",
+      "checkedAt": "2026-08-11T04:17:35.236Z",
       "status": "operational",
-      "responseMs": 1052,
+      "responseMs": 711,
       "httpStatus": 200,
       "components": [
         {
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-11T02:59:26.669Z",
+      "checkedAt": "2026-08-11T04:17:36.161Z",
       "status": "operational",
-      "responseMs": 997,
+      "responseMs": 738,
       "httpStatus": 200,
       "components": [
         {
