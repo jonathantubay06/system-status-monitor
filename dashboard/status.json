@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T14:52:46.696Z",
+  "updatedAt": "2026-08-20T15:24:00.524Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:09.675Z",
+      "checkedAt": "2026-08-20T15:23:04.328Z",
       "status": "operational",
-      "responseMs": 7773,
+      "responseMs": 9215,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,41 +62,22 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:10.046Z",
-      "status": "operational",
-      "responseMs": 287,
-      "httpStatus": 200,
+      "checkedAt": "2026-08-20T15:23:12.425Z",
+      "status": "down",
+      "responseMs": 3348,
+      "httpStatus": 500,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "75 day(s) until renewal"
         }
-      ]
+      ],
+      "screenshot": "screenshots/kingdomlandkids.jpg"
     },
     {
       "airtableId": "rec9nsO0vYvGzSYrI",
@@ -111,9 +92,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:29.168Z",
+      "checkedAt": "2026-08-20T15:23:32.794Z",
       "status": "operational",
-      "responseMs": 17934,
+      "responseMs": 18469,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +140,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:45.698Z",
+      "checkedAt": "2026-08-20T15:23:52.220Z",
       "status": "operational",
-      "responseMs": 16077,
+      "responseMs": 15475,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +181,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:46.131Z",
+      "checkedAt": "2026-08-20T15:23:52.678Z",
       "status": "operational",
-      "responseMs": 419,
+      "responseMs": 444,
       "httpStatus": 200,
       "components": [
         {
@@ -249,41 +230,22 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-08-20T14:52:46.672Z",
-      "status": "operational",
-      "responseMs": 512,
-      "httpStatus": 200,
+      "checkedAt": "2026-08-20T15:24:00.501Z",
+      "status": "down",
+      "responseMs": 3125,
+      "httpStatus": 500,
       "components": [
         {
           "name": "Page loads",
-          "status": "operational"
-        },
-        {
-          "name": "Header",
-          "status": "operational"
-        },
-        {
-          "name": "Navigation",
-          "status": "operational"
-        },
-        {
-          "name": "Products",
-          "status": "operational"
-        },
-        {
-          "name": "Cart",
-          "status": "operational"
-        },
-        {
-          "name": "Footer",
-          "status": "operational"
+          "status": "degraded"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "55 day(s) until renewal"
         }
-      ]
+      ],
+      "screenshot": "screenshots/anomalyx.jpg"
     }
   ]
 }
