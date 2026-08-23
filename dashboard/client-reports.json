@@ -592,5 +592,27 @@
     "raisedBy": "Sentry",
     "notes": "Traced to Participant List Import record for this event. File had wrong/incomplete header row plus two duplicated header rows and stray \"Day Pass\"/\"Speakers\" section dividers, which tripped an UNKNOWN_FIELD_NAME rejection and killed the whole batch. Rebuilt the file on the correct official template (76 participants: 66 roster + 6 Day Pass + 4 Speakers), re-uploaded, and confirmed all 76 records created correctly in Airtable. Also built a locked-header blank template to prevent recurrence, added to Downloadable Documents.",
     "fixEmail": "Reply sent confirming the fix, explaining the cause, and noting the header row on the template is now locked to prevent it happening again."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-08-14",
+    "request": "Portal Documents – Link to Areas of Jordan Ranch photo gallery",
+    "issue": "Wanted a deep link from the portal Documents section to a specific part of jordanranch.org (the photo carousel / Areas of Jordan Ranch).",
+    "definition": "Service Request",
+    "subDefinition": "Feature add (portal link)",
+    "raisedBy": "Service Request",
+    "notes": "Feature add (portal link)",
+    "fixEmail": "https://jordanranch.org/"
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-08-19",
+    "request": "Ladies of McGee Chapel – Duplicate participant count (152 vs 76)",
+    "issue": "Duplicate participant records (152 instead of 76); concern that uploads append instead of replace; concern about facilitator upload permissions.",
+    "definition": "Not A System Issue",
+    "subDefinition": "Test artifact (operator error)",
+    "raisedBy": "Not A System Issue",
+    "notes": "Test artifact (operator error)",
+    "fixEmail": ""
   }
 ]
