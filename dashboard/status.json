@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T13:02:18.520Z",
+  "updatedAt": "2026-09-23T17:51:36.825Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:01:34.251Z",
+      "checkedAt": "2026-09-23T17:50:50.765Z",
       "status": "operational",
-      "responseMs": 7939,
+      "responseMs": 9141,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:01:35.424Z",
+      "checkedAt": "2026-09-23T17:50:51.655Z",
       "status": "operational",
-      "responseMs": 1008,
+      "responseMs": 770,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:01:54.989Z",
+      "checkedAt": "2026-09-23T17:51:11.517Z",
       "status": "operational",
-      "responseMs": 18080,
+      "responseMs": 18216,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:02:14.980Z",
+      "checkedAt": "2026-09-23T17:51:35.361Z",
       "status": "operational",
-      "responseMs": 19409,
+      "responseMs": 19573,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:02:15.596Z",
+      "checkedAt": "2026-09-23T17:51:36.051Z",
       "status": "operational",
-      "responseMs": 600,
+      "responseMs": 662,
       "httpStatus": 200,
       "components": [
         {
@@ -249,22 +249,41 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T13:02:18.490Z",
-      "status": "down",
-      "responseMs": 368,
-      "httpStatus": 503,
+      "checkedAt": "2026-09-23T17:51:36.806Z",
+      "status": "operational",
+      "responseMs": 635,
+      "httpStatus": 200,
       "components": [
         {
           "name": "Page loads",
-          "status": "degraded"
+          "status": "operational"
+        },
+        {
+          "name": "Header",
+          "status": "operational"
+        },
+        {
+          "name": "Navigation",
+          "status": "operational"
+        },
+        {
+          "name": "Products",
+          "status": "operational"
+        },
+        {
+          "name": "Cart",
+          "status": "operational"
+        },
+        {
+          "name": "Footer",
+          "status": "operational"
         },
         {
           "name": "SSL certificate",
           "status": "operational",
           "detail": "81 day(s) until renewal"
         }
-      ],
-      "screenshot": "screenshots/anomalyx.jpg"
+      ]
     }
   ]
 }
