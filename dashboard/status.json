@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T17:51:36.825Z",
+  "updatedAt": "2026-09-23T20:48:05.970Z",
   "results": [
     {
       "airtableId": "recBJcopy2vZyLcHx",
@@ -14,9 +14,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:50:50.765Z",
+      "checkedAt": "2026-09-23T20:47:24.517Z",
       "status": "operational",
-      "responseMs": 9141,
+      "responseMs": 7799,
       "httpStatus": 200,
       "pageTitle": "Events",
       "components": [
@@ -62,9 +62,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:50:51.655Z",
+      "checkedAt": "2026-09-23T20:47:25.573Z",
       "status": "operational",
-      "responseMs": 770,
+      "responseMs": 991,
       "httpStatus": 200,
       "components": [
         {
@@ -111,9 +111,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:51:11.517Z",
+      "checkedAt": "2026-09-23T20:47:44.314Z",
       "status": "operational",
-      "responseMs": 18216,
+      "responseMs": 17752,
       "httpStatus": 200,
       "pageTitle": "Trustee Bonds",
       "components": [
@@ -159,9 +159,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:51:35.361Z",
+      "checkedAt": "2026-09-23T20:48:04.492Z",
       "status": "operational",
-      "responseMs": 19573,
+      "responseMs": 19937,
       "components": [
         {
           "name": "Page loads",
@@ -200,9 +200,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:51:36.051Z",
+      "checkedAt": "2026-09-23T20:48:05.280Z",
       "status": "operational",
-      "responseMs": 662,
+      "responseMs": 766,
       "httpStatus": 200,
       "components": [
         {
@@ -249,9 +249,9 @@
       "group": "",
       "alertThreshold": 0,
       "alertChannel": "email",
-      "checkedAt": "2026-09-23T17:51:36.806Z",
+      "checkedAt": "2026-09-23T20:48:05.948Z",
       "status": "operational",
-      "responseMs": 635,
+      "responseMs": 625,
       "httpStatus": 200,
       "components": [
         {
@@ -281,7 +281,7 @@
         {
           "name": "SSL certificate",
           "status": "operational",
-          "detail": "81 day(s) until renewal"
+          "detail": "80 day(s) until renewal"
         }
       ]
     }
