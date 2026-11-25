@@ -614,5 +614,82 @@
     "raisedBy": "Not A System Issue",
     "notes": "Test artifact (operator error)",
     "fixEmail": ""
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-09-24",
+    "request": "Legacy Lodge linen bundles (Change question text)",
+    "issue": "Text change for the linen bundle question. Follow-up: new text not showing in the displayed question.",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Text updated on Add Event and Edit Event on 25 September. The displayed question she flagged on 2 October was updated on 13 October, after her reminder.",
+    "fixEmail": "25 Sep: \"Your request has been applied. Both on Add event and edit event.\" 13 Oct: \"Apologies for the late response. This has been updated.\""
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-10-08",
+    "request": "Mike Sayre no access (Softr outage)",
+    "issue": "Mike could not see events, then got an error on loading.",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney",
+    "notes": "Softr support confirmed a global issue on their side and fixed it. No account problem found, nothing changed on our side.",
+    "fixEmail": "Told Cortney that Softr had a global issue and that we would update her. Followed up that Softr said it is fixed and asked Mike to hard refresh or sign out and back in."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-10-13",
+    "request": "Comment emails (Copy Cortney when an admin comments)",
+    "issue": "Cortney not copied on admin comment emails. Then: do not email her own comments to her.",
+    "definition": "Service Request",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "Added Cortney to the CC on the live zap \"NOTIF - New Comment Created\" (admin path) on 13 October. On 15 October changed it so she is copied when other admins comment and not on her own comments.",
+    "fixEmail": "13 Oct: \"You are now copied on comments that admins post.\" 15 Oct: \"You are copied when other admins comment, and not on your own comments.\""
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-10-29",
+    "request": "Ladies of Word of Restoration (Portal reminder not sending)",
+    "issue": "Portal reminder not sending after a facilitator change. Cortney not copied on the reminder email for that event.",
+    "definition": "Maintenance",
+    "subDefinition": "Not A System Issue",
+    "raisedBy": "Cortney",
+    "notes": "The reminder did go through and the facilitator received it. Checked the automation: Cortney is still included on the Remind Facilitator emails. Why she did not get a copy for this event is not confirmed.",
+    "fixEmail": "30 Oct: confirmed the reminder went through. 31 Oct: clarified that her email is still included in the automation."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-11-13",
+    "request": "Rooms (Locked rooms on an event)",
+    "issue": "New feature: lock a hotel room on an event, show it to the facilitator as unavailable, include it in the print pages.",
+    "definition": "Maintenance",
+    "subDefinition": "New Feature",
+    "raisedBy": "Cortney",
+    "notes": "Built on the Softr portal and published 25 November 2026. Airtable Room Bookings: new fields Locked, Locked reason, Locked label. Admin Edit form has Locked and Locked reason. Locked column in the admin and facilitator hotel room tables. Assign button hidden on locked rooms. Locked column on the Room Bookings and Housekeeping print pages. Hotel room tables widened so there is no sideways scroll. Tested on a test event (admin, facilitator, print preview). Still to build in the new portal.",
+    "fixEmail": "14 Nov: \"We will check on this.\" 18 Nov: confirmed it can be done and asked what the facilitator should see. 25 Nov: replied that locked rooms are live, with how to use it."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-11-17",
+    "request": "Meeting Rooms (Added rooms not showing)",
+    "issue": "Meeting room rows disappearing after being added on an event.",
+    "definition": "Maintenance",
+    "subDefinition": "Airtable Issue",
+    "raisedBy": "Cortney",
+    "notes": "Checked the event (Ladies of Word of Restoration, 20 to 22 Nov): all 8 rooms including Breakout Rm4 are saved and showing. Likely cause: two Airtable automations that sync meeting rooms can overlap when several rooms are added within a few minutes, and a new row gets removed. Workaround: add one room, wait for it to appear, then add the next. No system change made.",
+    "fixEmail": "18 Nov: Breakout Rm4 is saved on the event with the other meeting rooms. The earlier tries were dropped because several rooms were added close together while it was still syncing. Advised to wait a few seconds until a room shows before adding the next."
+  },
+  {
+    "projectId": "jordan-ranch-portal",
+    "date": "2026-11-18",
+    "request": "Portal Not Loading (Cortney, outage question)",
+    "issue": "Portal not loading.",
+    "definition": "Maintenance",
+    "subDefinition": "Softr Issue (Global)",
+    "raisedBy": "Cortney",
+    "notes": "Portal was up and fast when checked, Softr and Airtable status pages normal. Nick found a short Softr backend error (database connection pool) at 10:43 AM CST that cleared in about a minute. Cause on the Softr side, nothing on our Airtable, zaps or service.",
+    "fixEmail": "Replied that Softr had a few minute outage around 10:43 AM, tested after and everything is loading and fast."
   }
 ]
