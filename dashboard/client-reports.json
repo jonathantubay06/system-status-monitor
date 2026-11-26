@@ -667,7 +667,7 @@
     "definition": "Maintenance",
     "subDefinition": "New Feature",
     "raisedBy": "Cortney",
-    "notes": "Built on the Softr portal and published 25 November 2026. Airtable Room Bookings: new fields Locked, Locked reason, Locked label. Admin Edit form has Locked and Locked reason. Locked column in the admin and facilitator hotel room tables. Assign button hidden on locked rooms. Locked column on the Room Bookings and Housekeeping print pages. Hotel room tables widened so there is no sideways scroll. Tested on a test event (admin, facilitator, print preview). Still to build in the new portal.",
+    "notes": "Built on the Softr portal and published 25 November 2026. Airtable Room Bookings: new fields Locked, Locked reason, Locked label. Admin Edit form has Locked and Locked reason. Locked column in the admin and facilitator hotel room tables. Assign button hidden on locked rooms. Locked column on the Room Bookings and Housekeeping print pages. Hotel room tables widened so there is no sideways scroll. Tested on a test event (admin, facilitator, print preview). Update 26 Nov 2026: Cortney asked to remove the Locked column and grey out the locked line instead, with staff typing who is in the room in the bed fields. Done and published the same day: the Locked column is gone from the two hotel room tables and a locked room shows as a greyed out row. Print pages and the Locked reason field were left as they are. Same change built in the new portal (not live yet).",
     "fixEmail": "14 Nov: \"We will check on this.\" 18 Nov: confirmed it can be done and asked what the facilitator should see. 25 Nov: replied that locked rooms are live, with how to use it."
   },
   {
